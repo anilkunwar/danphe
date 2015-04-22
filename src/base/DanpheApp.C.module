@@ -1,0 +1,42 @@
+#include "DanpheApp.h"
+#include "Moose.h"
+#include "AppFactory.h"
+
+template<>
+InputParameters validParams<DanpheApp>()
+{
+  InputParameters params = validParams<MooseApp>();
+  return params;
+}
+
+DanpheApp::DanpheApp(const std::string & name, InputParameters parameters) :
+    MooseApp(name, parameters)
+{
+  srand(processor_id());
+
+  Moose::registerObjects(_factory);
+  DanpheApp::registerObjects(_factory);
+
+  Moose::associateSyntax(_syntax, _action_factory);
+  DanpheApp::associateSyntax(_syntax, _action_factory);
+}
+
+DanpheApp::~DanpheApp()
+{
+}
+
+void
+DanpheApp::registerApps()
+{
+  registerApp(DanpheApp);
+}
+
+void
+DanpheApp::registerObjects(Factory & factory)
+{
+}
+
+void
+DanpheApp::associateSyntax(Syntax & syntax, ActionFactory & action_factory)
+{
+}
