@@ -3,6 +3,13 @@
 #include "AppFactory.h"
 #include "ModulesApp.h"
 
+//Kernels
+#include "ElectricPotential.h"
+//Auxkernels
+#include "CurrentDensity.h"
+//Materials
+#include "TinSheet.h"
+
 template<>
 InputParameters validParams<DanpheApp>()
 {
@@ -37,6 +44,9 @@ DanpheApp::registerApps()
 void
 DanpheApp::registerObjects(Factory & factory)
 {
+  registerKernel(ElectricPotential);
+  registerAux(CurrentDensity);
+  registerMaterial(TinSheet);
 }
 
 void
