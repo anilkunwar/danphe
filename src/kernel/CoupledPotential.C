@@ -30,7 +30,7 @@ CoupledPotential::CoupledPotential(const std::string & name, InputParameters par
     _potential_gradient(coupledGradient("potential")),
 
     // Save off the coupled variable identifier for use in computeQpOffDiagJacobian
-    //_potential_var(coupled("potential")),
+    _potential_var(coupled("potential")),
 
     // Grab necessary material properties
     _conductivity(getParam<Real>("conductivity"))
@@ -51,4 +51,15 @@ Real
 CoupledPotential::computeQpJacobian()
 {
   return _mob[_qp] *  _conductivity[_qp] * _potential_gradient[_qp] *_phi[_j][_qp] * _test[_i][_qp];
+}
+
+Real
+CoupledPotential::computeQpOffDiagJacobian(unsigned int jvar)
+{
+  if (jvar == _potential_var)
+  {
+    return _conductivity[_qp]*_phi[_j][_qp] * _u[_qp] * _test[_i][_qp];
+  }
+
+  return 0.0;
 }
