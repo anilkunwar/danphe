@@ -22,6 +22,8 @@
 []
 
 [Variables]
+  [./potential]
+  [../]
   [./c]
     order = FIRST
     family = LAGRANGE
@@ -42,17 +44,12 @@
 []
 
 [Kernels]
+  #Cahn-Hilliard
   [./c_res]
     type = SplitCHParsed
     variable = c
     f_name = F
     kappa_name = kappa_c
-    w = w
-  [../]
-  [./e_mig]
-    type = SplitCHBase
-    variable = c
-    f_name = E  #needs further assessment and tasks
     w = w
   [../]
   [./w_res]
@@ -64,6 +61,12 @@
     type = CoupledImplicitEuler
     variable = w
     v = c
+  [../]
+  #Potential
+  [./electric_potential]
+    type = ElectricPotential
+    variable = potential
+    conductivity = 73 # (W/m K) From NIST leadfree solder database
   [../]
 []
 
