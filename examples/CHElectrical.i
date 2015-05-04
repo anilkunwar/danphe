@@ -65,6 +65,13 @@
     variable = potential
     conductivity = 73 # (W/m K) From NIST leadfree solder database
   [../]
+  #CoupledPotentialInCH
+  #Make the related Changes after writing a Kernel KernelName
+  [./CoupledPotential]
+    type = KernelName
+    variable = c
+    CoupledVar = ElectricPotential
+  [../]
 []
 
 [Materials]
