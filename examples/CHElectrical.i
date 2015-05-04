@@ -49,6 +49,12 @@
     kappa_name = kappa_c
     w = w
   [../]
+  [./e_mig]
+    type = SplitCHBase
+    variable = c
+    f_name = E  #needs further assessment and tasks
+    w = w
+  [../]
   [./w_res]
     type = SplitCHWRes
     variable = w
