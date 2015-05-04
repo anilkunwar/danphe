@@ -67,10 +67,10 @@
   [../]
   #CoupledPotentialInCH
   #Make the related Changes after writing a Kernel KernelName
-  [./CoupledPotential]
-    type = KernelName
+  [./couple]
+    type = CoupledPotential
     variable = c
-    CoupledVar = ElectricPotential
+    electric_potential = potential
   [../]
 []
 
