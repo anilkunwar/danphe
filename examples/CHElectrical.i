@@ -1,10 +1,7 @@
 #This is the modified form of the test given in 
 #moose/modules/phase_field/tests/Parsed/SplitCHParsed_test.i
-# Test the split parsed function free enery Cahn-Hilliard Bulk kernel
-# The free energy used here has the same functional form as the SplitCHPoly kernel
-# If everything works, the output of this test should replicate the output
-# of marmot/tests/chpoly_test/CHPoly_Cu_Split_test.i (exodiff match)
-#
+# This testcase accounts for the effect of Electromigration
+# Effect of External Voltage
 
 [Mesh]
   type = GeneratedMesh
