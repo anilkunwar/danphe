@@ -5,6 +5,7 @@
 
 //Kernels
 #include "ElectricPotential.h"
+#include "CoupledPotential.h"
 //Auxkernels
 #include "CurrentDensity.h"
 //Materials
@@ -45,6 +46,7 @@ void
 DanpheApp::registerObjects(Factory & factory)
 {
   registerKernel(ElectricPotential);
+  registerKernel(CoupledPotential);
   registerAux(CurrentDensity);
   registerMaterial(TinSheet);
 }
