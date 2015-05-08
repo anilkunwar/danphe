@@ -1,4 +1,4 @@
-# Steady-state test for the ThermoDiffusion kernel.
+# Transient test for the ThermoDiffusion kernel.
 #
 # This test applies a constant temperature gradient to drive thermo-diffusion
 # in the variable u. At steady state, the thermo-diffusion is balanced by
