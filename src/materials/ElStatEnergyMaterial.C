@@ -4,17 +4,18 @@
 /*          All contents are licensed under LGPL V2.1           */
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
-#include "ElasticEnergyMaterial.h"
-#include "RankTwoTensor.h"
-#include "ElasticityTensorR4.h"
+//#include "ElasticEnergyMaterial.h"
+#include "ElStatEnergyMaterial.h"
+//#include "RankTwoTensor.h"
+//#include "ElasticityTensorR4.h"
 
 template<>
-InputParameters validParams<ElasticEnergyMaterial>()
+InputParameters validParams<ElStatEnergyMaterial>()
 {
   InputParameters params = validParams<DerivativeFunctionMaterialBase>();
-  params.addClassDescription("Free energy material for the elastic energy contributions.");
+  params.addClassDescription("Free energy material for the electrical energy contributions.");
   params.addParam<std::string>("base_name", "Material property base name");
-  params.addRequiredCoupledVar("args", "Arguments of F() - use vector coupling");
+  //params.addRequiredCoupledVar("args", "Arguments of F() - use vector coupling");
   return params;
 }
 
