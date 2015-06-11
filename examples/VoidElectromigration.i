@@ -1,7 +1,6 @@
 #
 # Example 1
-# Illustrating the coupling between chemical and mechanical (elastic) driving forces.
-# An oversized precipitate deforms under a uniaxial compressive stress
+# Illustrating the coupling between chemical and electrical driving forces.
 # Check the file below for comments and suggestions for parameter modifications.
 #
 [Mesh]
@@ -46,9 +45,10 @@ family = LAGRANGE
 [../]
 []
 [Kernels]
-[./TensorMechanics]
-disp_x = disp_x
-disp_y = disp_y
+[./ElectricPotential]
+type = ElectricPotential
+#type = CoupledPotential
+variable = v
 [../]
 [./c_res]
 type = SplitCHParsed
