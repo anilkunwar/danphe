@@ -35,11 +35,7 @@ int_width = 50.0
 order = FIRST
 family = LAGRANGE
 [../]
-[./disp_x]
-order = FIRST
-family = LAGRANGE
-[../]
-[./disp_y]
+[./v]
 order = FIRST
 family = LAGRANGE
 [../]
