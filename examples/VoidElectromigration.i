@@ -67,32 +67,10 @@ v = c
 #
 # The AuxVariables and AuxKernels below are added to visualize the xx and yy stress tensor components
 #
-[AuxVariables]
-[./e11_aux]
-order = CONSTANT
-family = MONOMIAL
-[../]
-[./e22_aux]
-order = CONSTANT
-family = MONOMIAL
-[../]
-[]
-[AuxKernels]
-[./matl_e11]
-type = RankTwoAux
-rank_two_tensor = stress
-index_i = 0
-index_j = 0
-variable = e11_aux
-[../]
-[./matl_e22]
-type = RankTwoAux
-rank_two_tensor = stress
-index_i = 1
-index_j = 1
-variable = e22_aux
-[../]
-[]
+#[AuxVariables]
+#[]
+#[AuxKernels]
+#[]
 [Materials]
 [./pfmobility]
 type = PFMobility
@@ -114,25 +92,9 @@ function = 16*barr_height*(c-cv_eq)^2*(1-cv_eq-c)^2
 enable_jit = true
 derivative_order = 2
 [../]
-# undersized solute (voidlike)
-[./eigenstrain]
-type = SimpleEigenStrainMaterial
-block = 0
-# eigenstrain coefficient
-# -0.1 will result in an undersized precipiutate
-# 0.1 will result in an oversized precipitate
-epsilon0 = 0.1
-c = c
-disp_y = disp_y
-disp_x = disp_x
-# Stiffness tensor lambda, mu values
-# '15 15' results in a high stiffness (the elastic free energy will dominate)
-# '7 7' results in a low stiffness (the chemical free energy will dominate)
-C_ijkl = '7 7'
-fill_method = symmetric_isotropic
-[../]
-[./elastic_free_energy]
-type = ElasticEnergyMaterial
+# free energy contribution from electrical energy
+[./electric_free_energy]
+type = ElasticEnergyMaterial #Write the newly written material src C file name
 f_name = Fe
 block = 0
 args = 'c'
