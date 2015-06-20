@@ -5,6 +5,7 @@
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
 #include "MultiRectangleBoxIC.h"
+//Role of MooseRandom.h
 #include "MooseRandom.h"
 
 template<>
