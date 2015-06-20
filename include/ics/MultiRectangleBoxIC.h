@@ -49,6 +49,7 @@ public:
   virtual Real value(const Point & p);
 
 private:
+//To do list : Need to add the coordinates required to build the multiple boxes
   Real _x1;
   Real _y1;
   Real _z1;
