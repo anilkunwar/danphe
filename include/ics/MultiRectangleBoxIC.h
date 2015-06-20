@@ -4,8 +4,8 @@
 /*          All contents are licensed under LGPL V2.1           */
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
-#ifndef RNDBOUNDINGBOXIC_H
-#define RNDBOUNDINGBOXIC_H
+#ifndef MULTIRECTANGLEBOXIC_H
+#define MULTIRECTANGLEBOXIC_H
 
 #include "Kernel.h"
 #include "InitialCondition.h"
@@ -14,13 +14,13 @@
 #include <string>
 
 // Forward Declarations
-class RndBoundingBoxIC;
+class MultiRectangleBoxIC;
 
 template<>
-InputParameters validParams<RndBoundingBoxIC>();
+InputParameters validParams<MultiRectangleBoxIC>();
 
 /**
- * RndBoundingBoxIC allows setting the initial condition of a value inside and outside of a specified box.
+ * MultiRectangleBoxIC allows setting the initial condition of a value inside and outside of a specified box.
  * The box is aligned with the x,y,z axis... and is specified by passing in the x,y,z coordinates of the bottom
  * left point and the top right point. Each of the coordinates of the "bottom_left" point MUST be less than
  * those coordinates in the "top_right" point.
@@ -28,7 +28,7 @@ InputParameters validParams<RndBoundingBoxIC>();
  * When setting the initial condition if bottom_left <= Point <= top_right then the "inside" value is used.
  * Otherwise the "outside" value is used.
  **/
-class RndBoundingBoxIC : public InitialCondition
+class MultiRectangleBoxIC : public InitialCondition
 {
 public:
   /**
@@ -38,7 +38,7 @@ public:
    * @param parameters The parameters object holding data for the class to use.
    * @param var_name The variable this InitialCondtion is supposed to provide values for.
    */
-  RndBoundingBoxIC(const std::string & name,
+  MultiRectangleBoxIC(const std::string & name,
                 InputParameters parameters);
 
   /**
@@ -66,4 +66,4 @@ private:
   Point _top_right;
 };
 
-#endif //RNDBOUNDINGBOXIC_H
+#endif //MULTIRECTANGLEBOXIC_H
