@@ -48,8 +48,8 @@ protected:
   VariableGradient & _potential_gradient;
 
   /// Holds the conductivity and viscosity from the material system
-  MaterialProperty<Real> & _conductivity;
-  //MaterialProperty<Real> & _viscosity;
+  const MaterialProperty<Real> & _conductivity;
+  //const MaterialProperty<Real> & _viscosity;
 };
 
 #endif //CURRENTDENSITY_H
