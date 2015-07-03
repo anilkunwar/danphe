@@ -10,6 +10,8 @@ ny = 50
 polynomial_order = 8
 []
 [Variables]
+[./temp]
+[../]
 [./c]
 [../]
 [./w]
@@ -28,10 +30,10 @@ int_width = 100.0
 variable = c
 [../]
 []
-[AuxVariables]
-[./T]
-[../]
-[]
+#[AuxVariables]
+#[./T]
+#[../]
+#[]
 [Kernels]
 [./c_res]
 type = SplitCHParsed
