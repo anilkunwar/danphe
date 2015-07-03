@@ -1,8 +1,10 @@
 [Mesh]
 type = GeneratedMesh
-dim = 1
+dim = 2
 xmax = 1000
+ymax = 1000
 nx = 50
+ny = 50
 []
 [GlobalParams]
 polynomial_order = 8
@@ -44,7 +46,7 @@ variable = w
 mob_name = M
 [../]
 [./w_res_soret]
-type = SoretDiffusion
+type = SplitCHSoret
 variable = w
 c = c
 T = T
