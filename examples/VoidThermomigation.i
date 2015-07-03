@@ -46,7 +46,7 @@ variable = w
 mob_name = M
 [../]
 [./w_res_soret]
-type = SplitCHSoret
+type = SplitCHTemperature
 variable = w
 c = c
 T = T
