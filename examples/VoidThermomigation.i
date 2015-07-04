@@ -10,7 +10,7 @@
  polynomial_order = 8
 []
 [Variables]
- [./temp]
+ [./T]
  [../]
  [./c]
  [../]
@@ -37,7 +37,7 @@
 [Kernels]
  [./heat_conduction]
     type = HeatConduction
-    variable = temp
+    variable = T
  [../]
  [./c_res]
     type = SplitCHParsed
@@ -52,10 +52,10 @@
     mob_name = M
  [../]
  [./w_res_soret]
-    type = SplitCHTemperature
+    type = SoretDiffusion
     variable = w
     c = c
-    T = temp
+    T = T
     diff_name = D
     Q_name = Qstar
  [../]
@@ -75,13 +75,13 @@
 [BCs]
   [./bottom_temperature]
     type = DirichletBC
-    variable = temp
+    variable = T
     boundary = bottom
     value = 350 # (C)
   [../]
   [./top_temperature]
     type = DirichletBC
-    variable = temp
+    variable = T
     boundary = top
     value = 348 # (C)
   [../]
@@ -99,6 +99,12 @@
     Ef = 1.28 # in eV, from Balluffi1978 Table 2
     surface_energy = 0.708 # Total guess
  [../]
+ [./Cu_cond]
+    type = GenericConstantMaterial
+    block = 0
+    prop_names = thermal_conductivity
+    prop_values = 73 # K: (W/m*K) from wikipedia @296K
+  [../]
  [./free_energy]
     type = PolynomialFreeEnergy
     block = 0
@@ -132,4 +138,3 @@
     exodus = true
     print_perf_log = true
 []
-
