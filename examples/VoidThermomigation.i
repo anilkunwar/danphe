@@ -55,7 +55,7 @@
     type = SplitCHTemperature
     variable = w
     c = c
-    T = T
+    T = temp
     diff_name = D
     Q_name = Qstar
  [../]
@@ -72,6 +72,19 @@
 #    function = 1000.0+0.025*x
 # [../]
 #[]
+[BCs]
+  [./bottom_temperature]
+    type = DirichletBC
+    variable = temp
+    boundary = bottom
+    value = 350 # (C)
+  [../]
+  [./top_temperature]
+    type = DirichletBC
+    variable = temp
+    boundary = top
+    value = 348 # (C)
+  [../]
 [Materials]
  [./Copper]
     type = PFParamsPolyFreeEnergy
