@@ -65,13 +65,13 @@
     v = c
  [../]
 []
-[AuxKernels]
- [./Temp]
-    type = FunctionAux
-    variable = T
-    function = 1000.0+0.025*x
- [../]
-[]
+#[AuxKernels]
+# [./Temp]
+#    type = FunctionAux
+#    variable = T
+#    function = 1000.0+0.025*x
+# [../]
+#[]
 [Materials]
  [./Copper]
     type = PFParamsPolyFreeEnergy
