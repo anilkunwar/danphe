@@ -30,13 +30,13 @@ protected:
   virtual Real computeQpCJacobian();
 
   /// int label for Voltage variable
-  unsigned int _T_var;
+  unsigned int _volt_var;
 
   /// Coupled variable for the Voltage
-  VariableValue & _T;
+  VariableValue & _volt;
 
   /// Variable gradient for Voltage
-  VariableGradient & _grad_T;
+  VariableGradient & _grad_volt;
 
   /// int label for the Concentration
   unsigned int _c_var;
@@ -48,10 +48,14 @@ protected:
   const MaterialProperty<Real> & _D;
 
   /// Heat of transport material property
-  const MaterialProperty<Real> & _Q;
+  /// Effective charge number of the species
+  const MaterialProperty<Real> & _z;
 
   /// Boltzmann constant
   const Real _kb;
+
+  /// Charge of an electron
+  const Real _echarge;
 };
 
 #endif //SPLITCHVOLTAGE_H
