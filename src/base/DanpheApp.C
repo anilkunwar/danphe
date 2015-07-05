@@ -11,6 +11,7 @@
 #include "CurrentDensity.h"
 //Materials
 #include "TinSheet.h"
+#include "VoltPFParamsPolyFreeEnergy.h"
 
 template<>
 InputParameters validParams<DanpheApp>()
@@ -51,6 +52,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerKernel(SplitCHVoltage);
   registerAux(CurrentDensity);
   registerMaterial(TinSheet);
+  registerMaterial(VoltPFParamsPolyFreeEnergy);
 }
 
 void
