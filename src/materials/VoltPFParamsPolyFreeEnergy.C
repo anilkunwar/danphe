@@ -11,14 +11,14 @@ InputParameters validParams<VoltPFParamsPolyFreeEnergy>()
   params.addRequiredParam<Real>("int_width", "The interfacial width of void surface in the lengthscale of the problem");
   params.addParam<Real>("length_scale", 1.0e-9, "defines the base length scale of the problem in m");
   params.addParam<Real>("time_scale", 1.0e-9, "defines the base time scale of the problem");
+  //params.addParam<Real>("T", 298.0, "Temperature value in Kelvin");
   MooseEnum poly_order("4 6 8");
   params.addRequiredParam<MooseEnum>("polynomial_order", poly_order, "Order of polynomial free energy");
   params.addRequiredParam<Real>("D0", "Diffusivity prefactor for vacancies in m^2/s");
   params.addRequiredParam<Real>("Em", "Migration energy in eV");
   params.addRequiredParam<Real>("Ef", "Formation energy in eV");
   params.addRequiredParam<Real>("surface_energy", "Surface energy in J/m2");
-  params.addRequiredParam<Real>("T", "Temperature value in Kelvin");
-  return params;
+    return params;
 }
 
 VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const std::string & name,
@@ -33,9 +33,10 @@ VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const std::string & name,
     _c_eq(declareProperty<Real>("c_eq")),
     _W(declareProperty<Real>("barr_height")),
     _zeff(declareProperty<Real>("zeff")),
+    _T(declareProperty<Real>("T")),
     //_Qstar(declareProperty<Real>("Qstar")),
     _D(declareProperty<Real>("D")),
-    _T(getParam<Real>("T")),
+    //_T(getParam<Real>("T")),
     _int_width(getParam<Real>("int_width")),
     _length_scale(getParam<Real>("length_scale")),
     _time_scale(getParam<Real>("time_scale")),
@@ -109,5 +110,6 @@ VoltPFParamsPolyFreeEnergy::computeQpProperties()
   _grad_M[_qp] = 0.0;
 
   //_Qstar[_qp] = -4.0; // eV
-  _zeff = 2.0; //write the unit here
+  _zeff[_qp] = 2.0; // write the unit here
+  _T[_qp] = 298.0;  // Kelvin
 }
