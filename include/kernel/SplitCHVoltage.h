@@ -47,6 +47,10 @@ protected:
   /// Diffusivity material property
   const MaterialProperty<Real> & _D;
 
+  /// Temperature material property
+  const MaterialProperty<Real> & _T;
+
+
   /// Heat of transport material property
   /// Effective charge number of the species
   const MaterialProperty<Real> & _z;
@@ -55,7 +59,10 @@ protected:
   const Real _kb;
 
   /// Charge of an electron
-  const Real _echarge;
+  const Real _eo;
+
+  /// Temperature in kelvin scale
+  //const Real _T;
 };
 
 #endif //SPLITCHVOLTAGE_H
