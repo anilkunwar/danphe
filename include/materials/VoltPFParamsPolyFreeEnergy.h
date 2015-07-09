@@ -36,14 +36,14 @@ protected:
   MaterialProperty<Real> & _W;
   //MaterialProperty<Real> & _Qstar;
   MaterialProperty<Real> & _zeff;
-  MaterialProperty<Real> & _T;
+  //MaterialProperty<Real> & _T;
   MaterialProperty<Real> & _D;
 
   ///Input parameters
+  Real _T;
   Real _int_width;
   Real _length_scale;
   Real _time_scale;
-  //Real _T;
   MooseEnum _order;
   Real _D0;
   Real _Em;
