@@ -98,7 +98,7 @@
     block = 0
     c = c
     volt = volt
-    T = T # K
+    T = 423 # K
     int_width = 60.0
     length_scale = 1.0e-9
     time_scale = 1.0e-9
