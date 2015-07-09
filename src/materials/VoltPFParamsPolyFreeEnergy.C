@@ -33,10 +33,10 @@ VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const std::string & name,
     _c_eq(declareProperty<Real>("c_eq")),
     _W(declareProperty<Real>("barr_height")),
     _zeff(declareProperty<Real>("zeff")),
-    _T(declareProperty<Real>("T")),
+    //_T(declareProperty<Real>("T")),
     //_Qstar(declareProperty<Real>("Qstar")),
     _D(declareProperty<Real>("D")),
-    //_T(getParam<Real>("T")),
+    _T(getParam<Real>("T")),
     _int_width(getParam<Real>("int_width")),
     _length_scale(getParam<Real>("length_scale")),
     _time_scale(getParam<Real>("time_scale")),
@@ -57,7 +57,7 @@ VoltPFParamsPolyFreeEnergy::computeQpProperties()
   // Convert mobility from m^2/s to the length and time scale
   Real D0_c = _D0*_time_scale/(_length_scale*_length_scale);
 
-  Real kbT = _kb*_T[_qp];
+  Real kbT = _kb*_T;
 
   //Compute equilibrium concentration and diffusivity
   _c_eq[_qp] = std::exp(-_Ef/kbT);
@@ -111,5 +111,5 @@ VoltPFParamsPolyFreeEnergy::computeQpProperties()
 
   //_Qstar[_qp] = -4.0; // eV
   _zeff[_qp] = 2.0; // write the unit here
-  _T[_qp] = 298.0;  // Kelvin
+  //_T = 298.0;  // Kelvin
 }
