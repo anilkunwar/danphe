@@ -1,13 +1,12 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 100
-  ny = 100
-  xmax = 4.5e5
-  ymax = 4.5e5
-  elem_type = QUAD4
+  nx = 400
+  ny = 400 
+  xmax = 4.15e5
+  ymax = 9.00e5
+  elem_type = QUAD
 []
-
 
 [GlobalParams]
   polynomial_order = 8
@@ -19,8 +18,8 @@
   [./w]
     scaling = 1.0e2
   [../]
-  [./volt]
-    initial_condition = 0.68e-3
+  [./T]
+    initial_condition = 622.0
     scaling = 1.0e5
   [../]
 []
@@ -28,12 +27,12 @@
 [ICs]
   [./c_IC]
     type = SmoothCircleIC
-    x1 = 4.5e5 #1.25e5
-    y1 = 1.0e5 #7.0e4
-    radius = 5.0e4 #6.0e4
+    x1 = 2.25e5
+    y1 = 4.0e4
+    radius = 1.5e4
     invalue = 1.0
     outvalue = 0.1
-    int_width = 1.0e4 #3.0e4
+    int_width = 1.5e4
     variable = c
   [../]
 []
@@ -52,66 +51,62 @@
     mob_name = M
   [../]
   [./w_res_soret]
-    type = SplitCHVoltage
+    type = SoretDiffusion
     variable = w
     c = c
-    volt = volt
+    T = T
     diff_name = D
-    z_name = zeff
-    #T = T
+    Q_name = Qstar
   [../]
   [./time]
     type = CoupledTimeDerivative
     variable = w
     v = c
   [../]
-  [./electrical_potential]
+  [./HtCond]
     type = MatDiffusion
-    variable = volt
-    D_name = electrical_conductivity
+    variable = T
+    D_name = thermal_conductivity
   [../]
 []
 
 [BCs]
-  #active = 'Top_T Bottom_T'
-  [./Bottom_T]
-    type = DirichletBC
-    variable = volt
-    boundary = bottom
-    value = 0.7e-3
-  [../]
-
   [./Top_T]
     type = DirichletBC
-    variable = volt
+    variable = T
     boundary = top
-    value = 7e-3
-    # i = 4.5 A , l*b*h = 3 mm * 0.15 mm * 2 mm, resist = 23.34e-8 ohm m and T = 150 degree centigrade
+    value = 622.4
+  [../]
+
+  [./Bottom_T]
+    type = DirichletBC
+    variable = T
+    boundary = bottom
+    value = 623.1
   [../]
 []
 
 [Materials]
   [./Copper]
-    type = VoltPFParamsPolyFreeEnergy
+    type = TempPFParamsPolyFreeEnergy
     block = 0
     c = c
-    volt = volt
-    int_width = 1.0e4 #needs careful allocation of this value
-    length_scale =1.0e-9   #1.0e-8
-    time_scale = 1.0e-3 #1.0e-9
-    D0 = 8.26e-3  #C.H.Ma and R.A. swalin, J.A.P (1962)
-    Em = 0.68082      #0.71 # in eV, from P.H. S and M.O., 1976, J.A.P.
-    Ef = 0.511    #1.28 # in eV, from P.H. S and M.O., 1976, J.A.P.
-    # surface energy of tin 
-    surface_energy = 0.5 #0.35 #J/m^2 ref. N. Moelans et al. , TMS, 2010
+    T = T # K
+    int_width = 1.5e4
+    length_scale = 1.0e-9
+    time_scale = 1.0
+    D0 = 9.9e-9 # m^2/s, from Brown1980
+    Em = 0.68082 # in eV, from Balluffi1978 Table 2
+    Ef = 0.511 # in eV, from Balluffi1978 Table 2
+    surface_energy = 0.55 # Total guess
+    outputs = exodus
   [../]
-  [./elcond]
+  [./thcond]
     type = ParsedMaterial
     block = 0
     args = 'c'
-    #function = 'if(c>0.7,1.0e-8,4.93e-8)'
-    function = 'if(c>0.7,1.0e-9,1.8e-3)'
-    f_name = electrical_conductivity
+    function = 'if(c>0.7,0.1e-9,5.7e-8)'
+    f_name = thermal_conductivity
     outputs = exodus
   [../]
   [./free_energy]
@@ -142,14 +137,8 @@
   nl_max_its = 25
   nl_rel_tol = 1.0e-9
 
-  num_steps = 360 #150 #100 #60
-  #dt = 20.0
-  dt = 1000
-[]
-
-[Problem]
-  type = FEProblem
-  coord_type = RZ
+  num_steps = 36
+  dt = 100
 []
 
 [Outputs]
