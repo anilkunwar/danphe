@@ -37,8 +37,8 @@ InputParameters validParams<CurrentDensity>()
   return params;
 }
 
-CurrentDensity::CurrentDensity(const std::string & name, InputParameters parameters) :
-    AuxKernel(name, parameters),
+CurrentDensity::CurrentDensity(const InputParameters & parameters) :
+    AuxKernel(parameters),
 
     // This will automatically convert the MooseEnum to an integer
     _component(getParam<MooseEnum>("component")),

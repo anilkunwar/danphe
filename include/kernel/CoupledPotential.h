@@ -29,7 +29,7 @@ InputParameters validParams<CoupledPotential>();
 class CoupledPotential : public Kernel
 {
 public:
-  CoupledPotential(const std::string & name, InputParameters parameters);
+  CoupledPotential(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

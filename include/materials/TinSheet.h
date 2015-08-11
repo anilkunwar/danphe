@@ -33,7 +33,7 @@ InputParameters validParams<TinSheet>();
 class TinSheet : public Material
 {
 public:
-  TinSheet(const std::string & name, InputParameters parameters);
+  TinSheet(const InputParameters & parameters);
 
 protected:
   /**

@@ -29,7 +29,7 @@ InputParameters validParams<CurrentDensity>();
 class CurrentDensity : public AuxKernel
 {
 public:
-  CurrentDensity(const std::string & name, InputParameters parameters);
+  CurrentDensity(const InputParameters & parameters);
 
   virtual ~CurrentDensity() {}
 

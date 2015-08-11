@@ -33,8 +33,8 @@ InputParameters validParams<ElectricPotential>()
 }
 
 
-ElectricPotential::ElectricPotential(const std::string & name, InputParameters parameters) :
-    Diffusion(name, parameters),
+ElectricPotential::ElectricPotential(const InputParameters & parameters) :
+    Diffusion(parameters),
 
     // Get the parameters from the input file
     _conductivity(getParam<Real>("conductivity"))

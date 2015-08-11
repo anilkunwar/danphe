@@ -11,7 +11,7 @@ InputParameters validParams<DanpheApp>();
 class DanpheApp : public MooseApp
 {
 public:
-  DanpheApp(const std::string & name, InputParameters parameters);
+  DanpheApp(InputParameters parameters);
   virtual ~DanpheApp();
 
   static void registerApps();

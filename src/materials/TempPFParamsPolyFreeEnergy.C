@@ -19,9 +19,8 @@ InputParameters validParams<TempPFParamsPolyFreeEnergy>()
   return params;
 }
 
-TempPFParamsPolyFreeEnergy::TempPFParamsPolyFreeEnergy(const std::string & name,
-                                               InputParameters parameters) :
-    Material(name, parameters),
+TempPFParamsPolyFreeEnergy::TempPFParamsPolyFreeEnergy(const InputParameters & parameters) :
+    Material(parameters),
     _c(coupledValue("c")),
     _T(coupledValue("T")),
     _M(declareProperty<Real>("M")),

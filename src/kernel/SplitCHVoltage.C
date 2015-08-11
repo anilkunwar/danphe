@@ -22,8 +22,8 @@ params.addParam<MaterialPropertyName>("z_name", "zeff", "Effective charge number
 //params.addParam<MaterialPropertyName>("e_name", "eo", "Charge of the electron");
 return params;
 }
-SplitCHVoltage::SplitCHVoltage(const std::string & name, InputParameters parameters) :
-Kernel(name, parameters),
+SplitCHVoltage::SplitCHVoltage(const InputParameters & parameters) :
+Kernel(parameters),
 //_T_var(coupled("T")),
 //_T(coupledValue("T")),
 //_grad_T(coupledGradient("T")),

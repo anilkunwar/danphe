@@ -23,8 +23,8 @@ InputParameters validParams<CoupledPotential>()
   return params;
 }
 
-CoupledPotential::CoupledPotential(const std::string & name, InputParameters parameters) :
-    Kernel(name, parameters),
+CoupledPotential::CoupledPotential(const InputParameters & parameters) :
+    Kernel(parameters),
 
     // Couple to the gradient of the potential
     _potential_gradient(coupledGradient("potential")),

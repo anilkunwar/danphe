@@ -20,10 +20,9 @@ InputParameters validParams<DanpheApp>()
   return params;
 }
 
-DanpheApp::DanpheApp(const std::string & name, InputParameters parameters) :
-    MooseApp(name, parameters)
+DanpheApp::DanpheApp(InputParameters parameters) :
+    MooseApp(parameters)
 {
-  srand(processor_id());
 
   Moose::registerObjects(_factory);
   ModulesApp::registerObjects(_factory);
