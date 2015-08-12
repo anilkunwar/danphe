@@ -21,7 +21,7 @@ InputParameters validParams<SplitCHVoltage>();
 class SplitCHVoltage : public Kernel
 {
 public:
-  SplitCHVoltage(const std::string & name, InputParameters parameters);
+  SplitCHVoltage(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();

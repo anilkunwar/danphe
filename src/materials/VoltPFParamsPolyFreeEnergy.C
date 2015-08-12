@@ -21,9 +21,8 @@ InputParameters validParams<VoltPFParamsPolyFreeEnergy>()
     return params;
 }
 
-VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const std::string & name,
-                                               InputParameters parameters) :
-    Material(name, parameters),
+VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const InputParameters & parameters) :
+    Material(parameters),
     _c(coupledValue("c")),
     _volt(coupledValue("volt")),
     //_T(coupledValue("T")),
