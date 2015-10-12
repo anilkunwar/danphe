@@ -93,12 +93,23 @@
   [./consts]
     type = GenericConstantMaterial
     block = 0
-    prop_names  = 'L kappa_eta'
-    prop_values = '1 1        '
+    prop_names  = 'kappa_eta'
+    prop_values = '1        '
   [../]
+  
+  [./mob_AC]
+    type = DerivativeParsedMaterial
+      block = 0
+      f_name = 'L'
+      args = 'c'
+      function = (1-0.5 *c)
+      outputs = exodus
+      derivative_order = 1
+  [../]
+      
   [./consts2]
     type = GenericConstantMaterial
-    prop_names  = 'M kappa_c'
+    prop_names  = 'kappa_c'
     prop_values = '1 1'
     block = 0
   [../]
