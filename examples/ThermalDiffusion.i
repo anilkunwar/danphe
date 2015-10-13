@@ -106,6 +106,16 @@
       outputs = exodus
       derivative_order = 1
   [../]
+  
+  [./mob_CH]
+    type = DerivativeParsedMaterial
+      block = 0
+      f_name = 'M'
+      args = 'c'
+      function = (1-0.5 *c)
+      outputs = exodus
+      derivative_order = 1
+  [../]
       
   [./consts2]
     type = GenericConstantMaterial
