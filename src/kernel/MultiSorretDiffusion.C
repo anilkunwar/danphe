@@ -4,7 +4,7 @@
 /*          All contents are licensed under LGPL V2.1           */
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
-#include "SoretDiffusion.h"
+#include "MultiSoretDiffusion.h"
 template<>
 InputParameters validParams<SoretDiffusion>()
 {
@@ -17,7 +17,7 @@ InputParameters validParams<SoretDiffusion>()
   return params;
 }
 
-SoretDiffusion::SoretDiffusion(const InputParameters & parameters) :
+MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     Kernel(parameters),
     _T_var(coupled("T")),
     _T(coupledValue("T")),
@@ -31,7 +31,7 @@ SoretDiffusion::SoretDiffusion(const InputParameters & parameters) :
 }
 
 Real
-SoretDiffusion::computeQpResidual()
+MultiSoretDiffusion::computeQpResidual()
 {
   Real T_term = _D[_qp] * _Q[_qp] * _c[_qp] / (_kb * _T[_qp] * _T[_qp]);
 
@@ -39,7 +39,7 @@ SoretDiffusion::computeQpResidual()
 }
 
 Real
-SoretDiffusion::computeQpJacobian()
+MultiSoretDiffusion::computeQpJacobian()
 {
   if (_c_var == _var.number()) //Requires c jacobian
     return computeQpCJacobian();
@@ -48,7 +48,7 @@ SoretDiffusion::computeQpJacobian()
 }
 
 Real
-SoretDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
+MultiSoretDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (_c_var == jvar) //Requires c jacobian
     return computeQpCJacobian();
@@ -60,7 +60,7 @@ SoretDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
 }
 
 Real
-SoretDiffusion::computeQpCJacobian()
+MultiSoretDiffusion::computeQpCJacobian()
 {
   //Calculate the Jacobian for the c variable
   return _D[_qp] * _Q[_qp] * _phi[_j][_qp] * _grad_T[_qp] / (_kb * _T[_qp] * _T[_qp]) * _grad_test[_i][_qp];
