@@ -4,24 +4,24 @@
 /*          All contents are licensed under LGPL V2.1           */
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
-#ifndef SORETDIFFUSION_H
-#define SORETDIFFUSION_H
+#ifndef MULTISORETDIFFUSION_H
+#define MULTISORETDIFFUSION_H
 
 #include "Kernel.h"
 
 //Forward Declaration
-class SoretDiffusion;
+class MultiSoretDiffusion;
 
 template<>
-InputParameters validParams<SoretDiffusion>();
+InputParameters validParams<MultiSoretDiffusion>();
 /**
  * SoretDiffusion adds the soret effect in the split form of the Cahn-Hilliard
  * equation.
  */
-class SoretDiffusion : public Kernel
+class MultiSoretDiffusion : public Kernel
 {
 public:
-  SoretDiffusion(const InputParameters & parameters);
+  MultiSoretDiffusion(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -54,4 +54,4 @@ protected:
   const Real _kb;
 };
 
-#endif //SORETDIFFUSION_H
+#endif //MULTISORETDIFFUSION_H
