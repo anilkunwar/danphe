@@ -80,19 +80,22 @@
     v = c
   [../]
   
+  # Terms for representing the Soret Diffusion and this needs to represent the interaction 
+  # between two components Cu and Sn.
   [./w_res_soret]
-    type = SoretDiffusion
+    type = MultiSoretDiffusion
     variable = w
-    c = c
-    T = T
-    diff_name = D
-    Q_name = Qstar
+    #c = c
+    #T = T
+    #diff_name = D
+    #Q_name = Qstar
   [../]
   
   [./HtCond]
     type = MatDiffusion
     variable = T
-    D_name = thermal_conductivity
+    #D_name = thermal_conductivity
+    #Either the effective thermal conductivity/ the composite thermal conductivity or something else
   [../]
 []
 
