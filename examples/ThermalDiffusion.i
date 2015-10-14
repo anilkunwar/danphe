@@ -90,13 +90,15 @@
 []
 
 [Materials]
+#the gradient energy coefficient of Allen-Cahn Equation  (assumed constant)
   [./consts]
     type = GenericConstantMaterial
     block = 0
     prop_names  = 'kappa_eta'
     prop_values = '1        '
   [../]
-  
+ 
+ #the mobility of Allen-Cahn Equation - is a function of concentration variables of two species 
   [./mob_AC]
     type = DerivativeParsedMaterial
       block = 0
@@ -106,7 +108,16 @@
       outputs = exodus
       derivative_order = 1
   [../]
+      
+  # the gradient energy coefficient of Cahn-Hilliard Equation (assumed constant)    
+  [./consts2]
+    type = GenericConstantMaterial
+    prop_names  = 'kappa_c'
+    prop_values = '1 1'
+    block = 0
+  [../]
   
+  # the mobility of Cahn-Hilliard Equation assumed to be a function of concentration of two species
   [./mob_CH]
     type = DerivativeParsedMaterial
       block = 0
@@ -115,13 +126,6 @@
       function = (1-0.5 *c)
       outputs = exodus
       derivative_order = 1
-  [../]
-      
-  [./consts2]
-    type = GenericConstantMaterial
-    prop_names  = 'kappa_c'
-    prop_values = '1 1'
-    block = 0
   [../]
 
   [./switching]
