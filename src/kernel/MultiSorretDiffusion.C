@@ -13,7 +13,9 @@ InputParameters validParams<SoretDiffusion>()
   params.addRequiredCoupledVar("T", "Temperature");
   params.addRequiredCoupledVar("c", "Concentration");
   params.addRequiredParam<MaterialPropertyName>("diff_name", "The diffusivity used with the kernel");
+  #params.addRequiredParam<MaterialPropertyName>("diff_name", "The diffusivity used with the kernel");
   params.addParam<MaterialPropertyName>("Q_name", "Qheat", "The material name for the heat of transport");
+  #params.addParam<MaterialPropertyName>("Q_name", "Qheat", "The material name for the heat of transport");
   return params;
 }
 
@@ -25,7 +27,9 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     _c_var(coupled("c")),
     _c(coupledValue("c")),
     _D(getMaterialProperty<Real>("diff_name")),
+    #_D(getMaterialProperty<Real>("diff_name")),
     _Q(getMaterialProperty<Real>("Q_name")),
+    #_Q(getMaterialProperty<Real>("Q_name")),
     _kb(8.617343e-5) // Boltzmann constant in eV/K
 {
 }
@@ -33,6 +37,7 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
 Real
 MultiSoretDiffusion::computeQpResidual()
 {
+  # use the term to represent the differences of D1,D2 and Q1 and Q2 (or something like this)
   Real T_term = _D[_qp] * _Q[_qp] * _c[_qp] / (_kb * _T[_qp] * _T[_qp]);
 
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
