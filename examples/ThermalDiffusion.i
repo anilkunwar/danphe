@@ -79,6 +79,21 @@
     variable = w
     v = c
   [../]
+  
+  [./w_res_soret]
+    type = SoretDiffusion
+    variable = w
+    c = c
+    T = T
+    diff_name = D
+    Q_name = Qstar
+  [../]
+  
+  [./HtCond]
+    type = MatDiffusion
+    variable = T
+    D_name = thermal_conductivity
+  [../]
 []
 
 [BCs]
