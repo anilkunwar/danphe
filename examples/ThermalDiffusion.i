@@ -87,7 +87,8 @@
     variable = w
     #c = c
     #T = T
-    #diff_name = D
+    diff_name_1 = D1
+    diff_name_2 = D2
     #Q_name = Qstar
   [../]
   
