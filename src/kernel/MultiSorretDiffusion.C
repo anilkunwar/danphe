@@ -12,10 +12,10 @@ InputParameters validParams<SoretDiffusion>()
   params.addClassDescription("Add Soret effect to Split formulation Cahn-Hilliard Kernel");
   params.addRequiredCoupledVar("T", "Temperature");
   params.addRequiredCoupledVar("c", "Concentration");
-  params.addRequiredParam<MaterialPropertyName>("diff_name_1", "The diffusivity of Cu used with the kernel");
-  params.addRequiredParam<MaterialPropertyName>("diff_name_2", "The diffusivity of Sn used with the kernel");
-  params.addParam<MaterialPropertyName>("Q_name", "Qheat", "The material name for the heat of transport");
-  #params.addParam<MaterialPropertyName>("Q_name", "Qheat", "The material name for the heat of transport");
+  params.addRequiredParam<MaterialPropertyName>("diff_name_1", "The diffusivity of Cu or Element 1 used with the kernel");
+  params.addRequiredParam<MaterialPropertyName>("diff_name_2", "The diffusivity of Sn or Element 2 used with the kernel");
+  params.addParam<MaterialPropertyName>("Q_name_1", "Qheat_1", "The material 1 name for the heat of transport");
+  params.addParam<MaterialPropertyName>("Q_name_2", "Qheat_2", "The material 2 name for the heat of transport");
   return params;
 }
 
