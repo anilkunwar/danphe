@@ -12,10 +12,10 @@ InputParameters validParams<SoretDiffusion>()
   params.addClassDescription("Add Soret effect to Split formulation Cahn-Hilliard Kernel");
   params.addRequiredCoupledVar("T", "Temperature");
   params.addRequiredCoupledVar("c", "Concentration");
-  params.addRequiredParam<MaterialPropertyName>("diff_name_1", "The diffusivity of Cu or Element 1 used with the kernel");
-  params.addRequiredParam<MaterialPropertyName>("diff_name_2", "The diffusivity of Sn or Element 2 used with the kernel");
-  params.addParam<MaterialPropertyName>("Q_name_1", "Qheat_1", "The material 1 name for the heat of transport");
-  params.addParam<MaterialPropertyName>("Q_name_2", "Qheat_2", "The material 2 name for the heat of transport");
+  params.addRequiredParam<MaterialPropertyName>("diffname_1", "The diffusivity of Cu or Element 1 used with the kernel");
+  params.addRequiredParam<MaterialPropertyName>("diffname_2", "The diffusivity of Sn or Element 2 used with the kernel");
+  params.addParam<MaterialPropertyName>("Qname_1", "Qheat_1", "The material 1 name for the heat of transport");
+  params.addParam<MaterialPropertyName>("Qname_2", "Qheat_2", "The material 2 name for the heat of transport");
   return params;
 }
 
@@ -26,10 +26,10 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     _grad_T(coupledGradient("T")),
     _c_var(coupled("c")),
     _c(coupledValue("c")),
-    _D(getMaterialProperty<Real>("diff_name")),
-    #_D(getMaterialProperty<Real>("diff_name")),
-    _Q(getMaterialProperty<Real>("Q_name")),
-    #_Q(getMaterialProperty<Real>("Q_name")),
+    _D1(getMaterialProperty<Real>("diffname_1")),
+    _D2(getMaterialProperty<Real>("diffname_2")),
+    _Q1(getMaterialProperty<Real>("Qname_1")),
+    _Q2(getMaterialProperty<Real>("Qname_2")),
     _kb(8.617343e-5) // Boltzmann constant in eV/K
 {
 }
