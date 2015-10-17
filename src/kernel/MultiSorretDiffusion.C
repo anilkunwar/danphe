@@ -38,6 +38,9 @@ Real
 MultiSoretDiffusion::computeQpResidual()
 {
   # use the term to represent the differences of D1,D2 and Q1 and Q2 (or something like this)
+  # should create the expression Mq*(1/T)*gradT
+  # where Mq = rho *c (1-c)[ba Qa - bb Qb]
+  # this code has -[D *Q *c /(k*T*T)]*gradT
   Real T_term = _D[_qp] * _Q[_qp] * _c[_qp] / (_kb * _T[_qp] * _T[_qp]);
 
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
