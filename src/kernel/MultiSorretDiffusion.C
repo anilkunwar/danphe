@@ -26,12 +26,7 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     _T(coupledValue("T")),
     _grad_T(coupledGradient("T")),
     _c_var(coupled("c")),
-    #_c(coupledValue("c")),
-    #_D1(getMaterialProperty<Real>("diffname_1")),
-    #_D2(getMaterialProperty<Real>("diffname_2")),
-    #_Q1(getMaterialProperty<Real>("Qname_1")),
-    #_Q2(getMaterialProperty<Real>("Qname_2")),
-    _Mc(getMaterialProperty<Real>("mob_thermotransport")),
+    _Mq(getMaterialProperty<Real>("mob_thermotransport")),
     _kb(8.617343e-5) // Boltzmann constant in eV/K
 {
 }
@@ -39,13 +34,6 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
 Real
 MultiSoretDiffusion::computeQpResidual()
 {
-  # use the term to represent the differences of D1,D2 and Q1 and Q2 (or something like this)
-  # should create the expression Mq*(1/T)*gradT
-  # where Mq = rho *c (1-c)[ba Qa - bb Qb]
-  # this code has -[D *Q *c /(k*T*T)]*gradT
-  #Real T_term = _D[_qp] * _Q[_qp] * _c[_qp] / (_kb * _T[_qp] * _T[_qp]);
-
-  #return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
   Real T_term = _Mc[_qp] / ( _T[_qp] [_qp]);
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
 }
