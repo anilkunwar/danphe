@@ -12,10 +12,11 @@ InputParameters validParams<SoretDiffusion>()
   params.addClassDescription("Add Soret effect to Split formulation Cahn-Hilliard Kernel");
   params.addRequiredCoupledVar("T", "Temperature");
   params.addRequiredCoupledVar("c", "Concentration");
-  params.addRequiredParam<MaterialPropertyName>("diffname_1", "The diffusivity of Sn or Element 1 used with the kernel");
-  params.addRequiredParam<MaterialPropertyName>("diffname_2", "The diffusivity of Cu or Element 2 used with the kernel");
-  params.addParam<MaterialPropertyName>("Qname_1", "Qheat_1", "The material 1 name for the heat of transport");
-  params.addParam<MaterialPropertyName>("Qname_2", "Qheat_2", "The material 2 name for the heat of transport");
+  #params.addRequiredParam<MaterialPropertyName>("diffname_1", "The diffusivity of Sn or Element 1 used with the kernel");
+  #params.addRequiredParam<MaterialPropertyName>("diffname_2", "The diffusivity of Cu or Element 2 used with the kernel");
+  #params.addParam<MaterialPropertyName>("Qname_1", "Qheat_1", "The material 1 name for the heat of transport");
+  #params.addParam<MaterialPropertyName>("Qname_2", "Qheat_2", "The material 2 name for the heat of transport");
+  params.addRequiredParam<MaterialPropertyName>("mob_thermotransport", "The mobility of thermotransport");
   return params;
 }
 
@@ -25,11 +26,12 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     _T(coupledValue("T")),
     _grad_T(coupledGradient("T")),
     _c_var(coupled("c")),
-    _c(coupledValue("c")),
-    _D1(getMaterialProperty<Real>("diffname_1")),
-    _D2(getMaterialProperty<Real>("diffname_2")),
-    _Q1(getMaterialProperty<Real>("Qname_1")),
-    _Q2(getMaterialProperty<Real>("Qname_2")),
+    #_c(coupledValue("c")),
+    #_D1(getMaterialProperty<Real>("diffname_1")),
+    #_D2(getMaterialProperty<Real>("diffname_2")),
+    #_Q1(getMaterialProperty<Real>("Qname_1")),
+    #_Q2(getMaterialProperty<Real>("Qname_2")),
+    _Mc(getMaterialProperty<Real>("mob_thermotransport")),
     _kb(8.617343e-5) // Boltzmann constant in eV/K
 {
 }
@@ -41,8 +43,10 @@ MultiSoretDiffusion::computeQpResidual()
   # should create the expression Mq*(1/T)*gradT
   # where Mq = rho *c (1-c)[ba Qa - bb Qb]
   # this code has -[D *Q *c /(k*T*T)]*gradT
-  Real T_term = _D[_qp] * _Q[_qp] * _c[_qp] / (_kb * _T[_qp] * _T[_qp]);
+  #Real T_term = _D[_qp] * _Q[_qp] * _c[_qp] / (_kb * _T[_qp] * _T[_qp]);
 
+  #return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
+  Real T_term = _Mc[_qp] / ( _T[_qp] [_qp]);
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
 }
 
