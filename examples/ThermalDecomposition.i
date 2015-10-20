@@ -76,7 +76,7 @@
   [./w_res_soret]
     type = MultiSoretDiffusion
     variable = w
-    mob_name = Mq
+    mob_thermotransport = Mq
   [../]
   [./HtCond]
     type = MatDiffusion
