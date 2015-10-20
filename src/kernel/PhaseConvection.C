@@ -22,7 +22,7 @@ template<>
 InputParameters validParams<PhaseConvection>()
 {
   InputParameters params = validParams<Kernel>();
-  params.addRequiredParam<RealVectorValue>("velocity", "Velocity Vector");
+  #params.addRequiredParam<RealVectorValue>("velocity", "Velocity Vector");
   return params;
 }
 
