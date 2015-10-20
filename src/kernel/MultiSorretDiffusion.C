@@ -31,7 +31,7 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
 Real
 MultiSoretDiffusion::computeQpResidual()
 {
-  Real T_term = _Mc[_qp] / ( _T[_qp] [_qp]);
+  Real T_term = _Mq[_qp] / ( _T[_qp] [_qp]);
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
 }
 
