@@ -1,5 +1,5 @@
 #
-# Example simulation of an iron-chromium alloy at 500 C. Equilibrium
+# Example simulation of an iron-chromium alloy under temperature gradient. Equilibrium
 # concentrations are at 23.6 and 82.3 mol% Cr. Kappa value, free energy equation,
 # and mobility equation were provided by Lars Hoglund. Solved using the split
 # form of the Cahn-Hilliard equation.
@@ -64,7 +64,7 @@
   [./coupled_res]
     variable = w
     type = SplitCHWRes
-    mob_name = M
+    mob_name = Mc
   [../]
   [./coupled_parsed]
     variable = c
@@ -72,6 +72,17 @@
     f_name = f_loc
     kappa_name = kappa_c
     w = w
+  [../]
+  [./w_res_soret]
+    type = MultiSoretDiffusion
+    variable = w
+    mob_name = Mq
+  [../]
+  [./HtCond]
+    type = MatDiffusion
+    variable = T
+    D_name = thermal_conductivity
+    #Either the effective thermal conductivity/ the composite thermal conductivity or something else
   [../]
 []
 
