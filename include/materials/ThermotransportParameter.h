@@ -1,21 +1,21 @@
-#ifndef PFPARAMSPOLYFREEENERGY_H
-#define PFPARAMSPOLYFREEENERGY_H
+#ifndef THERMOTRANSPORTPARAMETER_H
+#define THERMOTRANSPORTPARAMETER_H
 
 #include "Material.h"
 
 //Forward Declarations
-class PFParamsPolyFreeEnergy;
+class ThermotransportParameter;
 
 template<>
-InputParameters validParams<PFParamsPolyFreeEnergy>();
+InputParameters validParams<ThermotransportParameter>();
 
 /**
- * Calculated properties for a single component phase field model using polynomial free energies
+ * Calculated properties for two component phase field model for thermotransport
  */
-class PFParamsPolyFreeEnergy : public Material
+class ThermotransportParameter : public Material
 {
 public:
-  PFParamsPolyFreeEnergy(const InputParameters & parameters);
+  ThermotransportParameter(const InputParameters & parameters);
 
 protected:
   virtual void computeQpProperties();
@@ -25,27 +25,32 @@ protected:
   VariableValue & _T;
 
   ///Mateiral property declarations
-  MaterialProperty<Real> & _M;
-  MaterialProperty<RealGradient> & _grad_M;
+  MaterialProperty<Real> & _Mq;
+  MaterialProperty<RealGradient> & _grad_Mq;
 
-  MaterialProperty<Real> & _kappa;
-  MaterialProperty<Real> & _c_eq;
-  MaterialProperty<Real> & _W;
-  MaterialProperty<Real> & _Qstar;
-  MaterialProperty<Real> & _D;
+  //MaterialProperty<Real> & _kappa; 
+  //declared as secondary parameters in dot C files and have to be evaluated from the input parameters
+  MaterialProperty<Real> & _B1;
+  MaterialProperty<Real> & _B2;
+  //MaterialProperty<Real> & _Qstar;
+  //MaterialProperty<Real> & _D;
 
-  ///Input parameters
-  Real _int_width;
-  Real _length_scale;
-  Real _time_scale;
-  MooseEnum _order;
-  Real _D0;
-  Real _Em;
-  Real _Ef;
-  Real _surface_energy;
+  ///Input parameters via the dot i input file
+  Real _B0_1;
+  Real _B0_2;
+  Real _E1;
+  Real _E2;
+  Real _Qh1;
+  Real _Qh2;
+  //Real _surface_energy;
+  //Real _int_width;
+  //Real _length_scale;
+  //Real _time_scale;
 
-  const Real _JtoeV;
+  //Input as values in the dot C file
   const Real _kb;
+  //const Real _JtoeV;
+  const Real _R;
 };
 
-#endif //PFPARAMSPOLYFREEENERGY_H
+#endif //THERMOTRANSPORTPARAMETER_H
