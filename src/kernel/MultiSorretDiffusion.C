@@ -52,6 +52,7 @@ MultiSoretDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
   else if (_T_var == jvar) //Requires T jacobian
     //return _D[_qp] * _Q[_qp] * _c[_qp] * _grad_test[_i][_qp] *
      //      (_grad_phi[_j][_qp]/(_kb * _T[_qp] * _T[_qp]) - 2.0 * _grad_T[_qp] * _phi[_j][_qp] / (_kb * _T[_qp] * _T[_qp] * _T[_qp]));
+    return _Mq * _c[_qp]*(1- _c[_qp])*(_grad_phi[_j][_qp]/_T[_qp]- _grad_T[_qp]* _phi[_j][_qp]/(_T[_qp] * _T[_qp]))
 
   return 0.0;
 }
