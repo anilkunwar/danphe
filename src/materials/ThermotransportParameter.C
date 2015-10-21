@@ -64,7 +64,8 @@ ThermotransportParameter::computeQpProperties()
   //_Qstar[_qp] = -4.0; // eV
   
   //In this context the heat of transport of the species are obtained from the input file
+  //Compute the net thermotransport factor
    _Mq[_qp] = _B1[_qp]*_Qh1[_qp] - _B2[_qp]*_Qh2[_qp];
-  _grad_M[_qp] = 0.0;
+   _grad_Mq[_qp] = 0.0;
 }
 
