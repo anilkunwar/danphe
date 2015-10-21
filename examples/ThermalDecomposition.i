@@ -79,6 +79,7 @@
     c = c
     T = T
     net_thermotransport = Mq
+    #name in kernel file = symbol in src/materials/filename.C and include/materials/filename.h
   [../]
   [./HtCond]
     type = MatDiffusion
@@ -141,7 +142,21 @@
       function = if(c>0.6,0.0016,0)
     [../]
   [./net_heatoftransport]
-  ...
+  type = ThermotransportParameter
+    block = 0
+    c = c
+    T = T # K
+    #int_width = 60.0
+    #length_scale = 1.0e-9
+    #time_scale = 1.0e-9
+    B0_1 = 3.1e-5 # m^2/s, from Brown1980
+    B0_2 = 0.71 # in eV, from Balluffi1978 Table 2
+    Qh1 = 12.34 # random value
+    Qh2 = 56.78 # also the random value
+    E1 = 1.28 # in eV, from Balluffi1978 Table 2
+    E2 = 82.1 # random guess done here
+    #surface_energy = 0.708 # Total guess
+    #...
   [../]
 []
 
