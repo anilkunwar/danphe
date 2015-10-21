@@ -13,7 +13,7 @@ InputParameters validParams<SoretDiffusion>()
   params.addRequiredCoupledVar("T", "Temperature");
   params.addRequiredCoupledVar("c", "Concentration");
   #params.addParam<MaterialPropertyName>("mob_name", "L", "The mobility used with the kernel");
-  params.addParam<MaterialPropertyName>("mob_thermotransport", "Mq","The mobility of thermotransport");
+  params.addParam<MaterialPropertyName>("net_thermotransport", "Mq","The mobility of thermotransport");
   return params;
 }
 
@@ -23,7 +23,7 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     _T(coupledValue("T")),
     _grad_T(coupledGradient("T")),
     _c_var(coupled("c")),
-    _Mq(getMaterialProperty<Real>("mob_thermotransport")),
+    _Mq(getMaterialProperty<Real>("net_thermotransport")),
     _kb(8.617343e-5) // Boltzmann constant in eV/K
 {
 }
@@ -31,7 +31,7 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
 Real
 MultiSoretDiffusion::computeQpResidual()
 {
-  Real T_term = _Mq[_qp] / ( _T[_qp] [_qp]);
+  Real T_term = _Mq[_qp]*(- _c[_qp]*_c[_qp] + _c[-qp]) / ( _T[_qp] );
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
 }
 
@@ -60,6 +60,7 @@ Real
 MultiSoretDiffusion::computeQpCJacobian()
 {
   //Calculate the Jacobian for the c variable
-  return _D[_qp] * _Q[_qp] * _phi[_j][_qp] * _grad_T[_qp] / (_kb * _T[_qp] * _T[_qp]) * _grad_test[_i][_qp];
+  //return _D[_qp] * _Q[_qp] * _phi[_j][_qp] * _grad_T[_qp] / (_kb * _T[_qp] * _T[_qp]) * _grad_test[_i][_qp];
+  return _Mq[_qp]*_grad_test[_i][_qp]*(_grad_T[_qp]/_T[_qp]- 2.0 *_phi[_j][_qp]*_grad_T[_qp]/_T[_qp])
 }
 
