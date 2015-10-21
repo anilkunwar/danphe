@@ -76,7 +76,9 @@
   [./w_res_soret]
     type = MultiSoretDiffusion
     variable = w
-    mob_thermotransport = Mq
+    c = c
+    T = T
+    net_thermotransport = Mq
   [../]
   [./HtCond]
     type = MatDiffusion
@@ -138,6 +140,9 @@
       args = c
       function = if(c>0.6,0.0016,0)
     [../]
+  [./net_heatoftransport]
+  ...
+  [../]
 []
 
 [Postprocessors]
