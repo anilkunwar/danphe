@@ -45,10 +45,13 @@ protected:
   VariableValue & _c;
 
   /// Diffusivity material property
-  const MaterialProperty<Real> & _D;
+  ///const MaterialProperty<Real> & _D;
 
   /// Heat of transport material property
-  const MaterialProperty<Real> & _Q;
+  ///const MaterialProperty<Real> & _Q;
+  
+  /// Net thermotransport factor symbolized as Mq
+  const MaterialProperty<Real> & _Mq;
 
   /// Boltzmann constant
   const Real _kb;
