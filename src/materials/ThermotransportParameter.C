@@ -31,16 +31,16 @@ ThermotransportParameter::ThermotransportParameter(const InputParameters & param
     //_D(declareProperty<Real>("D")),
     _B0_1(getParam<Real>("B0_1")),
     _B0_2(getParam<Real>("B0_2")),
-    _Qh1(getParam<Real>("Qh1")),
-    _Qh2(getParam<Real>("Qh2")),
     _E1(getParam<Real>("E1")),
     _E2(getParam<Real>("E2")),
+    _Qh1(getParam<Real>("Qh1")),
+    _Qh2(getParam<Real>("Qh2")),
     //_surface_energy(getParam<Real>("surface_energy")),
     //_JtoeV(6.24150974e18), // joule to eV conversion
     //_int_width(getParam<Real>("int_width")),
     //_length_scale(getParam<Real>("length_scale")),
     //_time_scale(getParam<Real>("time_scale")),
-    _kb(8.617343e-5) // Boltzmann constant in eV/K
+    _kb(8.617343e-5), // Boltzmann constant in eV/K
     _R(8.31)  // Universal gas constant in J/mol K
 {
 }
@@ -54,8 +54,8 @@ ThermotransportParameter::computeQpProperties()
   Real RT = _R*_T[_qp];
 
   //Compute atomic mobility of the species 1 and species 2
-  _B1[_qp] = _B0_1* std::exp(-_E1/RT);
-  _B2[_qp] = _B0_2*std::exp(-_E2/RT);
+  _B1[_qp] = _B0_1 * std::exp(-_E1/RT);
+  _B2[_qp] = _B0_2 *std::exp(-_E2/RT);
 
   // Convert surface energy from J/m2 to eV/length_scale
   //Real surf_energy = _surface_energy*_JtoeV*_length_scale*_length_scale;
@@ -65,7 +65,7 @@ ThermotransportParameter::computeQpProperties()
   
   //In this context the heat of transport of the species are obtained from the input file
   //Compute the net thermotransport factor
-   _Mq[_qp] = _B1[_qp]*_Qh1[_qp] - _B2[_qp]*_Qh2[_qp];
+   _Mq[_qp] = _B1[_qp]*_Qh1 - _B2[_qp]*_Qh2;
    _grad_Mq[_qp] = 0.0;
 }
 
