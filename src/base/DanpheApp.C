@@ -7,11 +7,13 @@
 #include "ElectricPotential.h"
 //#include "CoupledPotential.h"
 #include "SplitCHVoltage.h"
+#include "MultiSorretDiffusion.h"
 //Auxkernels
 #include "CurrentDensity.h"
 //Materials
 #include "TinSheet.h"
 #include "VoltPFParamsPolyFreeEnergy.h"
+#include "ThermotransportParameter.h"
 
 template<>
 InputParameters validParams<DanpheApp>()
@@ -46,12 +48,17 @@ DanpheApp::registerApps()
 void
 DanpheApp::registerObjects(Factory & factory)
 {
+  //Kernel
   registerKernel(ElectricPotential);
   //registerKernel(CoupledPotential);
   registerKernel(SplitCHVoltage);
+  registerKernel(MultiSorretDiffusion);
+  //Auxkernel(s)
   registerAux(CurrentDensity);
+  //Material
   registerMaterial(TinSheet);
   registerMaterial(VoltPFParamsPolyFreeEnergy);
+  registerMaterial(ThermotransportParameter);
 }
 
 void
