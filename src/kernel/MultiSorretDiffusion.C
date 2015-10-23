@@ -6,7 +6,7 @@
 /****************************************************************/
 #include "MultiSoretDiffusion.h"
 template<>
-InputParameters validParams<SoretDiffusion>()
+InputParameters validParams<MultiSoretDiffusion>()
 {
   InputParameters params = validParams<Kernel>();
   params.addClassDescription("Add Soret effect to Split formulation Cahn-Hilliard Kernel");
@@ -23,15 +23,17 @@ MultiSoretDiffusion::MultiSoretDiffusion(const InputParameters & parameters) :
     _T(coupledValue("T")),
     _grad_T(coupledGradient("T")),
     _c_var(coupled("c")),
+    _c(coupledValue("c")),
     _Mq(getMaterialProperty<Real>("net_thermotransport")),
-    _kb(8.617343e-5) // Boltzmann constant in eV/K
+    _kb(8.617343e-5), // Boltzmann constant in eV/K
+    _R(8.31)
 {
 }
 
 Real
 MultiSoretDiffusion::computeQpResidual()
 {
-  Real T_term = _Mq[_qp]*(- _c[_qp]*_c[_qp] + _c[-qp]) / ( _T[_qp] );
+  Real T_term = _Mq[_qp]*(- _c[_qp]*_c[_qp] + _c[_qp]) / ( _T[_qp] );
   return T_term * _grad_T[_qp] * _grad_test[_i][_qp];
 }
 
@@ -51,8 +53,9 @@ MultiSoretDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
     return computeQpCJacobian();
   else if (_T_var == jvar) //Requires T jacobian
     //return _D[_qp] * _Q[_qp] * _c[_qp] * _grad_test[_i][_qp] *
-     //      (_grad_phi[_j][_qp]/(_kb * _T[_qp] * _T[_qp]) - 2.0 * _grad_T[_qp] * _phi[_j][_qp] / (_kb * _T[_qp] * _T[_qp] * _T[_qp]));
-    return _Mq * _c[_qp]*(1- _c[_qp])*(_grad_phi[_j][_qp]/_T[_qp]- _grad_T[_qp]* _phi[_j][_qp]/(_T[_qp] * _T[_qp]))
+           //(_grad_phi[_j][_qp]/(_kb * _T[_qp] * _T[_qp]) - 2.0 * _grad_T[_qp] * _phi[_j][_qp] / (_kb * _T[_qp] * _T[_qp] * _T[_qp]));
+    return _Mq[_qp] * _c[_qp]* (1.0 - _c[_qp])*
+          (_grad_phi[_j][_qp]/(_T[_qp]) - _grad_T[_qp] * _phi[_j][_qp]/(_T[_qp] * _T[_qp]));
 
   return 0.0;
 }
@@ -62,6 +65,6 @@ MultiSoretDiffusion::computeQpCJacobian()
 {
   //Calculate the Jacobian for the c variable
   //return _D[_qp] * _Q[_qp] * _phi[_j][_qp] * _grad_T[_qp] / (_kb * _T[_qp] * _T[_qp]) * _grad_test[_i][_qp];
-  return _Mq[_qp]*_grad_test[_i][_qp]*(_grad_T[_qp]/_T[_qp]- 2.0 *_phi[_j][_qp]*_grad_T[_qp]/_T[_qp])
+  return _Mq[_qp]*_grad_test[_i][_qp]*(_grad_T[_qp]/_T[_qp]- 2.0 *_phi[_j][_qp]*_grad_T[_qp]/_T[_qp]);
 }
 
