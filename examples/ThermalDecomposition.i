@@ -1,8 +1,5 @@
-#
-# Example simulation of an iron-chromium alloy under temperature gradient. Equilibrium
-# concentrations are at 23.6 and 82.3 mol% Cr. Kappa value, free energy equation,
-# and mobility equation were provided by Lars Hoglund. Solved using the split
-# form of the Cahn-Hilliard equation.
+# Two phase materials simulation
+# Simulation of thermodiffusion of Cu in molten Sn.
 #
 
 [Mesh]
@@ -10,8 +7,8 @@
   dim = 2
   distribution = DEFAULT
   elem_type = QUAD4
-  nx = 25
-  ny = 25
+  nx = 50
+  ny = 50
   nz = 0
   xmin = 0
   xmax = 25
@@ -20,10 +17,6 @@
   zmin = 0
   zmax = 0
   uniform_refine = 2
-[]
-
-[GlobalParams]
-  block = 0           # The generated mesh is used for all materials and kernels
 []
 
 [Variables]
@@ -35,6 +28,10 @@
     order = FIRST
     family = LAGRANGE
   [../]
+  [./T] # Temperature of the medium (in K)
+    order = FIRST
+    family = LAGRANGE
+  [../] 
 []
 
 [ICs]
@@ -53,6 +50,20 @@
       auto_direction = 'x y'
     [../]
   [../]
+
+  [./Top_T]
+    type = DirichletBC
+    variable = T
+    boundary = top
+    value = 1000.0
+  [../]
+
+  [./Bottom_T]
+    type = DirichletBC
+    variable = T
+    boundary = bottom
+    value = 1015.0
+  [../]
 []
 
 [Kernels]
@@ -64,7 +75,7 @@
   [./coupled_res]
     variable = w
     type = SplitCHWRes
-    mob_name = Mc
+    mob_name = M
   [../]
   [./coupled_parsed]
     variable = c
@@ -87,44 +98,29 @@
     D_name = thermal_conductivity
     #Either the effective thermal conductivity/ the composite thermal conductivity or something else
   [../]
+
 []
 
 [Materials]
   # d is a scaling factor that makes it easier for the solution to converge
-  # without changing the results. It is defined in each of the first three
-  # materials and must have the same value in each one.
-  [./kappa]                  # Gradient energy coefficient (eV nm^2/mol)
+  # without changing the results. It is defined in each of the materials and
+  # must have the same value in each one.
+  [./constants]
+    # Define constant values kappa_c and M. Eventually M will be replaced with
+    # an equation rather than a constant.
     type = GenericFunctionMaterial
-    prop_names = 'kappa_c'
-    prop_values = '8.125e-16*6.24150934e+18*1e+09^2*1e-27'
-                  # kappa_c *eV_J*nm_m^2* d
+    block = 0
+    prop_names = 'kappa_c M'
+    prop_values = '8.125e-16*6.24150934e+18*1e+09^2*1e-27
+                   2.2841e-26*1e+09^2/6.24150934e+18/1e-27'
+                   # kappa_c*eV_J*nm_m^2*d
+                   # M*nm_m^2/eV_J/d
   [../]
-  [./mobility]               # Mobility (nm^2 mol/eV/s)
-    # NOTE: This is a fitted equation, so only 'Conv' has units
+  [./local_energy]
+    # Defines the function for the local free energy density as given in the
+    # problem, then converts units and adds scaling factor.
     type = DerivativeParsedMaterial
-    f_name = M
-    args = c
-    constant_names =       'Acr    Bcr    Ccr    Dcr
-                            Ecr    Fcr    Gcr
-                            Afe    Bfe    Cfe    Dfe
-                            Efe    Ffe    Gfe
-                            nm_m   eV_J   d'
-    constant_expressions = '-32.770969 -25.8186669 -3.29612744 17.669757
-                            37.6197853 20.6941796  10.8095813
-                            -31.687117 -26.0291774 0.2286581   24.3633544
-                            44.3334237 8.72990497  20.956768
-                            1e+09      6.24150934e+18          1e-27'
-    function = 'nm_m^2/eV_J/d*((1-c)^2*c*10^
-                (Acr*c+Bcr*(1-c)+Ccr*c*log(c)+Dcr*(1-c)*log(1-c)+
-                Ecr*c*(1-c)+Fcr*c*(1-c)*(2*c-1)+Gcr*c*(1-c)*(2*c-1)^2)
-                +c^2*(1-c)*10^
-                (Afe*c+Bfe*(1-c)+Cfe*c*log(c)+Dfe*(1-c)*log(1-c)+
-                Efe*c*(1-c)+Ffe*c*(1-c)*(2*c-1)+Gfe*c*(1-c)*(2*c-1)^2))'
-    derivative_order = 1
-    outputs = exodus
-  [../]
-  [./local_energy]           # Local free energy function (eV/mol)
-    type = DerivativeParsedMaterial
+    block = 0
     f_name = f_loc
     args = c
     constant_names = 'A   B   C   D   E   F   G  eV_J  d'
@@ -135,13 +131,7 @@
                 E*c*(1-c)+F*c*(1-c)*(2*c-1)+G*c*(1-c)*(2*c-1)^2)'
     derivative_order = 2
   [../]
-  [./precipitate_indicator]  # Returns 1/625 if precipitate
-      type = ParsedMaterial
-      f_name = prec_indic
-      args = c
-      function = if(c>0.6,0.0016,0)
-    [../]
-  [./net_heatoftransport]
+    [./net_heatoftransport]
   type = ThermotransportParameter
     block = 0
     c = c
@@ -158,6 +148,14 @@
     #surface_energy = 0.708 # Total guess
     #...
   [../]
+   [./thcond]
+    type = ParsedMaterial
+    block = 0
+    args = 'c'
+    function = 'if(c>0.7,400,40.0)'
+    f_name = thermal_conductivity
+    outputs = exodus
+  [../]
 []
 
 [Postprocessors]
@@ -172,10 +170,6 @@
   [../]
   [./evaluations]           # Cumulative residual calculations for simulation
     type = NumResidualEvaluations
-  [../]
-  [./precipitate_area]      # Fraction of surface devoted to precipitates
-    type = ElementIntegralMaterialProperty
-    mat_prop = prec_indic
   [../]
   [./active_time]           # Time computer spent on simulation
     type = RunTime
