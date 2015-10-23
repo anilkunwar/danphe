@@ -55,6 +55,9 @@ protected:
 
   /// Boltzmann constant
   const Real _kb;
+
+  ///Universal Gas Constant
+  const Real _R;
 };
 
 #endif //MULTISORETDIFFUSION_H
