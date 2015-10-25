@@ -1,0 +1,67 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\begin{document}
+\title{Finite Element Formulation of MultiSorretDiffusion Kernel}
+\section{Derivation for MultiSoretDiffusion Kernel}
+ Let c and T be the phase field and temperature variables respectively. For the shape function $ \phi_j$, these variables can be formulated as follow:
+ \begin{equation}
+ c = \sum c_j \times \phi_j
+ \end{equation}
+ 
+ \begin{equation}
+ T = \sum T_j \times \phi_j
+ \end{equation}
+ \subsection{Residuals and Jacobian for the Kernels}
+ The MultiSoretDiffusion kernel owing to the presence of the phase field variable and coupled temperature variable requires the computation of Off-diagonal Jacobian in addition to the Residual and Jacobian.
+ \subsubsection{computeQpResidual}
+ The residual(R) for the soret diffusion part of phase field equation that would be represented in the MOOSE kernel can be written mathematically as:
+ \begin{equation}
+ R = M_q \times c (1-c) \times \frac{\triangledown T}{T}
+ \end{equation}
+ \subsubsection{computeQpJacobian}
+  The computation of Jacobian , that is computeQpJacobian in MOOSE terminology, is done by performing the derivative of residual with respect to $c_j$. Mathematically,
+  \begin{equation}
+  J_{c_j} = \frac{dR}{dc_j}
+  \end{equation}
+  \begin{displaymath}
+      or, J_{c_j} = M_q \times \frac{\triangledown T}{T} \times \frac{d(c-c^2)}{dc_j} 
+ \end{displaymath}
+ \begin{displaymath}
+ or, J_{c_j} = M_q \times \frac{\triangledown T}{T} \times [\frac{d(c_j \phi_j}{dc_j} - \frac{dc^2}{dc_j}]
+  \end{displaymath} 
+  Applying the chain rule for the second term in the above equation, the equation becomes
+  \begin{displaymath}
+    J_{c_j} = M_q \times \frac{\triangledown T}{T} \times [\phi_j \frac{d(c_j }{dc_j} - \frac{dc^2}{dc} \times \frac{dc}{dc_j}]
+\end{displaymath}  
+\begin{equation}
+\therefore J_{c_j} = M_q \times \frac{\triangledown T}{T} \times [\phi_j  - 2c \times \phi_j] 
+\end{equation} 
+
+\subsubsection{computeQpOffDiagJacobian}
+Fir the computation of off diagonal Jacobian i.e. for creating the computeQpOffDiagJacobian formula in the kernel, the residual is differentiated with respect to $T_j$. It is represented mathematically as:
+\begin{equation}
+  J_{T_j} = \frac{dR}{dT_j}
+  \end{equation}
+  \begin{displaymath}
+      or, J_{T_j} = M_q \times c(1-c) \times \frac{d (\frac{\triangledown T}{T})}{dT_j} 
+ \end{displaymath}
+  \begin{displaymath}
+      or, J_{T_j} = M_q \times c(1-c) \times [\triangledown T \frac{d (\frac{1}{T})}{dT_j} + \frac{1}{T} \times \frac{d\triangledown T}{dT_j}]
+ \end{displaymath}
+ \begin{displaymath}
+      or, J_{T_j} = M_q \times c(1-c) \times [\triangledown T \frac{dT^{-1}}{dT} \frac{dT}{dT_j} + \frac{1}{T} \times \bigtriangledown (\frac{dT}{dT_j})]
+ \end{displaymath}
+ \begin{displaymath}
+ or, J_{T_j} = M_q \times c(1-c) \times [-\frac{\triangledown T}{T^2} \times \phi_j + \frac{\triangledown \phi_j}{T}]
+ \end{displaymath}
+ 
+ \begin{equation}
+ \therefore J_{T_j} = M_q \times c(1-c) \times [\frac{\triangledown \phi_j}{T} - \frac{\triangledown T}{T^2} \times \phi_j]
+ \end{equation}
+ 
+  
+\end{document}
