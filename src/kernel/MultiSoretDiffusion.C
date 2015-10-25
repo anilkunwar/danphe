@@ -65,6 +65,6 @@ MultiSoretDiffusion::computeQpCJacobian()
 {
   //Calculate the Jacobian for the c variable
   //return _D[_qp] * _Q[_qp] * _phi[_j][_qp] * _grad_T[_qp] / (_kb * _T[_qp] * _T[_qp]) * _grad_test[_i][_qp];
-  return _Mq[_qp]*_grad_test[_i][_qp]*(_grad_T[_qp]/_T[_qp]- 2.0 *_phi[_j][_qp]*_grad_T[_qp]/_T[_qp]);
+  return _Mq[_qp]*_grad_test[_i][_qp]*(_phi[_j][_qp] - 2.0 * _c[_qp]*_phi[_j][_qp])*_grad_T[_qp]/_T[_qp];
 }
 
