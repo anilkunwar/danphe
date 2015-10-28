@@ -162,6 +162,7 @@
     derivative_order = 2
   [../]
   [./net_heatoftransport]
+    # species 1 is tin and species 2 is copper
     type = ThermotransportParameter
     block = 0
     c = c
@@ -169,12 +170,12 @@
     #int_width = 60.0
     #length_scale = 1.0e-9
     #time_scale = 1.0e-9
-    B0_1 = 3.1e-5 # m^2/s, from Brown1980
-    B0_2 = 0.71 # in eV, from Balluffi1978 Table 2
+    B0_1 = 1.2e-9 # m^2/s, from Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
+    B0_2 = 2.4e-5 # m^2/s, from Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
     Qh1 = 12.34 # random value
     Qh2 = 56.78 # also the random value
-    E1 = 1.28 # in eV, from Balluffi1978 Table 2
-    E2 = 82.1 # random guess done here
+    E1 = 4.389e4 # in J/mol, from M. Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
+    E2 = 3.302e4 # in J/mol, from M. Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
     #surface_energy = 0.708 # Total guess
     #...
   [../]
