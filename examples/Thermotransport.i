@@ -170,8 +170,8 @@
     #int_width = 60.0
     #length_scale = 1.0e-9
     #time_scale = 1.0e-9
-    B0_1 = 1.2e-9 # m^2/s, from Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
-    B0_2 = 2.4e-5 # m^2/s, from Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
+    B0_1 = 1.2e-9 # m^2/s, from M. Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
+    B0_2 = 2.4e-5 # m^2/s, from M. Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
     Qh1 = 12.34 # random value
     Qh2 = 56.78 # also the random value
     E1 = 4.389e4 # in J/mol, from M. Abdulhamid Thesis and Ref 42 therein Z.Mei et al. (1992)
