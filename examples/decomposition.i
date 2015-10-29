@@ -82,7 +82,7 @@
     # Define constant value kappa_c 
     type = GenericFunctionMaterial
     prop_names = 'kappa_c'
-    prop_values = '0.0'
+    prop_values = '8.125e-16'
     #prop_values = '8.125e-10*6.24150934e+18*1e+09^2*1.0e-30'
                   # kappa_c*eV_J*nm_m^2*d
   [../]
