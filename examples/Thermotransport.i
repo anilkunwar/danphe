@@ -172,8 +172,8 @@
     #time_scale = 1.0e-9
     B0_1 = 1.2e-9 # m^2/s, from M. Abdulhamid Thesis(2008) and Ref 42 therein Z.Mei et al. (1992)
     B0_2 = 2.4e-5 # m^2/s, from M. Abdulhamid Thesis(2008) and Ref 42 therein Z.Mei et al. (1992)
-    Qh1 = 12.34 # random value
-    Qh2 = 56.78 # also the random value
+    Qh1 = 1.34e3 # J/mol
+    Qh2 = 1.12e4 # J/mol
     E1 = 4.389e4 # in J/mol, from M. Abdulhamid Thesis(2008) and Ref 42 therein Z.Mei et al. (1992)
     E2 = 3.302e4 # in J/mol, from M. Abdulhamid Thesis(2008) and Ref 42 therein Z.Mei et al. (1992)
     #surface_energy = 0.708 # Total guess
@@ -187,10 +187,16 @@
     f_name = thermal_conductivity
     outputs = exodus
   [../]
+  [./precipitate_indicator]  # Returns 1/625 if precipitate
+      type = ParsedMaterial
+      f_name = prec_indic
+      args = c
+      function = if(c>0.6,0.00016,0)
+ [../]
 []
 
 [Postprocessors]
-  [./step_size]             # Size of the time step
+   [./step_size]             # Size of the time step
     type = TimestepSize
   [../]
   [./iterations]            # Number of iterations needed to converge timestep
@@ -202,12 +208,15 @@
   [./evaluations]           # Cumulative residual calculations for simulation
     type = NumResidualEvaluations
   [../]
+  [./precipitate_area]      # Fraction of surface devoted to precipitates
+    type = ElementIntegralMaterialProperty
+    mat_prop = prec_indic
+  [../]
   [./active_time]           # Time computer spent on simulation
     type = RunTime
     time_type = active
   [../]
 []
-
 [Preconditioning]
   [./coupled]
     type = SMP
