@@ -91,9 +91,10 @@
     type = DerivativeParsedMaterial
     f_name = Mc
     args = c
-    constant_names =       'rho    B1    B2  nm_m   eV_J  d'
-    constant_expressions = '-32.770969 -25.8186669 -3.29612744 1e+09  6.24150934e+18 1.0e-30'
-    function = 'nm_m^2/eV_J/d*rho*c*(1-c)*(c*B2 + (1-c)*B1)'
+    constant_names =       'rho    B1    B2  nm_m   eV_J  d t'
+    #constant_expressions = '-32.770969 -25.8186669 -3.29612744 1e+09  6.24150934e+18 1.0e-30'
+    constant_expressions = '6.13873e+4 12.0936e-9 4.9362e-14 1e+09 6.24150934e+18 3.63e+3'
+    function = 'nm_m^2/eV_J/d/t*rho*c*(1-c)*(c*B2 + (1-c)*B1)'
     derivative_order = 1
     outputs = exodus
   [../]
