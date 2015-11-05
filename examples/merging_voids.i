@@ -128,8 +128,8 @@
 
 [Materials]
   [./Copper]
-    #type = PFParamsPolyFreeEnergy
-    type = TempPFParamsPolyFreeEnergy
+    type = PFParamsPolyFreeEnergy
+    #type = TempPFParamsPolyFreeEnergy
     block = 0
     c = c
     T = T # K
