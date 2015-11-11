@@ -1,18 +1,20 @@
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 50
-  ny = 50
-  xmax = 0.2 # Length of the solder material
-  ymax = 0.2 # height of the solder material
+  nx = 10 #25
+  ny = 10 #25
+  xmax = 2.0e-4 # Length of the solder material
+  ymax = 2.0e-4 # height of the solder material
 []
 
 [Variables]
   [./T]
   initial_condition = 300 # Start at room temperature
+  scaling = 1.0e-6
   [../]
   [./c]
-  #scaling = 1.0e+4
+  initial_condition = 4.0e-4  #mol/cc
+  scaling = 1.0e+4
   [../]
 []
 
@@ -53,12 +55,19 @@
     boundary = top
     value = 520.0 # (K) 
   [../]
-  [./concentration]
-    type = DirichletBC
+  [./concentration_bottom]
+    type = NeumannBC
     variable = c
-    boundary = bottom
+    boundary = top
+    value = 5.025e-6 # wt %/s (mol/cc^3/s)
+    #value = 0.0  #wt %
+  [../]
+  [./concentration_top]
+    type = NeumannBC
+    variable = c
+    boundary = top
     #value = 1.09e+3 # (mol/m^3)
-    value = 1.81  #wt %
+    value = 0.0 #wt %
   [../]
 []
 
@@ -66,25 +75,40 @@
   [./th_cond]
    type = GenericFunctionMaterial
    prop_names = 'thermal_conductivity'
-   prop_values = '4.0e-2'  #in W/mm K
+   prop_values = '35'  #in W/m K
    block = 0
   [../]
   [./diff_coeff]
    type = GenericFunctionMaterial
    prop_names = 'diff_coefficient'
-   prop_values = '3.2'  #in mm^2/s
+   prop_values = '3.2e-9'  #in m^2/s
    block = 0
   [../]
 []
 
+[Preconditioning]
+ [./coupled]
+    type = SMP
+    full = true
+  [../]
+  #[./SMP]
+   # type = FDP
+   # full = true
+  #[../]
+[]
 
 [Executioner]
   type = Transient
   num_steps = 69
-  dt = 60
+  dt = 60.0
   solve_type = PJFNK
-  petsc_options_iname = '-pc_type -pc_hypre_type'
-  petsc_options_value = 'hypre boomeramg'
+  #petsc_options = '-snes_monitor -ksp_monitor_true_residual -snes_converged_reason -ksp_converged_reason'
+    petsc_options_iname = '-pc_type -pc_hypre_type -ksp_gmres_restart'
+  petsc_options_value = 'hypre    boomeramg      101'
+  #petsc_options_iname = '-pc_type -ksp_grmres_restart -sub_ksp_type
+                         #-sub_pc_type -pc_asm_overlap'
+  #petsc_options_value = 'asm      31                  preonly
+                        # ilu          1'
 []
 
 [Debug]
