@@ -49,6 +49,9 @@ protected:
 
   /// Variable gradient for temperature
   VariableGradient & _grad_T;
+  
+  /// Diffusivity material property
+  const MaterialProperty<Real> & _D;
 
   /// Will be set from the input file
   Real _Qh;
