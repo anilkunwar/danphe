@@ -37,6 +37,7 @@
     type = ThermalConvection
     variable = c
     Temperature = T
+    D_name = diff_coefficient
     Q_asterik = 1.112e+4
     #kb = 1.38e-23
   [../]
