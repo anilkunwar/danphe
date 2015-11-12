@@ -21,6 +21,7 @@ InputParameters validParams<ThermalConvection>()
 
   params.addRequiredCoupledVar("Temperature", "The variable representing the temperature.");
   // Add a required parameter.  If this isn't provided in the input file MOOSE will error.
+  params.addRequiredParam<MaterialPropertyName>("D_name", "The diffusivity used with the kernel");
   params.addRequiredParam<Real>("Q_asterik", "The heat of transport of Cu (Q*) in Sn at T in J/mol");
 
   // Add a parameter with a default value.  This value can be overriden in the input file.
@@ -40,6 +41,7 @@ ThermalConvection::ThermalConvection(const InputParameters & parameters) :
     // Couple to the gradient of the pressure
     _grad_T(coupledGradient("T")),
     // Grab necessary material properties
+    _D(getMaterialProperty<Real>("diff_name")),
     _Qh(getParam<Real>("Q_asterik")),
     _kb(getParam<Real>("kb"))
 {
@@ -56,7 +58,7 @@ ThermalConvection::computeQpResidual()
 
   // http://en.wikipedia.org/wiki/Superficial_velocity
   RealVectorValue thermal_velocity =
-    _Qh[_qp] * -(_kb[_qp]/_T[_qp]*_T[_qp]) * _grad_T[_qp];
+    _D[_qp]*_Qh * -(_kb/_T[_qp]*_T[_qp]) * _grad_T[_qp];
 
   return thermal_velocity * _grad_c[_qp] * _test[_i][_qp];
 }
@@ -65,7 +67,7 @@ Real
 ThermalConvection::computeQpJacobian()
 {
   RealVectorValue thermal_velocity =
-    _Qh[_qp] * -(_kb[_qp]/_T[_qp]*_T[_qp]) * _grad_T[_qp];
+   _D[_qp]* _Qh * -(_kb/_T[_qp]*_T[_qp]) * _grad_T[_qp];
 
   return thermal_velocity * _grad_phi[_j][_qp] * _test[_i][_qp];
 }
@@ -75,7 +77,7 @@ ThermalConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _T_var)
   {
-    _Qh[_qp]* (_kb[_qp]/_T[_qp]*_T[_qp])*(2*_grad_T[_qp]*_phi[_j][_qp]/ _T[_qp] -
+    _D[_qp]*_Qh* (_kb[_qp/_T[_qp]*_T[_qp])*(2*_grad_T[_qp]*_phi[_j][_qp]/ _T[_qp] -
            _grad_phi[_j][_qp])*_test[_i][_qp];
   }
 
