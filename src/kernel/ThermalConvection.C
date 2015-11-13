@@ -41,7 +41,7 @@ ThermalConvection::ThermalConvection(const InputParameters & parameters) :
     // Couple to the gradient of the pressure
     _grad_T(coupledGradient("T")),
     // Grab necessary material properties
-    _D(getMaterialProperty<Real>("diff_name")),
+    _D(getMaterialProperty<Real>("D_name")),
     _Qh(getParam<Real>("Q_asterik")),
     _kb(getParam<Real>("kb"))
 {
