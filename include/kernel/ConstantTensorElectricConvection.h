@@ -55,7 +55,7 @@ protected:
   
   /// Material current density assumed constant throughout the volume
   /// The tensor values are defined in the input file
-  const MaterialProperty<RealTensorValue> &_permeability;
+  const MaterialProperty<RealTensorValue> &_current_density;
 
   /// Will be set from the input file
   Real _z;
