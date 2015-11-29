@@ -33,7 +33,7 @@ protected:
   RealTensorValue _j_mater_vol;
 
   /// the Material property that this Material provides
-  MaterialProperty<RealTensorValue> & __current_density;
+  MaterialProperty<RealTensorValue> & _current_density;
 
 };
 
