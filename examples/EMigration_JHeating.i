@@ -11,6 +11,7 @@
 
 [Variables]
   [./T]
+  initial_condition = 523.15 # Start at room temperature
   [../]
 []
 
@@ -18,16 +19,19 @@
   [./HcTimeDerivative]
     type = HeatConductionTimeDerivative
     variable = T
-    specific_heat_name=1.0
-    density_name=1.0
+    specific_heat_name=248.08 #J/kg K (at T=520-530) calculated using OC software
+    density_name=7290.0 #kg/m^3
   [../]
   [./HeatConduction]
     type = HeatConduction
     variable = T
-    thermal_conductivity=1.0
+    diffusion_coefficient_name=k_th
+    # by default "thermal_conductivity" set in Material Properties is read in the 
+    # MATERIALs block is read by this kernel without the mentioning of the  coefficient.
   [../]
   [./JouleHeating]
     type = HeatSource
+    variable = T
     #value=1.0
     function = volumetric_joule
   [../]
@@ -38,32 +42,38 @@
     type = ParsedFunction
     value = 'j*j/(elcond)'
     vars = 'j elcond '
-    #value = 'a_1*exp(-kd*t)'
-    #vars = 'a_1 kd'
     vals = '6.0e5 1.82e6'  #r_gb*k_d*s/v per second 1.82222e-2
-    #r_gb is the ratio of grain boundary channel to the whole area considered 0.1
-  [../]
+[../]
 []
 
 [BCs]
-  [./left]
+  [./bottom]
     type = DirichletBC
     variable = T
     boundary = bottom
     value = 523.15
   [../]
-  #[./right]
-    #type = DirichletBC
+  #[./all]
+    #type = NeumannBC
     #variable = T
-    #boundary = right
-    #value = 1
+    #boundary = 'left right top bottom'
+    #value = 0
   #[../]
+[]
+
+[Materials]
+  [./thermal_conductivity]
+   type = GenericFunctionMaterial
+   prop_names = 'k_th' #'thermal_conductivity' #
+   prop_values = '73.2 '  #in W/m K
+   block = 0
+  [../]
 []
 
 [Executioner]
   type = Transient
-  num_steps = 69
-  dt = 60.0
+  num_steps = 690
+  dt = 6.0
   #Preconditioned JFNK (default)
   solve_type = 'PJFNK'
   petsc_options_iname = '-pc_type -pc_hypre_type'
