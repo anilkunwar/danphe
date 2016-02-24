@@ -33,16 +33,16 @@ protected:
   unsigned int _volt_var;
 
   /// Coupled variable for the Voltage
-  VariableValue & _volt;
+  const VariableValue & _volt;
 
   /// Variable gradient for Voltage
-  VariableGradient & _grad_volt;
+  const VariableGradient & _grad_volt;
 
   /// int label for the Concentration
   unsigned int _c_var;
 
   /// Variable value for the concentration
-  VariableValue & _c;
+  const VariableValue & _c;
 
   /// Diffusivity material property
   const MaterialProperty<Real> & _D;

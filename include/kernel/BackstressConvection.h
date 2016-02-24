@@ -45,10 +45,10 @@ protected:
   unsigned int _stress_var;
 
   /// Coupled variable for the temperature
-  VariableValue & _stress;
+  const VariableValue & _stress;
 
   /// Variable gradient for temperature
-  VariableGradient & _grad_stress;
+  const VariableGradient & _grad_stress;
 
   /// Diffusivity material property
   const MaterialProperty<Real> & _D;
