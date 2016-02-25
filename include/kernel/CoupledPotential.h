@@ -39,7 +39,7 @@ protected:
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
   /// The gradient of potential
-  VariableGradient & _potential_gradient;
+  const VariableGradient & _potential_gradient;
 
   /// Coupling identifier for the potential.  This is used to uniquely identify a coupled variable
   unsigned int _potential_var;

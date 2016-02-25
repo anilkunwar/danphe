@@ -45,10 +45,10 @@ protected:
   unsigned int _T_var;
 
   /// Coupled variable for the temperature
-  VariableValue & _T;
+  const VariableValue & _T;
 
   /// Variable gradient for temperature
-  VariableGradient & _grad_T;
+  const VariableGradient & _grad_T;
 
   /// Diffusivity material property
   const MaterialProperty<Real> & _cs;

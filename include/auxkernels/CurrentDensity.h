@@ -45,7 +45,7 @@ protected:
   int _component;
 
   /// The gradient of a coupled variable
-  VariableGradient & _potential_gradient;
+  const VariableGradient & _potential_gradient;
 
   /// Holds the conductivity and viscosity from the material system
   const MaterialProperty<Real> & _conductivity;
