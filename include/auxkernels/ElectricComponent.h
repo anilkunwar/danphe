@@ -16,6 +16,7 @@
 #define ELECTRICCOMPONENT_H
 
 #include "AuxKernel.h"
+//#include "MaterialRealVectorValueAux.h"
 
 //Forward Declarations
 class ElectricComponent;
@@ -40,25 +41,15 @@ protected:
    * points coincide with the nodes.
    */
   virtual Real computeValue();
-
+ 
   /// Will hold 0,1,2 for x,y,z
   int _component;
- 
-  /// int label for temperature variable
-  ///unsigned int _T_var;
-
- /// Coupled variable for the temperature
-  ///const VariableValue & _T;
-
-  /// Variable gradient for temperature
-  ///const VariableGradient & _grad_T;
-
-  /// current density as a vector pointing from right to left, eg '0 -10000 0'
-  /// the input is given at the Global Params of input file
-  RealVectorValue _current_density;
 
   /// Diffusivity material property
   const MaterialProperty<Real> & _D;
+
+  /// current density material property
+  const MaterialProperty<RealVectorValue> & _current_density;
 
   /// Will be set from the input file
   Real _z;
