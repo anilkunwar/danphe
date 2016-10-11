@@ -37,6 +37,9 @@ InputParameters validParams<CurrentDensity>()
   return params;
 }
 
+//Update the deprecated names
+//CurrentDensity::CurrentDensity(const std::string & name, InputParameters parameters) :
+//AuxKernel(name, parameters),
 CurrentDensity::CurrentDensity(const InputParameters & parameters) :
     AuxKernel(parameters),
 
