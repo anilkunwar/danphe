@@ -33,7 +33,8 @@ InputParameters validParams<ElectricPotential>();
 class ElectricPotential : public Diffusion
 {
 public:
-  ElectricPotential(const InputParameters & parameters);
+  //ElectricPotential(const std::string & name, InputParameters parameters);
+  ElectricPotential(const  InputParameters & parameters);
   virtual ~ElectricPotential();
 
 protected:
