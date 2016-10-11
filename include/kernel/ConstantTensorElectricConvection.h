@@ -45,17 +45,21 @@ protected:
   //unsigned int _T_var;
 
   /// Coupled variable for the temperature
-  //const VariableValue & _T;
+  //VariableValue & _T;
 
   /// Variable gradient for temperature
-  //const VariableGradient & _grad_T;
+  //VariableGradient & _grad_T;
+
+  /// current density as a vector pointing from right to left, eg '0 -10000 0'
+  /// the input is given at the Global Params of input file
+  //RealVectorValue _current_density;
   
   /// Diffusivity material property
   const MaterialProperty<Real> & _D;
   
   /// Material current density assumed constant throughout the volume
   /// The tensor values are defined in the input file
-  const MaterialProperty<RealTensorValue> &_current_density;
+  const MaterialProperty<RealVectorValue> &_current_density;
 
   /// Will be set from the input file
   Real _z;
