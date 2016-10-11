@@ -42,15 +42,19 @@ protected:
   Real _E2;
   Real _Qh1;
   Real _Qh2;
+  //Real _rho;
+ 
   //Real _surface_energy;
   //Real _int_width;
   //Real _length_scale;
   //Real _time_scale;
 
   //Input as values in the dot C file
+  const Real _JtoeV;
   const Real _kb;
-  //const Real _JtoeV;
   const Real _R;
+  const Real _length;
+  //const Real _time;
 };
 
 #endif //THERMOTRANSPORTPARAMETER_H
