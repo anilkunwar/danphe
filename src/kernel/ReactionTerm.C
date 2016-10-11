@@ -42,7 +42,7 @@ ReactionTerm::ReactionTerm(const InputParameters & parameters) :
     _grad_T(coupledGradient("Temperature")),
     // Grab necessary material properties
     _cs(getMaterialProperty<Real>("c_sat")),
-    _kc(getParam<Real>("k_chem")),
+    _kc(getParam<Real>("k_chem"))
     //_kb(getParam<Real>("kb"))
 {
 }
@@ -51,23 +51,24 @@ Real
 ReactionTerm::computeQpResidual()
 {
   //return _kc *(_cs[_qp]- _u[_qp]) * _test[_i][_qp];
-  _kc * - _u[_qp] * _test[_i][_qp];
+  return -_kc * _u[_qp] * _test[_i][_qp];
 }
 
 Real
 ReactionTerm::computeQpJacobian()
 {
- return _kc * - _phi[_j][_qp] * _test[_i][_qp]; 
+ return  -_kc *  _phi[_j][_qp] * _test[_i][_qp]; 
 }
 
 Real
 ReactionTerm::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _T_var)
-  //{
+  {
+      0.0;
   //  _D[_qp]*_Qh* (-_kb/_T[_qp]*_T[_qp])*(2*_grad_T[_qp]*_phi[_j][_qp]/ _T[_qp] +
   //         _grad_phi[_j][_qp])*_grad_u[_qp] * _test[_i][_qp];
-  //}
+  }
 
   return 0.0;
 }
