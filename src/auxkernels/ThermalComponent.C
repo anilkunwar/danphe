@@ -70,3 +70,4 @@ ThermalComponent::computeValue()
   // parenthesis operator
   return -_D[_qp]* _Qh * (1.0/(_kb*_T[_qp]*_T[_qp])) * _grad_T[_qp](_component);
 }
+//Updated
