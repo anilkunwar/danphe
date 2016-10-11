@@ -21,7 +21,8 @@ InputParameters validParams<SplitCHVoltage>();
 class SplitCHVoltage : public Kernel
 {
 public:
-  SplitCHVoltage(const InputParameters & parameters);
+  //SplitCHVoltage(const std::string & name, InputParameters parameters);
+  SplitCHVoltage(const  InputParameters  & parameters);
 
 protected:
   virtual Real computeQpResidual();
@@ -48,7 +49,7 @@ protected:
   const MaterialProperty<Real> & _D;
 
   /// Temperature material property
-  const MaterialProperty<Real> & _T;
+  ///const MaterialProperty<Real> & _T;
 
 
   /// Heat of transport material property
@@ -62,7 +63,7 @@ protected:
   const Real _eo;
 
   /// Temperature in kelvin scale
-  //const Real _T;
+  const Real _T;
 };
 
 #endif //SPLITCHVOLTAGE_H
