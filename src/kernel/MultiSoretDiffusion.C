@@ -13,7 +13,7 @@ InputParameters validParams<MultiSoretDiffusion>()
   params.addRequiredCoupledVar("T", "Temperature");
   params.addRequiredCoupledVar("c", "Concentration");
   //params.addParam<MaterialPropertyName>("mob_name", "L", "The mobility used with the kernel");
-  params.addParam<MaterialPropertyName>("net_thermotransport", "Mq","The mobility of thermotransport");
+  params.addRequiredParam<MaterialPropertyName>("net_thermotransport","The mobility of thermotransport");
   return params;
 }
 
@@ -54,9 +54,9 @@ MultiSoretDiffusion::computeQpOffDiagJacobian(unsigned int jvar)
   else if (_T_var == jvar) //Requires T jacobian
     //return _D[_qp] * _Q[_qp] * _c[_qp] * _grad_test[_i][_qp] *
            //(_grad_phi[_j][_qp]/(_kb * _T[_qp] * _T[_qp]) - 2.0 * _grad_T[_qp] * _phi[_j][_qp] / (_kb * _T[_qp] * _T[_qp] * _T[_qp]));
-    return _Mq[_qp] * _c[_qp]* (1.0 - _c[_qp])* _grad_test[_i][_qp] *
-          (_grad_phi[_j][_qp]/(_T[_qp]) - _grad_T[_qp] * _phi[_j][_qp]/(_T[_qp] * _T[_qp]));
-
+    return _Mq[_qp] * _c[_qp]* (1.0 - _c[_qp]) * _grad_test[_i][_qp] *
+          (_grad_phi[_j][_qp]/(1.0 *_T[_qp]) - 1.0 *_grad_T[_qp] * _phi[_j][_qp]/(1.0 * _T[_qp] * _T[_qp]));
+   
   return 0.0;
 }
 
@@ -65,6 +65,7 @@ MultiSoretDiffusion::computeQpCJacobian()
 {
   //Calculate the Jacobian for the c variable
   //return _D[_qp] * _Q[_qp] * _phi[_j][_qp] * _grad_T[_qp] / (_kb * _T[_qp] * _T[_qp]) * _grad_test[_i][_qp];
+  //return _Mq[_qp]*_grad_test[_i][_qp]*(_grad_T[_qp]/_T[_qp]- 2.0 *_phi[_j][_qp]*_grad_T[_qp]/_T[_qp]);
   return _Mq[_qp]*_grad_test[_i][_qp]*(_phi[_j][_qp] - 2.0 * _c[_qp]*_phi[_j][_qp])*_grad_T[_qp]/_T[_qp];
 }
 
