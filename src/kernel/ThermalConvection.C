@@ -35,11 +35,11 @@ ThermalConvection::ThermalConvection(const InputParameters & parameters) :
     Kernel(parameters),
     // Save off the coupled variable identifier for use in
     // computeQpOffDiagJacobian
-    _T_var(coupled("T")),
+    _T_var(coupled("Temperature")),
     // Save off the coupled value for use in Residual 
-    _T(coupledValue("T")),
+    _T(coupledValue("Temperature")),
     // Couple to the gradient of the pressure
-    _grad_T(coupledGradient("T")),
+    _grad_T(coupledGradient("Temperature")),
     // Grab necessary material properties
     _D(getMaterialProperty<Real>("D_name")),
     _Qh(getParam<Real>("Q_asterik")),
@@ -58,16 +58,16 @@ ThermalConvection::computeQpResidual()
 
   // http://en.wikipedia.org/wiki/Superficial_velocity
   RealVectorValue thermal_velocity =
-    _D[_qp]*_Qh * -(_kb/_T[_qp]*_T[_qp]) * _grad_T[_qp];
+   -_D[_qp]* _Qh * (1.0/(_kb*_T[_qp]*_T[_qp])) * _grad_T[_qp];
 
-  return thermal_velocity * _grad_c[_qp] * _test[_i][_qp];
+  return thermal_velocity * _grad_u[_qp] * _test[_i][_qp];
 }
 
 Real
 ThermalConvection::computeQpJacobian()
 {
   RealVectorValue thermal_velocity =
-   _D[_qp]* _Qh * -(_kb/_T[_qp]*_T[_qp]) * _grad_T[_qp];
+   - _D[_qp]*_Qh * (1.0/(_kb*_T[_qp]*_T[_qp])) * _grad_T[_qp];
 
   return thermal_velocity * _grad_phi[_j][_qp] * _test[_i][_qp];
 }
@@ -77,8 +77,8 @@ ThermalConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _T_var)
   {
-    _D[_qp]*_Qh* (_kb[_qp/_T[_qp]*_T[_qp])*(2*_grad_T[_qp]*_phi[_j][_qp]/ _T[_qp] -
-           _grad_phi[_j][_qp])*_test[_i][_qp];
+    -_D[_qp]*_Qh* (- 1.0/(_kb *_T[_qp]*_T[_qp]))*(2*_grad_T[_qp]*_phi[_j][_qp]/ _T[_qp] +
+           _grad_phi[_j][_qp])*_grad_u[_qp] * _test[_i][_qp];
   }
 
   return 0.0;
