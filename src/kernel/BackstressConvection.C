@@ -63,7 +63,7 @@ BackstressConvection::computeQpResidual()
 
   // http://en.wikipedia.org/wiki/Superficial_velocity
   RealVectorValue stress_velocity =
-   -_D[_qp]* _omega * (1.0/(_kb*_T_c)) * _grad_stress[_qp];
+   _D[_qp]* _omega * (1.0/(_kb*_T_c)) * _grad_stress[_qp];
 
   return stress_velocity * _grad_u[_qp] * _test[_i][_qp];
 }
@@ -72,7 +72,7 @@ Real
 BackstressConvection::computeQpJacobian()
 {
   RealVectorValue stress_velocity =
-    -_D[_qp]* _omega * (1.0/(_kb*_T_c)) * _grad_stress[_qp];
+    _D[_qp]* _omega * (1.0/(_kb*_T_c)) * _grad_stress[_qp];
 
   return stress_velocity * _grad_phi[_j][_qp] * _test[_i][_qp];
 }
@@ -82,7 +82,7 @@ BackstressConvection::computeQpOffDiagJacobian(unsigned int jvar)
 {
   if (jvar == _stress_var)
   {
-    -_D[_qp]* _omega * (1.0/(_kb*_T_c)) * _grad_u[_qp] *
+    _D[_qp]* _omega * (1.0/(_kb*_T_c)) * _grad_u[_qp] *
            _grad_phi[_j][_qp]* _test[_i][_qp];
   }
 
