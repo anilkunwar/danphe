@@ -49,7 +49,7 @@ protected:
 
   /// Variable gradient for temperature
   const VariableGradient & _grad_T;
-  
+
   /// Diffusivity material property
   const MaterialProperty<Real> & _D;
 
