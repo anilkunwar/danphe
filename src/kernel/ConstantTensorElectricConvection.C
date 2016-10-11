@@ -22,6 +22,8 @@ InputParameters validParams<ConstantTensorElectricConvection>()
 
   //params.addRequiredCoupledVar("Temperature", "The variable representing the temperature.");
   // Add a required parameter.  If this isn't provided in the input file MOOSE will error.
+  //params.addRequiredParam<RealVectorValue>("current_density", "j_vector (A/m^2 pointing from right to left.  Eg '0 -10000 0 '");
+  //j_vector will be not among quadrature points as it is defined at Global Params 
   params.addRequiredParam<MaterialPropertyName>("D_name", "The diffusivity used with the kernel");
   //params.addRequiredParam<std::vector<Real> >("j_vector","current density (j) in A/m^2");
   //params.addRequiredParam<std::vector<Real> >("slip_factor","Fraction of calculated slip");
@@ -47,9 +49,10 @@ ConstantTensorElectricConvection::ConstantTensorElectricConvection(const InputPa
     // Couple to the gradient of the pressure
     //_grad_T(coupledGradient("T")),
     // Grab necessary material properties
+    //_current_density(getParam<RealVectorValue>("current_density")), 
     _D(getMaterialProperty<Real>("D_name")),
     //the current density tensor has already been defined in CurrentDensityMaterial file
-    _current_density(getMaterialProperty<RealTensorValue>("current_density")),
+    _current_density(getMaterialProperty<RealVectorValue>("current_density")),
     //std::vector<Real> current_density = params.get<std::vector<Real> >("j_vector");
     //std::vector<Real> slip_factor = params.get<std::vector<Real> >("slip_factor");
     _z(getParam<Real>("z")),
@@ -67,15 +70,15 @@ ConstantTensorElectricConvection::computeQpResidual()
   // Method For Transient Convection Diffusion", Scientific Research
   // of the Institute of Mathematics and Computer Science, vol. 1,
   // no. 11, 2012, pp. 63-72.
-  Real electrical_velocity = -_D[_qp]*_z *_e * _rho* _current_density[_qp]/(_kb* _T_c);
+  RealVectorValue electrical_velocity = -_D[_qp]*_z *_e * _rho* _current_density[_qp]/(_kb* _T_c);
 
-  return electrical__velocity * _grad_u[_qp] * _test[_i][_qp];
+  return electrical_velocity * _grad_u[_qp] * _test[_i][_qp];
 }
 
 Real
 ConstantTensorElectricConvection::computeQpJacobian()
 {
-  Real electrical_velocity = -_D[_qp]*_z *_e * _rho* _current_density[_qp]/(_kb* _T_c);
+  RealVectorValue electrical_velocity = -_D[_qp]*_z *_e * _rho* _current_density[_qp]/(_kb* _T_c);
 
   return electrical_velocity * _grad_phi[_j][_qp] * _test[_i][_qp];
 }
