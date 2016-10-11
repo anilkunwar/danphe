@@ -18,7 +18,7 @@ template<>
 InputParameters validParams<CurrentDensityMaterial>();
 
 /**
- * Defines the permeability tensor used in Darcy flow
+ * Defines the current density vector used 
  */
 class CurrentDensityMaterial : public Material
 {
@@ -28,13 +28,12 @@ public:
 protected:
 
   virtual void computeQpProperties();
-
-  /// current density tensor as entered by the user
-  RealTensorValue _j_mater_vol;
+ 
+  /// current density vector as entered by the user
+  RealVectorValue _j_mater_vol;
 
   /// the Material property that this Material provides
-  MaterialProperty<RealTensorValue> & _current_density;
-
+  MaterialProperty<RealVectorValue> & _current_density;
 };
 
 #endif //CURRENTDENSITYMATERIAL_H
