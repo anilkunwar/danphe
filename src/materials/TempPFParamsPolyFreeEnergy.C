@@ -19,8 +19,11 @@ InputParameters validParams<TempPFParamsPolyFreeEnergy>()
   return params;
 }
 
+//TempPFParamsPolyFreeEnergy::TempPFParamsPolyFreeEnergy(const std::string & name,
+//                                              InputParameters parameters) :
+//   Material(name, parameters),
 TempPFParamsPolyFreeEnergy::TempPFParamsPolyFreeEnergy(const InputParameters & parameters) :
-    Material(parameters),
+Material(parameters),
     _c(coupledValue("c")),
     _T(coupledValue("T")),
     _M(declareProperty<Real>("M")),
@@ -82,7 +85,8 @@ TempPFParamsPolyFreeEnergy::computeQpProperties()
   Real surf_energy = _surface_energy*alphaT*_JtoeV*_length_scale*_length_scale;
 
   // Set interfacial parameter and energy barrier
-  _kappa[_qp] = surf_energy*_int_width/KN;
+  //_kappa[_qp] = 1.0e-15 * surf_energy*_int_width/KN;
+  _kappa[_qp] = surf_energy*_int_width/KN;  //no scaling
   _W[_qp] = surf_energy/( 2.0*_int_width*KN );
 
   Real Co = 0.0;
@@ -103,7 +107,8 @@ TempPFParamsPolyFreeEnergy::computeQpProperties()
       mooseError("Error in TempPFParamsPolyFreeEnergy: incorrect polynomial order");
   }
 
-  _M[_qp] = KN/Co*(_D[_qp]*_int_width/surf_energy);
+  _M[_qp] = KN/Co*(_D[_qp]*_int_width/surf_energy); //no scaling
+  //_M[_qp] = 1.0e15 * KN/Co*(_D[_qp]*_int_width/surf_energy);
   _grad_M[_qp] = 0.0;
 
   _Qstar[_qp] = 2.3;    //4.0; //e5; // eV
