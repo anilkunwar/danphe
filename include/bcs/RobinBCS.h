@@ -52,7 +52,7 @@ private:
    * Holds the values at the quadrature points
    * of a coupled variable.
    */
-  //const VariableValue & _some_var_val;
+  //VariableValue & _some_var_val;
 };
 
 #endif //ROBINBCS_H
