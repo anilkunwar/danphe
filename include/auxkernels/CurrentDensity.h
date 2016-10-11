@@ -29,7 +29,8 @@ InputParameters validParams<CurrentDensity>();
 class CurrentDensity : public AuxKernel
 {
 public:
-  CurrentDensity(const InputParameters & parameters);
+ // CurrentDensity(const std::string & name, InputParameters parameters);
+CurrentDensity(const InputParameters & parameters);
 
   virtual ~CurrentDensity() {}
 
@@ -49,7 +50,7 @@ protected:
 
   /// Holds the conductivity and viscosity from the material system
   const MaterialProperty<Real> & _conductivity;
-  //const MaterialProperty<Real> & _viscosity;
+  //MaterialProperty<Real> & _viscosity;
 };
 
 #endif //CURRENTDENSITY_H
