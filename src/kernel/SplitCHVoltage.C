@@ -17,12 +17,16 @@ params.addClassDescription("Add Electromigration Flux to Split formulation Cahn-
 params.addRequiredCoupledVar("volt", "Voltage");
 params.addRequiredCoupledVar("c", "Concentration");
 params.addRequiredParam<MaterialPropertyName>("diff_name", "The diffusivity used with the kernel");
-params.addRequiredParam<MaterialPropertyName>("T", "The temperature used with the kernel");
+//params.addRequiredParam<MaterialPropertyName>("T", "The temperature used with the kernel");
 params.addParam<MaterialPropertyName>("z_name", "zeff", "Effective charge number of the species");
 //params.addParam<MaterialPropertyName>("e_name", "eo", "Charge of the electron");
 return params;
 }
-SplitCHVoltage::SplitCHVoltage(const InputParameters & parameters) :
+
+//Update the deprecated names
+//SplitCHVoltage::SplitCHVoltage(const std::string & name, InputParameters parameters) :
+//Kernel(name, parameters),
+SplitCHVoltage::SplitCHVoltage(const  InputParameters  & parameters) :
 Kernel(parameters),
 //_T_var(coupled("T")),
 //_T(coupledValue("T")),
@@ -33,18 +37,18 @@ _grad_volt(coupledGradient("volt")),
 _c_var(coupled("c")),
 _c(coupledValue("c")),
 _D(getMaterialProperty<Real>("diff_name")),
-_T(getMaterialProperty<Real>("T")),
+//_T(getMaterialProperty<Real>("T")),
 //_Q(getMaterialProperty<Real>("Q_name")),
 _z(getMaterialProperty<Real>("z_name")),
-//_T(getParam<Real>("T")),
 _kb(8.617343e-5), // Boltzmann constant in eV/K
-_eo(1.6e-19) // charge of an electron
+_eo(1.6e-19), // charge of an electron
+_T(423.0) //Temperature in kelvin
 {
 }
 Real
 SplitCHVoltage::computeQpResidual()
 {
-Real volt_term = _D[_qp] * _z[_qp] *_eo * _c[_qp] / (_kb * _T[_qp] );
+Real volt_term = _D[_qp] * _z[_qp] *_eo * _c[_qp] / (_kb * _T );
 return volt_term * _grad_volt[_qp] * _grad_test[_i][_qp];
 }
 
@@ -61,10 +65,10 @@ Real
 SplitCHVoltage::computeQpOffDiagJacobian(unsigned int jvar)
 {
 if (_c_var == jvar)
-return _D[_qp] * _z[_qp] * _eo * _phi[_j][_qp] * _grad_volt[_qp] / (_kb *  _T[_qp]) * _grad_test[_i][_qp];
+return _D[_qp] * _z[_qp] * _eo * _phi[_j][_qp] * _grad_volt[_qp] / (_kb *  _T) * _grad_test[_i][_qp];
 else if (_volt_var == jvar)
 return _D[_qp] * _z[_qp] * _eo * _c[_qp] * _grad_test[_i][_qp] *
-(_grad_phi[_j][_qp]/(_kb * _T[_qp]) + _grad_volt[_qp] * _phi[_j][_qp] / (_kb * _T[_qp] * _T[_qp]));
+(_grad_phi[_j][_qp]/(_kb * _T) + _grad_volt[_qp] * _phi[_j][_qp] / (_kb * _T * _T));
 return 0.0;
 }
 
@@ -72,5 +76,5 @@ Real
 SplitCHVoltage::computeQpCJacobian()
 {
   //Calculate the Jacobian for the c variable
-  return _D[_qp] * _z[_qp] * _phi[_j][_qp] * _grad_volt[_qp] / (_kb * _T[_qp]) * _grad_test[_i][_qp];
+  return _D[_qp] * _z[_qp] * _phi[_j][_qp] * _grad_volt[_qp] / (_kb * _T) * _grad_test[_i][_qp];
 }
