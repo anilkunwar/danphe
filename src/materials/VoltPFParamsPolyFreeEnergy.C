@@ -21,6 +21,9 @@ InputParameters validParams<VoltPFParamsPolyFreeEnergy>()
     return params;
 }
 
+//VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const std::string & name,
+//                                              InputParameters parameters) :
+//    Material(name, parameters),
 VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const InputParameters & parameters) :
     Material(parameters),
     _c(coupledValue("c")),
@@ -35,7 +38,7 @@ VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const InputParameters & p
     //_T(declareProperty<Real>("T")),
     //_Qstar(declareProperty<Real>("Qstar")),
     _D(declareProperty<Real>("D")),
-    _T(getParam<Real>("T")),
+    //_T(getParam<Real>("T")),
     _int_width(getParam<Real>("int_width")),
     _length_scale(getParam<Real>("length_scale")),
     _time_scale(getParam<Real>("time_scale")),
@@ -46,7 +49,8 @@ VoltPFParamsPolyFreeEnergy::VoltPFParamsPolyFreeEnergy(const InputParameters & p
     _surface_energy(getParam<Real>("surface_energy")),
     _JtoeV(6.24150974e18), // joule to eV conversion
     _kb(8.617343e-5), // Boltzmann constant in eV/K
-    _echarge(1.6e-19) // Charge of electron in Coulumb
+    _echarge(1.6e-19), // Charge of electron in Coulumb
+    _T(423.0) // Temperature in kelvin scale 
 {
 }
 
@@ -109,6 +113,7 @@ VoltPFParamsPolyFreeEnergy::computeQpProperties()
   _grad_M[_qp] = 0.0;
 
   //_Qstar[_qp] = -4.0; // eV
-  _zeff[_qp] = 2.0; // write the unit here
-  //_T = 298.0;  // Kelvin
+  //_zeff[_qp] = 2.0; // write the unit here
+  _zeff[_qp] = 59.0; // write the unit here
+  //_T = 423.0;  // Kelvin
 }
