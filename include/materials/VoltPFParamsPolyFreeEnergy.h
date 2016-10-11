@@ -15,14 +15,16 @@ InputParameters validParams<VoltPFParamsPolyFreeEnergy>();
 class VoltPFParamsPolyFreeEnergy : public Material
 {
 public:
-  VoltPFParamsPolyFreeEnergy(const InputParameters & parameters);
+// VoltPFParamsPolyFreeEnergy(const std::string & name,
+//                        InputParameters parameters);
+VoltPFParamsPolyFreeEnergy(const InputParameters & parameters);
 
 protected:
   virtual void computeQpProperties();
 
   ///Variable values
   const VariableValue & _c;
-  //const VariableValue & _T;
+  //VariableValue & _T;
   const VariableValue & _volt;
   
 
@@ -39,7 +41,7 @@ protected:
   MaterialProperty<Real> & _D;
 
   ///Input parameters
-  Real _T;
+  //Real _T;
   Real _int_width;
   Real _length_scale;
   Real _time_scale;
@@ -52,6 +54,7 @@ protected:
   const Real _JtoeV;
   const Real _kb;
   const Real _echarge;
+  const Real _T;
 };
 
 #endif //VOLTPFPARAMSPOLYFREEENERGY_H
