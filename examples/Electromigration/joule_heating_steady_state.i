@@ -1,4 +1,6 @@
-# This test solves a 2D steady state heat equation
+# This is a test example copied from moose worked out examples
+# The actual problems are found in jouleheating_3D_450.i and jouleheating_3D_1243.i
+#This test solves a 2D steady state heat equation
 # The error is found by comparing to the analytical solution
 
 # Note that the thermal conductivity, specific heat, and density in this problem
