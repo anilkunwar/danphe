@@ -54,6 +54,9 @@
 #include "ThermotransportParameter.h"
 #include "CurrentDensityMaterial.h"
 #include "TemperatureDependentMaterial.h"
+#include "HeatCapacityMaterial.h"
+#include "DensityMaterial.h"
+#include "ThermalConductivityMaterial.h"
 //Initial Conditions
 //#include "RndTrapezoidBoxIC.h"
 //timesteppers
@@ -169,6 +172,9 @@ DanpheApp::registerObjects(Factory & factory)
   registerMaterial(ThermotransportParameter);
   registerMaterial(CurrentDensityMaterial);
   registerMaterial(TemperatureDependentMaterial);
+  registerMaterial(HeatCapacityMaterial);
+  registerMaterial(DensityMaterial);
+  registerMaterial(ThermalConductivityMaterial);
 
   //registerInitialCondition(RndTrapezoidBoxIC);
 }
