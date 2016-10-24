@@ -53,6 +53,7 @@
 #include "ScaledPolynomialFreeEnergy.h"
 #include "ThermotransportParameter.h"
 #include "CurrentDensityMaterial.h"
+#include "TemperatureDependentMaterial.h"
 //Initial Conditions
 //#include "RndTrapezoidBoxIC.h"
 //timesteppers
@@ -167,6 +168,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerMaterial(ScaledPolynomialFreeEnergy);
   registerMaterial(ThermotransportParameter);
   registerMaterial(CurrentDensityMaterial);
+  registerMaterial(TemperatureDependentMaterial);
 
   //registerInitialCondition(RndTrapezoidBoxIC);
 }
