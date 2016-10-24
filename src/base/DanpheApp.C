@@ -15,6 +15,7 @@
 #include "TinSheet.h"
 #include "VoltPFParamsPolyFreeEnergy.h"
 #include "ThermotransportParameter.h"
+#include "TemperatureDependentMaterial.h"
 
 template<>
 InputParameters validParams<DanpheApp>()
@@ -60,6 +61,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerMaterial(TinSheet);
   registerMaterial(VoltPFParamsPolyFreeEnergy);
   registerMaterial(ThermotransportParameter);
+  registerMaterial(TemperatureDependentMaterial);
 }
 
 void
