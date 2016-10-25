@@ -46,6 +46,8 @@
 //Boundary Conditions
 #include "RobinBCS.h"
 #include "FunctionRobinBCS.h"
+#include "BetaFunctionRobinBCS.h"
+#include "OnlyBetaFunctionRobinBCS.h"
 //Materials
 //#include "TinSheet.h" //see at ~/project/material_danphe/
 #include "VoltPFParamsPolyFreeEnergy.h"
@@ -164,6 +166,8 @@ DanpheApp::registerObjects(Factory & factory)
 
   registerBoundaryCondition(RobinBCS);
   registerBoundaryCondition(FunctionRobinBCS);
+  registerBoundaryCondition(BetaFunctionRobinBCS);
+  registerBoundaryCondition(OnlyBetaFunctionRobinBCS);
 
   //registerMaterial(TinSheet); //see at ~/project/material_danphe/
   registerMaterial(VoltPFParamsPolyFreeEnergy);
