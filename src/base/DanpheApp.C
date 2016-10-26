@@ -43,6 +43,7 @@
 #include "ElectricComponent.h"
 #include "DriftVelocity.h"
 #include "BackstressComponent.h"
+#include "ThermalGradient.h"
 //Boundary Conditions
 #include "RobinBCS.h"
 #include "FunctionRobinBCS.h"
@@ -163,6 +164,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerAux(ElectricComponent);
   registerAux(DriftVelocity);
   registerAux(BackstressComponent);
+  registerAux(ThermalGradient);
 
   registerBoundaryCondition(RobinBCS);
   registerBoundaryCondition(FunctionRobinBCS);
