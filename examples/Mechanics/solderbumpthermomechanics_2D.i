@@ -1,8 +1,10 @@
 # This example problem demonstrates coupling heat conduction with mechanics.
-# A circular domain has as uniform heat source that increases with time
-# and a fixed temperature on the outer boundary, resulting in a temperature gradient.
+# A circular domain (2D section of a spherical solder bump) has as uniform heat source via
+# electric current induced joule heating  that increases with time  and a 
+# fixed temperature on the outer boundary, resulting in a temperature gradient.
 # This results in heterogeneous thermal expansion, where it is pinned in the center.
-# Looking at the hoop stress demonstrates why fuel pellets have radial cracks
+# Looking at the hoop stress demonstrates why solder bumps  have radial cracks
+# near the weakpoint i.e. at the interface of solder-substrate (location near IMC).
 # that extend from the outer boundary to about halfway through the radius.
 # The problem is run with length units of microns.
 
