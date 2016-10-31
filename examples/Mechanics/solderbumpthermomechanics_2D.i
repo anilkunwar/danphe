@@ -11,7 +11,7 @@
 [Mesh]
   #Circle mesh has a radius of 1000 units
   type = FileMesh
-  file = circle.e
+  file = circle.unv
   uniform_refine = 1
 []
 
