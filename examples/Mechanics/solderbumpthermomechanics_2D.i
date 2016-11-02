@@ -35,7 +35,7 @@
 [Variables]
   # We solve for the temperature and the displacements
   [./T]
-    initial_condition = 800
+    initial_condition = 298.00
     scaling = 1e7
   [../]
   [./disp_x]
