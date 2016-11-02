@@ -3,7 +3,7 @@
 # This example problem demonstrates coupling heat conduction with mechanics.
 # A circular domain (2D section of a spherical solder bump) has as uniform heat source via
 # electric current induced joule heating  that increases with time  and a 
-# fixed temperature on the outer boundary, resulting in a temperature gradient.
+# fixed temperature on the inner boundary, resulting in a temperature gradient.
 # This results in heterogeneous thermal expansion, where it is pinned in the center.
 # Looking at the hoop stress demonstrates why solder bumps  have radial cracks
 # near the weakpoint i.e. at the interface of solder-substrate (location near IMC).
@@ -12,6 +12,8 @@
 # Adapted from the following tutorial
 #https://github.com/idaholab/moose/blob/devel/modules/combined/examples/thermomechanics/circle_thermal_expansion_stress.i
 # Mesh in unv format is used as external mesh
+# In the original tutorial there is a fixed higher temperature on the outer boundary and the thermal conductivity is 5 W/m K
+# In this tutorial there is a fixed higher temperature on the inner boundary and the thermal conductivity is 50 W/m K
 
 [Mesh]
   #Circle mesh has a radius of 1000 units
