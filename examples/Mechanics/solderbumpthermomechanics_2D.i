@@ -17,8 +17,8 @@
   #Circle mesh has a radius of 1000 units
   type = FileMesh
   #file = circle.unv
-  #file = Mesh_1.unv
-  file = Mesh_2.unv
+  file = Mesh_circle1.unv
+  #file = Mesh_2.unv
   block_id = '1'
   block_name = 'circleface'
   #block_name = 'soldercircle_face'
@@ -90,32 +90,38 @@
 []
 
 [BCs]
-  [./outer_T] #Temperature on outer edge is fixed at 800K
+  [./outer_T] #Temperature on outer edge is fixed at 298.00K
     type = PresetBC
     variable = T
-    boundary = 2
-    value = 800
+    boundary = '2'
+    value = 298.00 #800
+  [../]
+    [./outer_T] #Temperature on inner edge is fixed at 423.00K
+    type = PresetBC
+    variable = T
+    boundary = '3'
+    value = 298.00 #800
   [../]
   [./outer_x] #Displacements in the x-direction are fixed in the center
     type = PresetBC
     variable = disp_x
-    boundary = 3
+    boundary = '3'
     value = 0
   [../]
   [./outer_y] #Displacements in the y-direction are fixed in the center
     type = PresetBC
     variable = disp_y
-    boundary = 3
+    boundary = '3'
     value = 0
   [../]
 []
 
 [Materials]
-  [./thcond] #Thermal conductivity is set to 5 W/mK
+  [./thcond] #Thermal conductivity is set to 50 W/mK
     type = GenericConstantMaterial
     block = 1
     prop_names = 'thermal_conductivity'
-    prop_values = '5e-6'
+    prop_values = '5e-5'
   [../]
   [./iso_C] #Sets isotropic elastic constants
     type = ComputeElasticityTensor
