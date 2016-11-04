@@ -13,6 +13,7 @@
 #include "ChemicalReactionsApp.h"
 //#include "CombinedApp.h"
 #include "ContactApp.h"
+#include "FluidPropertiesApp.h"
 #include "HeatConductionApp.h"
 #include "LinearElasticityApp.h"
 #include "MiscApp.h"
@@ -92,6 +93,7 @@ DanpheApp::DanpheApp(InputParameters parameters) :
   ChemicalReactionsApp::registerObjects(_factory);
   //CombinedApp::registerObjects(_factory);
   ContactApp::registerObjects(_factory);
+  FluidPropertiesApp::registerObjects(_factory);
   HeatConductionApp::registerObjects(_factory);
   LinearElasticityApp::registerObjects(_factory);
   MiscApp::registerObjects(_factory);
@@ -116,6 +118,7 @@ DanpheApp::DanpheApp(InputParameters parameters) :
   ChemicalReactionsApp::associateSyntax(_syntax, _action_factory);
   //CombinedApp::associateSyntax(syntax, action_factory);
   ContactApp::associateSyntax(_syntax, _action_factory);
+  FluidPropertiesApp::associateSyntax(_syntax, _action_factory);
   HeatConductionApp::associateSyntax(_syntax, _action_factory);
   LinearElasticityApp::associateSyntax(_syntax, _action_factory);
   MiscApp::associateSyntax(_syntax, _action_factory);
