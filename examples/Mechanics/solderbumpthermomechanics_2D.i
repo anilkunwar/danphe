@@ -26,7 +26,10 @@
   #block_name = 'soldercircle_face'
 
   boundary_id = '2 3' # need to know that putting 1 here does not recognize the boundary
-  boundary_name = 'outboundf inbound'
+  # moose reads the boundary ID numbers from the unv mesh file and the numbers there are
+  # 2 for inside boundary and 3 for the outside bounday
+  # Disscussion for it is found at https://groups.google.com/forum/#!topic/moose-users/m1aA6B3TrXo
+  boundary_name = 'inbound outboundf'
   #boundary_name = 'Edge_2outer Edge_1inner'
   #boundary_name = 'boundary_circle'
   uniform_refine = 1
