@@ -1,6 +1,7 @@
 # Material properties of polylactic acid needs to be searched from the literatures
 # E (GPa), g_c (GPa mm), l(mm), eta (s/mm), K (G Pa), nu (poisson's ratio)
 # G_IC = 2-6 kJ/m^2 Reference http://cdn.intechweb.org/pdfs/22932.pdf
+# E = 683.6 - 854.2 M Pa Reference http://link.springer.com/article/10.1007/s10853-013-7644-7
 [Mesh]
   type = FileMesh
   file = crack_mesh_1.unv
