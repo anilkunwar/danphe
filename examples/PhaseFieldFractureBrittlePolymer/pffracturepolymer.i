@@ -1,3 +1,5 @@
+# Material properties of polylactic acid needs to be searched from the literatures
+# E (GPa), g_c (GPa mm), l(mm), eta (s/mm), K (G Pa), nu (poisson's ratio)
 [Mesh]
   type = FileMesh
   file = crack_mesh_1.unv
