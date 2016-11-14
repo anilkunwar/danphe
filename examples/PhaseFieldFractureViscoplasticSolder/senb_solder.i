@@ -119,19 +119,19 @@
   [./ydisp]
     type = FunctionPresetBC
     variable = disp_y
-    boundary = 2
+    boundary = 'top' #2
     function = '0.0001*t'
   [../]
   [./yfix]
     type = PresetBC
     variable = disp_y
-    boundary = 1
+    boundary = 'bottom' #1
     value = 0
   [../]
   [./xfix]
     type = PresetBC
     variable = disp_x
-    boundary = '1 2'
+    boundary = 'bottom top'#'1 2'
     value = 0
   [../]
 []
