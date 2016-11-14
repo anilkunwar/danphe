@@ -1,8 +1,12 @@
 # original file adapted from pritam chakraborty 
 # add the materials property of solder
 [Mesh]
-  type = FileMesh
-  file = crack_mesh.e
+ type = FileMesh
+  file = crack_Mesh_2.unv
+  #block_id = '1'
+  block_name = 'solder'
+  #boundary_id = '2 3 4 5 6 7 8 9'
+  boundary_name = 'bottom_left top_left crack_bottom crack_top bottom crack_tip top right'
   uniform_refine = 0
 []
 
