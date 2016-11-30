@@ -38,6 +38,7 @@
 #include "BackstressDiffusion.h"
 #include "LaplacianStress.h"
 #include "INSMomentumGravity.h"
+#include "NernstPlanckConvection.h"
 //Auxkernels
 #include "CurrentDensity.h"
 #include "ThermalComponent.h"
@@ -61,6 +62,7 @@
 #include "HeatCapacityMaterial.h"
 #include "DensityMaterial.h"
 #include "ThermalConductivityMaterial.h"
+#include "IonicMobility.h"
 //Initial Conditions
 //#include "RndTrapezoidBoxIC.h"
 //timesteppers
@@ -160,6 +162,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerKernel(BackstressDiffusion);
   registerKernel(LaplacianStress);
   registerKernel(INSMomentumGravity);
+  registerKernel(NernstPlanckConvection);
   
 
   registerAux(CurrentDensity);
@@ -183,9 +186,9 @@ DanpheApp::registerObjects(Factory & factory)
   registerMaterial(TemperatureDependentMaterial);
   registerMaterial(HeatCapacityMaterial);
   registerMaterial(DensityMaterial);
-  registerMaterial(ThermalConductivityMaterial);
-
+  registerMaterial(ThermalConductivityMaterial); 
   //registerInitialCondition(RndTrapezoidBoxIC);
+  registerMaterial(IonicMobility); 
 }
 
 void
