@@ -10,6 +10,7 @@
 # E2222: 245.8
 # E1212:  46.85
 # E1122:  36.08
+#Literature for MOOSE/BISON/MARMOT for this tutorial is found at https://inldigitallibrary.inl.gov/sti/5842301.pdf
 #
 
 [Mesh]
