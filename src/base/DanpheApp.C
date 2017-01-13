@@ -15,7 +15,7 @@
 #include "ContactApp.h"
 #include "FluidPropertiesApp.h"
 #include "HeatConductionApp.h"
-#include "LinearElasticityApp.h"
+//#include "LinearElasticityApp.h"
 #include "MiscApp.h"
 #include "NavierStokesApp.h"
 #include "PhaseFieldApp.h"
@@ -97,7 +97,7 @@ DanpheApp::DanpheApp(InputParameters parameters) :
   ContactApp::registerObjects(_factory);
   FluidPropertiesApp::registerObjects(_factory);
   HeatConductionApp::registerObjects(_factory);
-  LinearElasticityApp::registerObjects(_factory);
+  //LinearElasticityApp::registerObjects(_factory);
   MiscApp::registerObjects(_factory);
   NavierStokesApp::registerObjects(_factory);
   PhaseFieldApp::registerObjects(_factory);
@@ -122,7 +122,7 @@ DanpheApp::DanpheApp(InputParameters parameters) :
   ContactApp::associateSyntax(_syntax, _action_factory);
   FluidPropertiesApp::associateSyntax(_syntax, _action_factory);
   HeatConductionApp::associateSyntax(_syntax, _action_factory);
-  LinearElasticityApp::associateSyntax(_syntax, _action_factory);
+  //LinearElasticityApp::associateSyntax(_syntax, _action_factory);
   MiscApp::associateSyntax(_syntax, _action_factory);
   NavierStokesApp::associateSyntax(_syntax, _action_factory);
   PhaseFieldApp::associateSyntax(_syntax, _action_factory);
