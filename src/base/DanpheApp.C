@@ -65,6 +65,7 @@
 #include "IonicMobility.h"
 //Initial Conditions
 //#include "RndTrapezoidBoxIC.h"
+#include "MultiRectangleBoxIC.h"
 //timesteppers
 #include "TransientHalf.h"
 
@@ -188,6 +189,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerMaterial(DensityMaterial);
   registerMaterial(ThermalConductivityMaterial); 
   //registerInitialCondition(RndTrapezoidBoxIC);
+  registerInitialCondition(MultiRectangleBoxIC);
   registerMaterial(IonicMobility); 
 }
 
