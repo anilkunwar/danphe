@@ -9,7 +9,7 @@
 #include "MooseRandom.h"
 
 template<>
-InputParameters validParams<RndBoundingBoxIC>()
+InputParameters validParams<MultiRectangleBoxIC>()
 {
   InputParameters params = validParams<InitialCondition>();
   params.addClassDescription("Random noise with different min/max inside/outside of a bounding box");
@@ -30,9 +30,8 @@ InputParameters validParams<RndBoundingBoxIC>()
   return params;
 }
 
-RndBoundingBoxIC::RndBoundingBoxIC(const std::string & name,
-                                   InputParameters parameters) :
-    InitialCondition(name, parameters),
+MultiRectangleBoxIC::MultiRectangleBoxIC(const InputParameters & parameters) :
+    InitialCondition(parameters),
     _x1(parameters.get<Real>("x1")),
     _y1(parameters.get<Real>("y1")),
     _z1(parameters.get<Real>("z1")),
@@ -53,7 +52,7 @@ RndBoundingBoxIC::RndBoundingBoxIC(const std::string & name,
 }
 
 Real
-RndBoundingBoxIC::value(const Point & p)
+MultiRectangleBoxIC::value(const Point & p)
 {
   //Random number between 0 and 1
   Real rand_num = MooseRandom::rand();
