@@ -61,21 +61,21 @@
     variable = velocity_x
     component = x
     execute_on = timestep_end
-    darcy_pressure = pressure
+    ocular_pressure = pressure
   [../]
   [./velocity_y]
     type = DarcyVelocity
     variable = velocity_y
     component = y
     execute_on = timestep_end
-    darcy_pressure = pressure
+    ocular_pressure = pressure
   [../]
   [./velocity_z]
     type = DarcyVelocity
     variable = velocity_z
     component = z
     execute_on = timestep_end
-    darcy_pressure = pressure
+    ocular_pressure = pressure
   [../]
 []
 
