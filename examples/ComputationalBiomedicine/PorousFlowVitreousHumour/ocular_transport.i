@@ -35,8 +35,8 @@
 []
 
 [Kernels]
-  [./darcy_pressure]
-    type = DarcyPressure
+  [./ocular_pressure]
+    type = EyePressure
     variable = pressure
   [../]
 [./drug_diffusion]
@@ -49,7 +49,7 @@
     variable = c
   [../]
   [./drug_convection]
-    type = DarcyConvection
+    type = SpeciesConvection
     variable = c
     darcy_pressure = pressure
   [../]
