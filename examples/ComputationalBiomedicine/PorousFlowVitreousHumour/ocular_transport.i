@@ -15,7 +15,7 @@
   [./pressure]
   [../]
   [./c]
-    initial_condition = 300 # Start at room temperature
+    initial_condition = 300 # Start at room concentration (unit kg/m^3)
   [../]
 []
 
