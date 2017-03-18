@@ -57,21 +57,21 @@
 
 [AuxKernels]
   [./velocity_x]
-    type = DarcyVelocity
+    type = SpeciesVelocity
     variable = velocity_x
     component = x
     execute_on = timestep_end
     ocular_pressure = pressure
   [../]
   [./velocity_y]
-    type = DarcyVelocity
+    type = SpeciesVelocity
     variable = velocity_y
     component = y
     execute_on = timestep_end
     ocular_pressure = pressure
   [../]
   [./velocity_z]
-    type = DarcyVelocity
+    type = SpeciesVelocity
     variable = velocity_z
     component = z
     execute_on = timestep_end
