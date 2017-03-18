@@ -1,5 +1,8 @@
 #if we need to model concentration c, make e(-kd*t) =1 i.e. Neumann BC 
 # and for this we need to decrease the value of a_1 from 10^-8 to 10^-10
+# the mesh file is not uploaded in the github
+# Boundary conditions and initial conditions selection are very important for ocular pharmacokinetics
+# Drug pharmacokinetics will be added as a source/reaction term in the advection-diffusion-reaction equation
 
 [Mesh]
   #dim = 2
