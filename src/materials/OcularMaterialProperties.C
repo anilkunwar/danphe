@@ -20,10 +20,10 @@ InputParameters validParams<OcularMaterialProperties>()
 
   // Add a parameter to get the radius of the balls in the column (used later to interpolate permeability).
   //params.addParam<Real>("ball_radius", "The radius of the steel balls that are packed in the column.  Used to interpolate _permeability.");
-  params.addParam<Real>("z", "Ion charge number for the transported species.");
-  params.addParam<Real>("F", 96500, "Faraday's constant in C.");
-  params.addParam<Real>("R", 8.31, "Universal gas constant in J/mol K.");
-  params.addParam<Real>("T", 298, "Temperature of the liquid or solvent in K.");
+  //params.addParam<Real>("z", "Ion charge number for the transported species.");
+  //params.addParam<Real>("F", 96500, "Faraday's constant in C.");
+  //params.addParam<Real>("R", 8.31, "Universal gas constant in J/mol K.");
+  //params.addParam<Real>("T", 298, "Temperature of the liquid or solvent in K.");
   return params;
 }
 
