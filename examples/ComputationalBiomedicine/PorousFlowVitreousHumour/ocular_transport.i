@@ -14,7 +14,7 @@
 [Variables]
   [./pressure]
   [../]
-  [./temperature]
+  [./c]
     initial_condition = 300 # Start at room temperature
   [../]
 []
@@ -39,17 +39,18 @@
     type = DarcyPressure
     variable = pressure
   [../]
-  [./heat_conduction]
-    type = HeatConduction
-    variable = temperature
+[./drug_diffusion]
+    type = MatDiffusion
+    variable = c
+    D_name = diff_coefficient
   [../]
-  [./heat_conduction_time_derivative]
-    type = HeatCapacityConductionTimeDerivative
-    variable = temperature
+  [./c_dot]
+    type = TimeDerivative
+    variable = c
   [../]
-  [./heat_convection]
+  [./drug_convection]
     type = DarcyConvection
-    variable = temperature
+    variable = c
     darcy_pressure = pressure
   [../]
 []
@@ -102,15 +103,15 @@
     boundary = right
     function = outlet_function
   [../]
-  [./inlet_temperature]
+  [./inlet_concentration]
     type = DirichletBC
-    variable = temperature
+    variable = c
     boundary = left
     value = 350 # (C)
   [../]
-  [./outlet_temperature]
+  [./outlet_concentration]
     type = HeatConductionOutflow
-    variable = temperature
+    variable = c
     boundary = right
   [../]
 []
