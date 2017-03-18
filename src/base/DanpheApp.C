@@ -39,6 +39,8 @@
 #include "LaplacianStress.h"
 #include "INSMomentumGravity.h"
 #include "NernstPlanckConvection.h"
+#include "EyePressure.h"
+#include "SpeciesConvection.h"
 //Auxkernels
 #include "CurrentDensity.h"
 #include "ThermalComponent.h"
@@ -46,6 +48,7 @@
 #include "DriftVelocity.h"
 #include "BackstressComponent.h"
 #include "ThermalGradient.h"
+#include "SpeciesVelocity.h"
 //Boundary Conditions
 #include "RobinBCS.h"
 #include "FunctionRobinBCS.h"
@@ -63,6 +66,7 @@
 #include "DensityMaterial.h"
 #include "ThermalConductivityMaterial.h"
 #include "IonicMobility.h"
+#include "OcularMaterialProperties.h"
 //Initial Conditions
 //#include "RndTrapezoidBoxIC.h"
 #include "MultiRectangleBoxIC.h"
@@ -164,6 +168,8 @@ DanpheApp::registerObjects(Factory & factory)
   registerKernel(LaplacianStress);
   registerKernel(INSMomentumGravity);
   registerKernel(NernstPlanckConvection);
+  registerKernel(EyePressure);
+  registerKernel(SpeciesConvection);
   
 
   registerAux(CurrentDensity);
@@ -172,6 +178,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerAux(DriftVelocity);
   registerAux(BackstressComponent);
   registerAux(ThermalGradient);
+  registerAux(SpeciesVelocity);
 
   registerBoundaryCondition(RobinBCS);
   registerBoundaryCondition(FunctionRobinBCS);
@@ -191,6 +198,7 @@ DanpheApp::registerObjects(Factory & factory)
   //registerInitialCondition(RndTrapezoidBoxIC);
   registerInitialCondition(MultiRectangleBoxIC);
   registerMaterial(IonicMobility); 
+  registerMaterial(OcularMaterialProperties); 
 }
 
 void
