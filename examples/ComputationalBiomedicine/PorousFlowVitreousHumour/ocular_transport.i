@@ -2,13 +2,14 @@
 # and for this we need to decrease the value of a_1 from 10^-8 to 10^-10
 
 [Mesh]
-  #type = GeneratedMesh
-  dim = 2
-  nx = 10 #25
-  ny = 10 #25
-  xmax = 2.0e-4 #Length of the solder material
-  ymax = 2.0e-4 #height of the solder material
-[]
+  #dim = 2
+  type = FileMesh
+  file = EyeMesh_1.unv
+  #block_id = '1'
+  block_name = 'VitreousVolume'
+  #boundary_id = '1 2 3'
+  boundary_name = 'Hyaloid Lens Retina'
+ []
 
 [Variables]
   [./T]
