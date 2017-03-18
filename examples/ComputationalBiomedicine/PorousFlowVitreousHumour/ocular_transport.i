@@ -51,7 +51,7 @@
   [./drug_convection]
     type = SpeciesConvection
     variable = c
-    darcy_pressure = pressure
+    ocular_pressure = pressure # variable input into kernel = main variable as input file name 
   [../]
 []
 
