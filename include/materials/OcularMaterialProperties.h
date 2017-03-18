@@ -61,10 +61,10 @@ protected:
 
   /// The radius of the balls in the column
   // const Real & _ball_radius;
-  const Real & _z;
-  const Real & _F;
-  const Real & _R;
-  const Real & _T;
+  //const Real & _z;
+  //const Real & _F;
+  //const Real & _R;
+  //const Real & _T;
 
 
   
