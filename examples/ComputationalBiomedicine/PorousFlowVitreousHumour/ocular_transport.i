@@ -118,9 +118,9 @@
 
 [Materials]
   [./column]
-    type = PackedColumn
+    type = OcularMaterialProperties #for uniform and isotropic properties
     block = 0
-    sphere_radius = 1
+    #sphere_radius = 1
   [../]
 []
 
