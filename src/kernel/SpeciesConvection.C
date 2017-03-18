@@ -19,7 +19,7 @@ InputParameters validParams<SpeciesConvection>()
 {
   InputParameters params = validParams<Kernel>();
 
-  params.addRequiredCoupledVar("darcy_pressure", "The variable representing the pressure.");
+  params.addRequiredCoupledVar("ocular_pressure", "The variable representing the pressure.");
 
   return params;
 }
@@ -28,11 +28,11 @@ SpeciesConvection::SpeciesConvection(const InputParameters & parameters) :
     Kernel(parameters),
 
     // Couple to the gradient of the pressure
-    _pressure_gradient(coupledGradient("darcy_pressure")),
+    _pressure_gradient(coupledGradient("ocular_pressure")),
 
     // Save off the coupled variable identifier for use in
     // computeQpOffDiagJacobian
-    _pressure_var(coupled("darcy_pressure")),
+    _pressure_var(coupled("ocular_pressure")),
 
     // Grab necessary material properties
     _permeability(getMaterialProperty<Real>("permeability")),
