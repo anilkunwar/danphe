@@ -67,6 +67,8 @@
 #include "ThermalConductivityMaterial.h"
 #include "IonicMobility.h"
 #include "OcularMaterialProperties.h"
+#include "DiffusivityMaterial.h"
+#include "SolubilityMaterial.h"
 //Initial Conditions
 //#include "RndTrapezoidBoxIC.h"
 #include "MultiRectangleBoxIC.h"
@@ -199,6 +201,8 @@ DanpheApp::registerObjects(Factory & factory)
   registerInitialCondition(MultiRectangleBoxIC);
   registerMaterial(IonicMobility); 
   registerMaterial(OcularMaterialProperties); 
+  registerMaterial(DiffusivityMaterial); 
+  registerMaterial(SolubilityMaterial);  
 }
 
 void
