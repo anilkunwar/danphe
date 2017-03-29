@@ -19,8 +19,10 @@ int main(int argc, char *argv[])
   // This creates dynamic memory that we're responsible for deleting
   MooseApp * app = AppFactory::createApp("DanpheApp", argc, argv);
 
-  app->legacyUoInitializationDefault() = false;
-  app->legacyUoAuxComputationDefault() = false;
+  //app->legacyUoInitializationDefault() = false;
+  //app->legacyUoAuxComputationDefault() = false;
+  app->setCheckUnusedFlag(true);
+  app->setErrorOverridden();
 
   // Execute the application
   app->run();
