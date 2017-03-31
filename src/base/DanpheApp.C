@@ -41,6 +41,8 @@
 #include "NernstPlanckConvection.h"
 #include "EyePressure.h"
 #include "SpeciesConvection.h"
+#include "SourceSolubility.h"
+
 //Auxkernels
 #include "CurrentDensity.h"
 #include "ThermalComponent.h"
@@ -172,6 +174,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerKernel(NernstPlanckConvection);
   registerKernel(EyePressure);
   registerKernel(SpeciesConvection);
+  registerKernel(SourceSolubility);
   
 
   registerAux(CurrentDensity);
