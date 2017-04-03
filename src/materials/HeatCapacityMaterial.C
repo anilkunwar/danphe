@@ -39,7 +39,7 @@ HeatCapacityMaterial::HeatCapacityMaterial(const InputParameters & parameters) :
     // Declare that this material is going to provide a RealGradient
     // valued property named "convection_velocity" that Kernels can use.
     //_convection_velocity(declareProperty<RealGradient>("convection_velocity")),
-    //write a unique name for convection velocity
+    //write a unique name for convection velocity as there are multiple material objects in a same block that depend on same independent variable T
     _convection_velocity(declareProperty<RealGradient>("spec_convection_velocity")),
 
     // Get the reference to the variable coupled into this Material
