@@ -39,7 +39,10 @@ ThermalConductivityMaterial::ThermalConductivityMaterial(const InputParameters &
 
     // Declare that this material is going to provide a RealGradient
     // valued property named "convection_velocity" that Kernels can use.
-    _convection_velocity(declareProperty<RealGradient>("convection_velocity")),
+       //_convection_velocity(declareProperty<RealGradient>("convection_velocity")),
+    //As there are multiple material objects in a same block dependent on same independent variable T,
+    // give a unique name to the declared property
+     _convection_velocity(declareProperty<RealGradient>("thermal_convection_velocity")),
 
     // Get the reference to the variable coupled into this Material
     _T_grad(isCoupled("T_grad") ? coupledGradient("T_grad") : _grad_zero),
