@@ -1,1 +1,1 @@
-# Materials src codes for MOOSE framework applciation danphe
+# Materials src codes for MOOSE framework application danphe
