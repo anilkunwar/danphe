@@ -30,6 +30,7 @@
 #include "SplitCHVoltage.h"
 //#include "GasGeneration.h"
 #include "MultiSoretDiffusion.h"
+#include "MobilitySoretDiffusion.h"
 #include "ThermalConvection.h"
 #include "SinkTerm.h"
 #include "ReactionTerm.h"
@@ -164,6 +165,7 @@ DanpheApp::registerObjects(Factory & factory)
   //registerKernel(GasGeneration);
   //registerKernel(CoupledPotential);
   registerKernel(MultiSoretDiffusion);
+  registerKernel(MobilitySoretDiffusion);
   registerKernel(ThermalConvection);
   registerKernel(SinkTerm);
   registerKernel(ReactionTerm);
