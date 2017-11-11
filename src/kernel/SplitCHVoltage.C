@@ -8,6 +8,7 @@
 //This kernel adds electromigration flux in the Cahn-Hilliard Equation
 //Mathematically it is J_em=c*(D/kT)*z*eE
 #include "SplitCHVoltage.h"
+#include "MooseVariable.h"
 template<>
 InputParameters validParams<SplitCHVoltage>()
 {
