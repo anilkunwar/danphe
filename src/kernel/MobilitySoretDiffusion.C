@@ -5,6 +5,7 @@
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
 #include "MobilitySoretDiffusion.h"
+#include "MooseVariable.h"
 template <>
 InputParameters
 validParams<MobilitySoretDiffusion>()
