@@ -31,6 +31,7 @@
 //#include "GasGeneration.h"
 #include "MultiSoretDiffusion.h"
 #include "MobilitySoretDiffusion.h"
+#include "MobilityVoltageDiffusion.h"
 #include "ThermalConvection.h"
 #include "SinkTerm.h"
 #include "ReactionTerm.h"
@@ -178,6 +179,7 @@ DanpheApp::registerObjects(Factory & factory)
   registerKernel(EyePressure);
   registerKernel(SpeciesConvection);
   registerKernel(SourceSolubility);
+  registerKernel(MobilityVoltageDiffusion);
   
 
   registerAux(CurrentDensity);
