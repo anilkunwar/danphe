@@ -5,6 +5,11 @@
 /*             See LICENSE for full restrictions                */
 /****************************************************************/
 #include "MobilityVoltageDiffusion.h"
+#include "MooseVariable.h" 
+// As the Kernel uses "_var.number()),", MooseVariable.h should be included to prevent the following error
+//error: invalid use of incomplete  type "class MooseVariable"
+//https://groups.google.com/forum/#!msg/moose-users/alUZJJQkdI0/cbCp2JvsBwAJ
+//https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!msg/moose-users/Zy_Ul5dfzcQ/wIT3R4LsBwAJ
 template <>
 InputParameters
 validParams<MobilityVoltageDiffusion>()
