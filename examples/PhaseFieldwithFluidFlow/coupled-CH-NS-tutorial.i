@@ -1,5 +1,5 @@
 # Applicable for 2d axisymmetric model
-# https://groups.google.com/forum/#!topic/moose-users/ak6-IIV7HVo
+# The real constants and materials constants are described as Protected type in SurfaceTension.h header file
 [GlobalParams]
   gravity = '0 0.0 0'
   supg = true
