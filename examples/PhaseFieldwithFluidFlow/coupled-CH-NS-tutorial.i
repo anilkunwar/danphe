@@ -1,5 +1,5 @@
 # Applicable for 2d axisymmetric model
-#https://groups.google.com/forum/#!topic/moose-users/ak6-IIV7HVo
+# https://groups.google.com/forum/#!topic/moose-users/ak6-IIV7HVo
 [GlobalParams]
   gravity = '0 0.0 0'
   supg = true
