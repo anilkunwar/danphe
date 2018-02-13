@@ -1,4 +1,5 @@
 # Applicable for 2d axisymmetric model
+# Illustrates on how a drop spreads on impacting a rigid bottom wall
 # The real constants and materials constants are described as Protected type in SurfaceTension.h header file
 # Authors: Vitaliy Yurkiv and Anil Kunwar
 [GlobalParams]
