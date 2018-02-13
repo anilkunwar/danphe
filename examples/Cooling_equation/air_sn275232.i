@@ -1,4 +1,4 @@
-# Anil Kunwar
+# Author: Anil Kunwar
 # 2016 -10 - 23 Sunday
 # Modelling the air cooling of liquid solders upto the melting point from an initial temperature of 275 degree C
 # http://mooseframework.org/wiki/MooseSystems/Functions/
