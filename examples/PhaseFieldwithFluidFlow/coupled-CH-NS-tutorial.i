@@ -1,4 +1,4 @@
-#Test example developed by Vitaliy Yurkiv and modified by Anil Kunwar (Applicable for 2d axisymmetric model)
+# Applicable for 2d axisymmetric model
 #https://groups.google.com/forum/#!topic/moose-users/ak6-IIV7HVo
 [GlobalParams]
   gravity = '0 0.0 0'
