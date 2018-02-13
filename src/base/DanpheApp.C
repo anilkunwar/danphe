@@ -44,6 +44,8 @@
 #include "EyePressure.h"
 #include "SpeciesConvection.h"
 #include "SourceSolubility.h"
+#include "CHConvection.h"
+#include "SurfaceTension.h"
 
 //Auxkernels
 #include "CurrentDensity.h"
@@ -180,6 +182,8 @@ DanpheApp::registerObjects(Factory & factory)
   registerKernel(SpeciesConvection);
   registerKernel(SourceSolubility);
   registerKernel(MobilityVoltageDiffusion);
+   registerKernel(CHConvection);
+   registerKernel(SurfaceTension);
   
 
   registerAux(CurrentDensity);
