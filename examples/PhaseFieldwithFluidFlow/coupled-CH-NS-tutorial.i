@@ -151,6 +151,8 @@
 #   y_vel_forcing_func = vel_y_ff
  [../]
 
+# The updated INSMomentumTimeDerivative kernel in moose can now take :"density name" from Materials block
+# So, we seek to obtain rho from DerivativeParsedMaterial material class
  [./x_momentum_time]
    type = INSMomentumTimeDerivative
    variable = vel_x 
