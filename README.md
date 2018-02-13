@@ -12,3 +12,4 @@ The "examples" directory contains the tests on:
 4. Phase field method
 5. Mechanics
 6. Ocular drug delivery - Biomedicine and Biomechanics
+7. Navier-stokes Equations
