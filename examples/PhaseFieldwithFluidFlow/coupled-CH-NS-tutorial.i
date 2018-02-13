@@ -1,6 +1,8 @@
 # Applicable for 2d axisymmetric model
 # Illustrates on how a drop spreads on impacting a rigid bottom wall
 # The real constants and materials constants are described as Protected type in SurfaceTension.h header file
+# Kernels in danphe app : CHConvection and SurfaceTension
+# Other source codes are in the core MOOSE Framework over which danphe resides.
 # Authors: Vitaliy Yurkiv and Anil Kunwar
 [GlobalParams]
   gravity = '0 0.0 0'
