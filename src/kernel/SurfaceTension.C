@@ -25,9 +25,10 @@ InputParameters validParams<SurfaceTension>()
   // Add a required parameter.  If this isn't provided in the input file MOOSE will error.
   //params.addRequiredParam<MaterialPropertyName>("c_sat", "The saturated solubility used with the kernel");
   //params.addRequiredParam<Real>("k_chem", "the product of chemical reaction constant and ration s/v");
-  params.addParam<MaterialPropertyName>("func_name", "fn", "The name of the function");
+  params.addParam<MaterialPropertyName>("function_name", "func_name", "The name of the function");
   //params.addRequiredParam<MaterialPropertyName>("func_name", "The name of the function");
-  params.addParam<Real>("coef", 1.0, "Coefficent ($\\sigma$) multiplier for the coupled force term.");
+  //params.addParam<Real>("coef", 1.0, "Coefficent ($\\sigma$) multiplier for the coupled force term.");
+  params.addParam<Real>("sigmacoef", 1.0, "Coefficent ($\\sigma$) multiplier for the coupled force term.");
   //params.addRequiredParam<Real>("coef",  "Coefficent ($\\sigma$) multiplier for the coupled force term.");
 
 
@@ -50,8 +51,9 @@ SurfaceTension::SurfaceTension(const InputParameters & parameters) :
     // Grab necessary material properties
     //_cs(getMaterialProperty<Real>("c_sat")),
     //_kc(getParam<Real>("k_chem"))
-    _fn(getMaterialProperty<Real>("func_name")),
-    _coef(getParam<Real>("coef"))
+    _gammafn(getMaterialProperty<Real>("function_name")),
+    //_coef(getParam<Real>("coef"))
+    _sigmazero(getParam<Real>("sigmacoef"))
     //_kb(getParam<Real>("coef"))
 {
 }
@@ -61,7 +63,7 @@ SurfaceTension::computeQpResidual()
 {
   //return _kc *(_cs[_qp]- _u[_qp]) * _test[_i][_qp];
   //return -_kc * _u[_qp] * _test[_i][_qp];
-  return -_coef * _fn[_qp] * _v[_qp] * _test[_i][_qp];
+  return -_sigmazero * _gammafn[_qp] * _v[_qp] * _test[_i][_qp];
 }
 
 Real
@@ -85,6 +87,6 @@ SurfaceTension::computeQpOffDiagJacobian(unsigned int jvar)
 //}
 {
   if (jvar == _v_var)
-    return -_coef * _fn[_qp] * _phi[_j][_qp] * _test[_i][_qp];
+    return -_sigmazero * _gammafn[_qp] * _phi[_j][_qp] * _test[_i][_qp];
   return 0.0;
 }
