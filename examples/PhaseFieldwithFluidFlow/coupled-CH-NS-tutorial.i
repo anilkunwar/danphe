@@ -232,8 +232,10 @@
     #type = MyConvection
     type = CHConvection
      variable = c
-	velocity_x = vel_x
-	velocity_y = vel_y
+     #velocity_x = vel_x
+     #velocity_y = vel_y
+     u = vel_x
+     v = vel_y
  [../]
 
 []
