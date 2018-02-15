@@ -190,8 +190,10 @@
     type = SurfaceTension
     variable = vel_x
     v = c
-    func_name = F_s
-    coef = 1
+    #func_name = F_s
+    #coef = 1
+    function_name = F_s
+    sigmacoef = 1
   [../]
 
   [./force_y]
@@ -199,6 +201,7 @@
     type = SurfaceTension
     variable = vel_y
     v = c
+    # func_name = F_s
     function_name = F_s
     #coef = 1
     sigmacoef = 1
@@ -395,6 +398,7 @@
     variable = w
     boundary = 'top bottom left right'
     flux = '0.0 0.0 0.0'
+    # flux = '0.7 0.7 0.0' #(an illustration on non-zero flux BC)
     mob_name = 1
     args = ''
   [../]
@@ -433,7 +437,7 @@
     initial_adaptivity    = 2             # Number of times mesh is adapted to initial condition
     refine_fraction       = 0.7           # Fraction of high error that will be refined
     coarsen_fraction      = 0.1           # Fraction of low error that will coarsened
-    max_h_level           = 3             # Max number of refinements used, starting from initial mesh (before uniform refinement)
+    max_h_level           = 4 #3             # Max number of refinements used, starting from initial mesh (before uniform refinement)
     weight_names          = 'c	 '
     weight_values         = '1  '
   [../]
