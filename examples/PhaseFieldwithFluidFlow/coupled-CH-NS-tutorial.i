@@ -199,8 +199,9 @@
     type = SurfaceTension
     variable = vel_y
     v = c
-    func_name = F_s
-    coef = 1
+    function_name = F_s
+    #coef = 1
+    sigmacoef = 1
   [../]
 
   #########
