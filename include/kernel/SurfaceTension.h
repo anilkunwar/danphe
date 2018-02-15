@@ -58,7 +58,8 @@ protected:
   //Real _Qh;
   //Real _kc;
   //Real _coef;
-  Real _sigma0;
+  //Real _sigma0;
+  Real _sigmazero;
 };
 
 #endif //SURFACETENSION_H
