@@ -52,7 +52,7 @@ protected:
   //const VariableGradient & _grad_T;
 
   /// Surface tension material property
-  const MaterialProperty<Real> & __gammafn;
+  const MaterialProperty<Real> & _gammafn;
 
   /// Will be set from the input file
   //Real _Qh;
