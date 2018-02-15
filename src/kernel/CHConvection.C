@@ -52,9 +52,9 @@ CHConvection::CHConvection(const InputParameters & parameters)
 //	_x_vel_var(coupled("velocity_x")),
 //    	_y_vel_var(coupled("velocity_y")),
 //	_z_vel_var(coupled("velocity_z"))
-	_u_vel_var(coupled("velocity_x")),
-    	_v_vel_var(coupled("velocity_y")),
-	_w_vel_var(coupled("velocity_z"))
+	_u_vel_var(coupled("u")),
+    	_v_vel_var(coupled("v")),
+	_w_vel_var(coupled("w"))
 {
 //  _velocity(0) = _velocity_x[_qp];
  // _velocity(1) = _velocity_y[_qp];
