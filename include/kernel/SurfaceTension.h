@@ -52,12 +52,13 @@ protected:
   //const VariableGradient & _grad_T;
 
   /// Surface tension material property
-  const MaterialProperty<Real> & _fn;
+  const MaterialProperty<Real> & __gammafn;
 
   /// Will be set from the input file
   //Real _Qh;
   //Real _kc;
-  Real _coef;
+  //Real _coef;
+  Real _sigma0;
 };
 
 #endif //SURFACETENSION_H
