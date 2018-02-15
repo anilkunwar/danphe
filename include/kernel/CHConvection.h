@@ -79,14 +79,22 @@ protected:
   RealVectorValue _velocity;
   
    /// Coupled velocity variables
-  const VariableValue & _velocity_x;
-  const VariableValue & _velocity_y;
-  const VariableValue & _velocity_z;
+  //const VariableValue & _velocity_x;
+  //const VariableValue & _velocity_y;
+  //const VariableValue & _velocity_z;
+  /// Coupled velocity variables (syntax similar to INSBase.h)
+  const VariableValue & _u_vel;
+  const VariableValue & _v_vel;
+  const VariableValue & _w_vel;
 
   /// Coupled velocity identifiers
-  unsigned int _x_vel_var;
-  unsigned int _y_vel_var;
-  unsigned int _z_vel_var;
+ // unsigned int _x_vel_var;
+ // unsigned int _y_vel_var;
+  // unsigned int _z_vel_var;
+  /// Coupled velocity identifiers
+  unsigned int _u_vel_var;
+  unsigned int _v_vel_var;
+  unsigned int _w_vel_var;
 };
 
 #endif // CHCONVECTION_H
