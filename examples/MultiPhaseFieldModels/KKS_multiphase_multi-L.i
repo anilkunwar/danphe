@@ -1,6 +1,10 @@
 #
 # This test is for the 3-phase KKS model
-#
+# L1 and L2 are the two different mobilities associated with two AC kernels and L1 and L2 are functions of 
+# phase field variable eta1,eta2 and eta3.
+# As MOOSE AC kernels search for mobility name "L", exclusive writing the phrase mob_name = L1 and mob_name=L2 is necessary
+# for all Allen-Cahn Kernels
+# http://mooseframework.org/docs/doxygen/modules/classACBulk.html
 
 [Mesh]
   type = GeneratedMesh
