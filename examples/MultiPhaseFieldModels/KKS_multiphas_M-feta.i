@@ -1,6 +1,6 @@
 #
 # This test is for the 3-phase KKS model
-#
+# The Allen-Cahn Mobility (L) is defined as function of Allen-Cahn variables eta1, eta2 and eta3.
 
 [Mesh]
   type = GeneratedMesh
