@@ -1,447 +1,496 @@
-# Applicable for 2d axisymmetric model
-# Illustrates on how a drop spreads on impacting a rigid bottom wall
-# The real constants and materials constants are described as Protected type in SurfaceTension.h header file
-# Kernels in danphe app : CHConvection  and SurfaceTension
-# Other source codes are in the core MOOSE Framework over which danphe resides.
-# Author:  Anil Kunwar
-[GlobalParams]
-  gravity = '0 0.0 0'
-  supg = true
-  pspg = true
-  convective_term = true
-  integrate_p_by_parts = true
-  transient_term = true
-  laplace = true
-  u = vel_x
-  v = vel_y
-  p = p
-  alpha = 1
-  enable_jit=false
-[]
-
+#
+# This test is for the 3-phase KKS model
+#
 
 [Mesh]
   type = GeneratedMesh
   dim = 2
-  nx = 35
-  ny = 35
+  nx = 20
+  ny = 20
   nz = 0
   xmin = 0
+  xmax = 40
   ymin = 0
+  ymax = 40
   zmin = 0
-  xmax = 5.0
-  ymax = 5.0
   zmax = 0
   elem_type = QUAD4
 []
 
+[BCs]
+  [./Periodic]
+    [./all]
+      auto_direction = 'x y'
+    [../]
+  [../]
+[]
+
+[AuxVariables]
+  [./Energy]
+    order = CONSTANT
+    family = MONOMIAL
+  [../]
+[]
 
 [Variables]
-# Velocity in radial (r) direction
-  [./vel_x]
-    order = FIRST
-    family = LAGRANGE
-    [./InitialCondition]
-	      type = FunctionIC
-        function = vel_x_IC
-    [../]
-  [../]
-
-# Velocity in axial (z) direction
-  [./vel_y]
-    order = FIRST
-    family = LAGRANGE
-    [./InitialCondition]
-	      type = FunctionIC
-        function = vel_y_IC
-    [../]
- [../]
-
-# pressure for the NS module
-  [./p]
+  # concentration
+  [./c]
     order = FIRST
     family = LAGRANGE
   [../]
 
-#########
-# phase-field module variables: phase(c) and chemical potential (w)
-#########
+  # order parameter 1
+  [./eta1]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+
+  # order parameter 2
+  [./eta2]
+    order = FIRST
+    family = LAGRANGE
+  [../]
+
+  # order parameter 3
+  [./eta3]
+    order = FIRST
+    family = LAGRANGE
+    initial_condition = 0.0
+  [../]
+
+  # phase concentration 1
   [./c1]
     order = FIRST
     family = LAGRANGE
-    [./InitialCondition]
-	      type = FunctionIC
-        function = c_IC
-    [../]
+    initial_condition = 0.2
   [../]
 
-  [./w]
+  # phase concentration 2
+  [./c2]
     order = FIRST
     family = LAGRANGE
+    initial_condition = 0.5
+  [../]
+
+  # phase concentration 3
+  [./c3]
+    order = FIRST
+    family = LAGRANGE
+    initial_condition = 0.8
+  [../]
+
+  # Lagrange multiplier
+  [./lambda]
+    order = FIRST
+    family = LAGRANGE
+    initial_condition = 0.0
   [../]
 []
 
-# setting up 2D axisymmetric calculations
-[Problem]
-  type          = FEProblem     # This is the "normal" type of Finite Element Problem in MOOSE
-  coord_type    = RZ            # Axisymmetric RZ
-  rz_coord_axis = Y             # Which axis the symmetry is around
-[]
-
-
-[Functions]
-# concentration initial conditions
-  [./c_IC]
-    type = ParsedFunction
-    value = 'r:=(((x-0.0)/1.0)^2+((y-1.0)/1.0)^2-0);if(r<=1,1.0,0)'
+[ICs]
+  [./eta1]
+    variable = eta1
+    type = SmoothCircleIC
+    x1 = 20.0
+    y1 = 20.0
+    radius = 10
+    invalue = 0.9
+    outvalue = 0.1
+    int_width = 4
   [../]
-# velocity in X direction initial condition, in this problem it is zero
-  [./vel_x_IC]
-    type = ParsedFunction
-    value = 'r:=(((x-0.0)/1.0)^2+((y-1.0)/1.0)^2-0);if(r<=1,0.0,0)'
+  [./eta2]
+    variable = eta2
+    type = MultiBoundingBoxIC
+    corners = '0.0 0.0 0.0'
+    opposite_corners = '40.0 20.0 0.0'
+    inside = '1.0'
+    outside = '0.1'
+    #int_width = 4
   [../]
-# velocity in Y direction initial conditions, vertical velocity is applied
-  [./vel_y_IC]
-    type = ParsedFunction
-    value = 'r:=(((x-0.0)/1.0)^2+((y-1.0)/1.0)^2-0);if(r<=1,-0.1,0)'
-  [../]
-
-[]
-
-
-
-[AuxVariables]
-[./time]
-[../]
-  [./x_coor]
-  [../]
-  [./y_coor]
-  [../]
-[]
-
-  [AuxKernels]
-    [./time]
-      type = FunctionAux
-      variable = time
-      function = t
-    [../]
-    [./x_coor]
-    type = FunctionAux
-    variable = x_coor
-    function = x
-  [../]
-        [./y_coor]
-      type = FunctionAux
-      variable = y_coor
-      function = y
-    [../]
-
-[]
-
-
-[Kernels]
-
-#########
-# 2D axisymmetric Navier-Stokes kernels: mass, momentum time and space
-#########
-# mass
- [./mass]
-  type = INSMassRZ
-   variable = p
-   u = vel_x
-   v = vel_y
-   p = p
-#   x_vel_forcing_func = vel_x_ff
-#   y_vel_forcing_func = vel_y_ff
- [../]
-
-# The updated INSMomentumTimeDerivative kernel in moose can now take :"density name" from Materials block
-# So, we seek to obtain rho from DerivativeParsedMaterial material class
- [./x_momentum_time]
-   type = INSMomentumTimeDerivative
-   variable = vel_x 
-   #rho_name = rho
- [../]
- [./y_momentum_time]
-   type = INSMomentumTimeDerivative
-   variable = vel_y
-   #rho_name = rho
- [../]
-
- # x-momentum, space
- [./x_momentum_space]
-  type = INSMomentumLaplaceFormRZ
-   variable = vel_x
-   component = 0
-#   forcing_func = vel_x_ff
- [../]
-
- # y-momentum, space
- [./y_momentum_space]
-   type = INSMomentumLaplaceFormRZ
-   variable = vel_y
-   component = 1
-#   forcing_func = vel_y_ff
- [../]
-
- # coupled force, we need it to pass surface tension from the PFM to the NS module. It is needed for both x and y vel
-  [./force_x]
-    #type = CoupledForce
-    type = SurfaceTension
-    variable = vel_x
-    v = c
-    #func_name = F_s
-    #coef = 1
-    function_name = F_s
-    sigmacoef = 1
-  [../]
-
-  [./force_y]
-    #type = CoupledForce
-    type = SurfaceTension
-    variable = vel_y
-    v = c
-    # func_name = F_s
-    function_name = F_s
-    #coef = 1
-    sigmacoef = 1
-  [../]
-
-  #########
-  # the PFM kernels
-  #########
-  [./c_res]
-    type = SplitCHParsed
+  [./c]
     variable = c
-    f_name = F
-    kappa_name = kappa_c
-    w = w
+    type = SmoothCircleIC
+    x1 = 20.0
+    y1 = 20.0
+    radius = 10
+    invalue = 0.2
+    outvalue = 0.5
+    int_width = 2
   [../]
-
-  [./w_res]
-    type = SplitCHWResAniso     # SplitCHWRes
-    variable = w
-    mob_name = M_c
-  [../]
-  [./time]
-    type = CoupledTimeDerivative
-    variable = w
-    v = c
-  [../]
-
-# the term to add advection velocity to the Cahn-Hilliard eq. u*nabla(C):
-# dC/dt+u*nabla(C)=(1/Pe)*(M nabla(w)), Pe is the Peclet number Pe = L*u/(M*w), L is the characteristic lenght
-  [./conv]
-    #type = MyConvection
-    type = CHConvection
-     variable = c
-     #velocity_x = vel_x
-     #velocity_y = vel_y
-     u = vel_x
-     v = vel_y
- [../]
-
 []
 
 
 [Materials]
+  # simple toy free energies
+  [./f1]
+    type = DerivativeParsedMaterial
+    f_name = F1
+    args = 'c1'
+    function = '20*(c1-0.2)^2'
+  [../]
+  [./f2]
+    type = DerivativeParsedMaterial
+    f_name = F2
+    args = 'c2'
+    function = '20*(c2-0.5)^2'
+  [../]
+  [./f3]
+    type = DerivativeParsedMaterial
+    f_name = F3
+    args = 'c3'
+    function = '20*(c3-0.8)^2'
+  [../]
 
-#########
-# setting up density and viscosity for the NS module
-#########
-# rho_water = 1000 kg/m^3
-# rho_air = 1.29 kg/m3
-  [./rho]
-     type = DerivativeParsedMaterial
-      args = 'c'
-      f_name = rho #'rho'
-      constant_names        = 'rho_l    rho_s    lambda_rho'
-      constant_expressions  = '1         1         1.29e-3'
+  # Switching functions for each phase
+  # h1(eta1, eta2, eta3)
+  [./h1]
+    type = SwitchingFunction3PhaseMaterial
+    eta_i = eta1
+    eta_j = eta2
+    eta_k = eta3
+    f_name = h1
+  [../]
+  # h2(eta1, eta2, eta3)
+  [./h2]
+    type = SwitchingFunction3PhaseMaterial
+    eta_i = eta2
+    eta_j = eta3
+    eta_k = eta1
+    f_name = h2
+  [../]
+  # h3(eta1, eta2, eta3)
+  [./h3]
+    type = SwitchingFunction3PhaseMaterial
+    eta_i = eta3
+    eta_j = eta1
+    eta_k = eta2
+    f_name = h3
+  [../]
 
-      function = '1*((c)^2)^0.5+1*(1-((c)^2)^0.5)*lambda_rho'
-      derivative_order = 0
-      outputs = exodus
-      output_properties = 'rho'
-      #material_property_names = 'rho'
-    [../]
-# mu_water = 1.0*10^-3 kg/(m s)
-# mu_air = 1.79*10^-5 kg/(m s)
-    [./mu]
-       type = DerivativeParsedMaterial
-        args = 'c'
-        f_name = 'mu'
-        constant_names        = 'mu_l   mu_s    lambda_mu'
-        constant_expressions  = '1      10       1.79e-2'
-        function = '1*((c)^2)^0.5+1*(1-((c)^2)^0.5)*lambda_mu'
-        derivative_order = 0
-        outputs = exodus
-        output_properties = 'mu'
-      [../]
-# the NS forcing function: surface tension, coef = 1/Re*Ca
-      [./F_s]
-        type = DerivativeParsedMaterial
-        f_name = F_s
-        args = 'c w'
-        material_property_names = 'F  dF:=D[F(c),c,]'
-        constant_names =       ' coef    '
-        constant_expressions = '5.0e1   '
-        function = 'coef*w*c^2*(1-c)^2'
-        derivative_order = 0
-        outputs = exodus
-        output_properties = F_s
-      [../]
+  # Coefficients for diffusion equation
+  [./Dh1]
+    type = DerivativeParsedMaterial
+    material_property_names = 'D h1'
+    function = D*h1
+    f_name = Dh1
+  [../]
+  [./Dh2]
+    type = DerivativeParsedMaterial
+    material_property_names = 'D h2'
+    function = D*h2
+    f_name = Dh2
+  [../]
+  [./Dh3]
+    type = DerivativeParsedMaterial
+    material_property_names = 'D h3'
+    function = D*h3
+    f_name = Dh3
+  [../]
 
-# anisotropic mobility, active only at the interface meaning no bulk mobility
-    [./c_aniso]
-      type = ConstantAnisotropicMobility
-      tensor = '1.0   0.0   0.0
-                0.0   1.0   0.0
-                0.0   0.0   0.0'
-      M_name = c_aniso_tensor
-      outputs = exodus
-    [../]
-    [./var_dependence_c_tensor_1]
-      type = DerivativeParsedMaterial
-      args = 'c time '
-      f_name = c_var_dep_1
-      constant_names =       ' M_0     '
-      constant_expressions = '10.0   '
-      function = 'M_0*c^2*(1-c)^2'
-      derivative_order = 0
-      outputs = exodus
-    [../]
-    [./c_mobility_tensor]
-      type = CompositeMobilityTensor
-      M_name =  M_c
-      tensors = 'c_aniso_tensor'
-      weights = 'c_var_dep_1   '
-      args = 'c'
-      outputs = exodus
-      output_properties = M_c
-    [../]
-# gradient energy coefficient
-    [./kappa_c]
-    		type = DerivativeParsedMaterial
-    		f_name = kappa_c
-    		args = 'c time'
-    		constant_names = 'kappa_c_0'
-    		constant_expressions = '0.002'
-    		function = 'kappa_c_0'
-    		derivative_order = 0
-    		outputs = exodus
-    		output_properties = kappa_c
-      [../]
-# free energy of the system
-      [./free_energy]
-        type = DerivativeParsedMaterial
-        f_name = F
-        args = 'c'
-        constant_names = 'barr_height  cv_eq'
-        constant_expressions = '0.25      0'
-        function = 16*barr_height*(c-cv_eq)^2*(1-cv_eq-c)^2
-        derivative_order = 2
-        outputs = exodus
-        output_properties = F
-      [../]
+  # Barrier functions for each phase
+  [./g1]
+    type = BarrierFunctionMaterial
+    g_order = SIMPLE
+    eta = eta1
+    function_name = g1
+  [../]
+  [./g2]
+    type = BarrierFunctionMaterial
+    g_order = SIMPLE
+    eta = eta2
+    function_name = g2
+  [../]
+  [./g3]
+    type = BarrierFunctionMaterial
+    g_order = SIMPLE
+    eta = eta3
+    function_name = g3
+  [../]
+
+  # constant properties
+  [./constants]
+    type = GenericConstantMaterial
+    prop_names  = 'L   kappa  D'
+    prop_values = '0.7 1.0    1'
+  [../]
 []
 
-[BCs]
-
-#########
-# BC for the NS eq
-#########
-[./u_axis]
-  type = DirichletBC
-  boundary = 'left bottom'
-  variable = vel_x
-  value = 0
-[../]
-[./v_no_slip]
-  type = DirichletBC
-  boundary = 'bottom'
-  variable = vel_y
-  value = 0
-[../]
-
-[./u_domain]
-  type = NeumannBC
-  boundary = 'top right'
-  variable = vel_x
-  value = 0
-[../]
-[./v_domain]
-  type = NeumannBC
-  boundary = 'left top right'
-  variable = vel_y
-  value = 0
-[../]
-
-#########
-# BC for the PFM
-#########
-
-
-# no flux of c, in this case contact angle is 90 degree, n*M*nabla(C)=0
-  [./c_bottom_CHF_BC]
-    type = CahnHilliardFluxBC
+[Kernels]
+  #Kernels for diffusion equation
+  [./diff_time]
+    type = TimeDerivative
     variable = c
-    boundary = bottom
-    flux = '0.0 0.0 0.0'
-    mob_name = 1
-    args = ''
+  [../]
+  [./diff_c1]
+    type = MatDiffusion
+    variable = c
+    D_name = Dh1
+    conc = c1
+  [../]
+  [./diff_c2]
+    type = MatDiffusion
+    variable = c
+    D_name = Dh2
+    conc = c2
+  [../]
+  [./diff_c3]
+    type = MatDiffusion
+    variable = c
+    D_name = Dh3
+    conc = c3
   [../]
 
-
-# no flux of chemical potential
-  [./w_bottom_CHF_BC]
-    type = CahnHilliardFluxBC
-    variable = w
-    boundary = 'top bottom left right'
-    flux = '0.0 0.0 0.0'
-    # flux = '0.7 0.7 0.0' #(an illustration on non-zero flux BC)
-    mob_name = 1
-    args = ''
+  # Kernels for Allen-Cahn equation for eta1
+  [./deta1dt]
+    type = TimeDerivative
+    variable = eta1
+  [../]
+  [./ACBulkF1]
+    type = KKSMultiACBulkF
+    variable  = eta1
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    gi_name   = g1
+    eta_i     = eta1
+    wi        = 1.0
+    args      = 'c1 c2 c3 eta2 eta3'
+  [../]
+  [./ACBulkC1]
+    type = KKSMultiACBulkC
+    variable  = eta1
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    cj_names  = 'c1 c2 c3'
+    eta_i     = eta1
+    args      = 'eta2 eta3'
+  [../]
+  [./ACInterface1]
+    type = ACInterface
+    variable = eta1
+    kappa_name = kappa
+  [../]
+  [./multipler1]
+    type = MatReaction
+    variable = eta1
+    v = lambda
+    mob_name = L
   [../]
 
+  # Kernels for Allen-Cahn equation for eta2
+  [./deta2dt]
+    type = TimeDerivative
+    variable = eta2
+  [../]
+  [./ACBulkF2]
+    type = KKSMultiACBulkF
+    variable  = eta2
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    gi_name   = g2
+    eta_i     = eta2
+    wi        = 1.0
+    args      = 'c1 c2 c3 eta1 eta3'
+  [../]
+  [./ACBulkC2]
+    type = KKSMultiACBulkC
+    variable  = eta2
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    cj_names  = 'c1 c2 c3'
+    eta_i     = eta2
+    args      = 'eta1 eta3'
+  [../]
+  [./ACInterface2]
+    type = ACInterface
+    variable = eta2
+    kappa_name = kappa
+  [../]
+  [./multipler2]
+    type = MatReaction
+    variable = eta2
+    v = lambda
+    mob_name = L
+  [../]
+
+  # Kernels for the Lagrange multiplier equation
+  [./mult_lambda]
+    type = MatReaction
+    variable = lambda
+    mob_name = 3
+  [../]
+  [./mult_ACBulkF_1]
+    type = KKSMultiACBulkF
+    variable  = lambda
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    gi_name   = g1
+    eta_i     = eta1
+    wi        = 1.0
+    mob_name  = 1
+    args      = 'c1 c2 c3 eta2 eta3'
+  [../]
+  [./mult_ACBulkC_1]
+    type = KKSMultiACBulkC
+    variable  = lambda
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    cj_names  = 'c1 c2 c3'
+    eta_i     = eta1
+    args      = 'eta2 eta3'
+    mob_name  = 1
+  [../]
+  [./mult_CoupledACint_1]
+    type = SimpleCoupledACInterface
+    variable = lambda
+    v = eta1
+    kappa_name = kappa
+    mob_name = 1
+  [../]
+  [./mult_ACBulkF_2]
+    type = KKSMultiACBulkF
+    variable  = lambda
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    gi_name   = g2
+    eta_i     = eta2
+    wi        = 1.0
+    mob_name  = 1
+    args      = 'c1 c2 c3 eta1 eta3'
+  [../]
+  [./mult_ACBulkC_2]
+    type = KKSMultiACBulkC
+    variable  = lambda
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    cj_names  = 'c1 c2 c3'
+    eta_i     = eta2
+    args      = 'eta1 eta3'
+    mob_name  = 1
+  [../]
+  [./mult_CoupledACint_2]
+    type = SimpleCoupledACInterface
+    variable = lambda
+    v = eta2
+    kappa_name = kappa
+    mob_name = 1
+  [../]
+  [./mult_ACBulkF_3]
+    type = KKSMultiACBulkF
+    variable  = lambda
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    gi_name   = g3
+    eta_i     = eta3
+    wi        = 1.0
+    mob_name  = 1
+    args      = 'c1 c2 c3 eta1 eta2'
+  [../]
+  [./mult_ACBulkC_3]
+    type = KKSMultiACBulkC
+    variable  = lambda
+    Fj_names  = 'F1 F2 F3'
+    hj_names  = 'h1 h2 h3'
+    cj_names  = 'c1 c2 c3'
+    eta_i     = eta3
+    args      = 'eta1 eta2'
+    mob_name  = 1
+  [../]
+  [./mult_CoupledACint_3]
+    type = SimpleCoupledACInterface
+    variable = lambda
+    v = eta3
+    kappa_name = kappa
+    mob_name = 1
+  [../]
+
+  # Kernels for constraint equation eta1 + eta2 + eta3 = 1
+  # eta3 is the nonlinear variable for the constraint equation
+  [./eta3reaction]
+    type = MatReaction
+    variable = eta3
+    mob_name = 1
+  [../]
+  [./eta1reaction]
+    type = MatReaction
+    variable = eta3
+    v = eta1
+    mob_name = 1
+  [../]
+  [./eta2reaction]
+    type = MatReaction
+    variable = eta3
+    v = eta2
+    mob_name = 1
+  [../]
+  [./one]
+    type = BodyForce
+    variable = eta3
+    value = -1.0
+  [../]
+
+  # Phase concentration constraints
+  [./chempot12]
+    type = KKSPhaseChemicalPotential
+    variable = c1
+    cb       = c2
+    fa_name  = F1
+    fb_name  = F2
+  [../]
+  [./chempot23]
+    type = KKSPhaseChemicalPotential
+    variable = c2
+    cb       = c3
+    fa_name  = F2
+    fb_name  = F3
+  [../]
+  [./phaseconcentration]
+    type = KKSMultiPhaseConcentration
+    variable = c3
+    cj = 'c1 c2 c3'
+    hj_names = 'h1 h2 h3'
+    etas = 'eta1 eta2 eta3'
+    c = c
+  [../]
 []
 
-[Preconditioning]
-  [./SMP_PJFNK]
-    type = SMP
-    full = true
-    solve_type = Newton
+[AuxKernels]
+  [./Energy_total]
+    type = KKSMultiFreeEnergy
+    Fj_names = 'F1 F2 F3'
+    hj_names = 'h1 h2 h3'
+    gj_names = 'g1 g2 g3'
+    variable = Energy
+    w = 1
+    interfacial_vars =  'eta1  eta2  eta3'
+    kappa_names =       'kappa kappa kappa'
   [../]
 []
 
 [Executioner]
   type = Transient
-  petsc_options_iname = '-pc_type -sub_pc_type -sub_pc_factor_levels'
-  petsc_options_value = 'bjacobi  ilu          4'
+  solve_type = 'PJFNK'
+  petsc_options_iname = '-pc_type -sub_pc_type   -sub_pc_factor_shift_type'
+  petsc_options_value = 'asm       ilu            nonzero'
+  l_max_its = 30
+  nl_max_its = 10
+  l_tol = 1.0e-4
+  nl_rel_tol = 1.0e-10
+  nl_abs_tol = 1.0e-11
 
-  nl_rel_tol  = 1e-5
-  nl_abs_tol  = 1e-5
-  nl_max_its  = 50
-  l_tol       = 1e-5
-  l_max_its   = 50
+  num_steps = 2
+  dt = 0.5
+[]
 
-  end_time    = 200
-
-# adaptive time stepping
-  [./TimeStepper]
-	    type = IterationAdaptiveDT
-	    dt = 0.01
+[Preconditioning]
+  active = 'full'
+  [./full]
+    type = SMP
+    full = true
   [../]
-
-# adaptive mesh to resolve an interface
-  [./Adaptivity]
-    initial_adaptivity    = 2             # Number of times mesh is adapted to initial condition
-    refine_fraction       = 0.7           # Fraction of high error that will be refined
-    coarsen_fraction      = 0.1           # Fraction of low error that will coarsened
-    max_h_level           = 4 #3             # Max number of refinements used, starting from initial mesh (before uniform refinement)
-    weight_names          = 'c	 '
-    weight_values         = '1  '
+  [./mydebug]
+    type = FDP
+    full = true
   [../]
-
 []
 
 [Outputs]
