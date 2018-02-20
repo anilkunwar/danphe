@@ -16,8 +16,10 @@ int main(int argc, char *argv[])
   // Register this application's MooseApp and any it depends on
   DanpheApp::registerApps();
 
-  // This creates dynamic memory that we're responsible for deleting
-  MooseApp * app = AppFactory::createApp("DanpheApp", argc, argv);
+ // This creates dynamic memory that we're responsible for deleting
+  //MooseApp * app = AppFactory::createApp("DanpheApp", argc, argv);
+   // Create an instance of the application and store it in a smart pointer for easy cleanup
+  std::shared_ptr<MooseApp> app = AppFactory::createAppShared("DanpheApp", argc, argv);
 
   //app->legacyUoInitializationDefault() = false;
   //app->legacyUoAuxComputationDefault() = false;
@@ -28,7 +30,7 @@ int main(int argc, char *argv[])
   app->run();
 
   // Free up the memory we created earlier
-  delete app;
+  //delete app;
 
   return 0;
 }
