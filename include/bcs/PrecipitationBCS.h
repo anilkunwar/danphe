@@ -50,13 +50,18 @@ private:
    * Multiplier on the boundary.
    */
   // Real _alpha;
-  Real _beta;
+  //Real _beta;
+  Real _volume;
+  Real _area;
+  Real _C_o;
 
   /**
    * Holds the values at the quadrature points
    * of a coupled variable.
    */
   //VariableValue & _some_var_val;
+  const MaterialProperty<Real> & _k_rc;
+  const MaterialProperty<Real> & _C_svart;
 };
 
 #endif //PrecipitationBCS_H
