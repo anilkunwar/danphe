@@ -9,6 +9,7 @@
 //#include "CoupledPotential.h"
 #include "SplitCHVoltage.h"
 #include "MultiSorretDiffusion.h"
+#include "INSMomentumGravity.h"
 //Auxkernels
 #include "CurrentDensity.h"
 //Materials
@@ -55,6 +56,7 @@ DanpheApp::registerObjects(Factory & factory)
   //registerKernel(CoupledPotential);
   registerKernel(SplitCHVoltage);
   registerKernel(MultiSorretDiffusion);
+  registerKernel(INSMomentumGravity);
   //Auxkernel(s)
   registerAux(CurrentDensity);
   //Material
