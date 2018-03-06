@@ -7,10 +7,12 @@
 //* Licensed under LGPL 2.1, please see LICENSE for details
 //* https://www.gnu.org/licenses/lgpl-2.1.html
 
+//Modified from INSBase.h  and INSMomentumBase.h  kernels
+
 #ifndef BOUSSINESQBODYFORCE_H
 #define BOUSSINESQBODYFORCE_H
 
-#include "NSKernel.h"
+#include "Kernel.h"
 
 // Forward Declarations
 class BoussinesqBodyForce;
@@ -18,7 +20,7 @@ class BoussinesqBodyForce;
 template <>
 InputParameters validParams<BoussinesqBodyForce>();
 
-class BoussinesqBodyForce : public NSKernel
+class BoussinesqBodyForce : public Kernel
 {
 public:
   BoussinesqBodyForce(const InputParameters & parameters);
@@ -28,8 +30,33 @@ protected:
   virtual Real computeQpJacobian();
   virtual Real computeQpOffDiagJacobian(unsigned int jvar);
 
+ // components of velocity as 0,1 or 2
+  unsigned _component;
+// Coupled variables
+  const VariableValue & _u_vel;
+  const VariableValue & _v_vel;
+  const VariableValue & _w_vel;
+  const VariableValue & _p;
+
+ // Gradients
+  const VariableGradient & _grad_u_vel;
+  const VariableGradient & _grad_v_vel;
+  const VariableGradient & _grad_w_vel;
+  const VariableGradient & _grad_p;
+
+ // Variable numberings
+  unsigned _u_vel_var_number;
+  unsigned _v_vel_var_number;
+  unsigned _w_vel_var_number;
+  unsigned _p_var_number;
+
+  RealVectorValue _gravity;
+
+
   // Parameters
-  const Real _acceleration;
+  //const Real _acceleration;
+  // Materials Properties
+  //const MaterialProperty<Real> & _mu;
   const MaterialProperty<Real> & _rho_bq;
 };
 
