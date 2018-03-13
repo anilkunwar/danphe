@@ -61,6 +61,8 @@
 #include "FunctionRobinBCS.h"
 #include "BetaFunctionRobinBCS.h"
 #include "OnlyBetaFunctionRobinBCS.h"
+//Functions
+#include "LevelSetBoundingBox.h"
 //Materials
 //#include "TinSheet.h" //see at ~/project/material_danphe/
 #include "VoltPFParamsPolyFreeEnergy.h"
@@ -162,8 +164,9 @@ DanpheApp::registerApps()
 void
 DanpheApp::registerObjects(Factory & factory)
 {
+  //Timestepper
   registerTimeStepper(TransientHalf);
-
+  //Kernel
   registerKernel(ElectricPotential);
   registerKernel(SplitCHVoltage);
   //registerKernel(GasGeneration);
@@ -187,7 +190,7 @@ DanpheApp::registerObjects(Factory & factory)
    registerKernel(SurfaceTension);
   registerKernel(BoussinesqBodyForce);
   
-
+ //AuxKernel
   registerAux(CurrentDensity);
   registerAux(ThermalComponent);
   registerAux(ElectricComponent);
@@ -195,12 +198,15 @@ DanpheApp::registerObjects(Factory & factory)
   registerAux(BackstressComponent);
   registerAux(ThermalGradient);
   registerAux(SpeciesVelocity);
-
+  //Boundary Conditions
   registerBoundaryCondition(RobinBCS);
   registerBoundaryCondition(FunctionRobinBCS);
   registerBoundaryCondition(BetaFunctionRobinBCS);
   registerBoundaryCondition(OnlyBetaFunctionRobinBCS);
-
+  //Functions
+  registerFunction(LevelSetBoundingBox);
+  
+  //Materials
   //registerMaterial(TinSheet); //see at ~/project/material_danphe/
   registerMaterial(VoltPFParamsPolyFreeEnergy);
   registerMaterial(TempPFParamsPolyFreeEnergy);  
