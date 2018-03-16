@@ -47,6 +47,7 @@
 #include "CHConvection.h"
 #include "SurfaceTension.h"
 #include "BoussinesqBodyForce.h"
+#include "CoupledBoussinesqBodyForce.h"
 
 //Auxkernels
 #include "CurrentDensity.h"
@@ -189,6 +190,7 @@ DanpheApp::registerObjects(Factory & factory)
    registerKernel(CHConvection);
    registerKernel(SurfaceTension);
   registerKernel(BoussinesqBodyForce);
+   registerKernel(CoupledBoussinesqBodyForce); //MaskedBoussinesqBodyForce
   
  //AuxKernel
   registerAux(CurrentDensity);
