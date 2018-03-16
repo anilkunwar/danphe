@@ -47,7 +47,7 @@
 #include "CHConvection.h"
 #include "SurfaceTension.h"
 #include "BoussinesqBodyForce.h"
-#include "CoupledBoussinesqBodyForce.h"
+#include "CoupledBoussinesqBodyForce.h" //MaskedBoussinesqBodyForce
 
 //Auxkernels
 #include "CurrentDensity.h"
