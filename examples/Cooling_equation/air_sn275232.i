@@ -259,7 +259,10 @@
 
 [Outputs]
   exodus = true
+  #execute_on = 'initial timestep_end' # output the initial condition for the file
   #file_base = ./examples/Cooling_equation/testrun/abcdefghijh #to output file in the same directory of input file
+  #interval = 5 #3             # only output every ffth r step
+  #csv = true
   print_perf_log = true
 []
 
