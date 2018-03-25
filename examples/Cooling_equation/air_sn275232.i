@@ -259,6 +259,7 @@
 
 [Outputs]
   exodus = true
+  #file_base = ./examples/Cooling_equation/testrun/abcdefghijh #to output file in the same directory of input file
   print_perf_log = true
 []
 
