@@ -12,13 +12,13 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef WETTINGNEUMANNBC_H
-#define WETTINGNEUMANNBC_H
+#ifndef INTERFACIALNEUMANNBC_H
+#define INTERFACIALNEUMANNBC_H
 
 #include "IntegratedBC.h"
 
 //Forward Declarations
-class WettingNeumannBC;
+class InterfacialNeumannBC;
 class Function;
 
 template<>
@@ -27,16 +27,19 @@ InputParameters validParams<WettingNeumannBC>();
 /**
  * Boundary condition of a Neumann style whose value is computed by a user-defined function
  */
-class WettingNeumannBC : public IntegratedBC
+class InterfacialNeumannBC : public IntegratedBC
 {
 public:
-  WettingNeumannBC(const InputParameters & parameters);
+  InterfacialNeumannBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
   /// The function being used for setting the value
   Function & _func;
+//private:
+// constants 
+//material-properties
 };
 
-#endif // WETTINGNEUMANNBC_H
+#endif // INTERFACIALNEUMANNBC_H
