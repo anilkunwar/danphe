@@ -12,24 +12,24 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "WettingNeumannBC.h"
+#include "InterfacialNeumannBC.h"
 #include "Function.h"
 
 template<>
-InputParameters validParams<WettingNeumannBC>()
+InputParameters validParams<InterfacialNeumannBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
   params.addRequiredParam<FunctionName>("function", "The function.");
   return params;
 }
 
-WettingNeumannBC::WettingNeumannBC(const InputParameters & parameters):IntegratedBC(parameters),
+InterfacialNeumannBC::InterfacialNeumannBC(const InputParameters & parameters):IntegratedBC(parameters),
     _func(getFunction("function"))
 {
 }
 
 Real
-WettingNeumannBC::computeQpResidual()
+InterfacialNeumannBC::computeQpResidual()
 {
 	return -_test[_i][_qp] * _func.value(_t, _q_point[_qp]) * sqrt (_grad_u[_qp] * _grad_u[_qp]);
 }
