@@ -12,30 +12,30 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#ifndef WETTINGANGLENEUMANNBC_H
-#define WETTINGANGLENEUMANNBC_H
+#ifndef INTERFACIALANGLENEUMANNBC_H
+#define INTERFACIALANGLENEUMANNBC_H
 
 #include "IntegratedBC.h"
 
 //Forward Declarations
-class WettingAngleNeumannBC;
+class InterfacialAngleNeumannBC;
 
 template<>
-InputParameters validParams<WettingAngleNeumannBC>();
+InputParameters validParams<InterfacialAngleNeumannBC>();
 
 /**
  * Boundary condition of a Neumann style whose value is computed by a user-defined function
  */
-class WettingAngleNeumannBC : public IntegratedBC
+class InterfacialAngleNeumannBC : public IntegratedBC
 {
 public:
-  WettingAngleNeumannBC(const InputParameters & parameters);
+  InterfacialAngleNeumannBC(const InputParameters & parameters);
 
 protected:
   virtual Real computeQpResidual();
 
   /// The wetting angle used for the Neumann wall potential condition
-  const Real & _value;
+  //const Real & _value;
 };
 
-#endif // WETTINGANGLENEUMANNBC_H
+#endif // INTERFACIALANGLENEUMANNBC_H
