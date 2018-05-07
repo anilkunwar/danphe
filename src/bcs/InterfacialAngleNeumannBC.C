@@ -12,26 +12,26 @@
 /*            See COPYRIGHT for full restrictions               */
 /****************************************************************/
 
-#include "WettingAngleNeumannBC.h"
+#include "InterfacialAngleNeumannBC.h"
 
 
 template<>
-InputParameters validParams<WettingAngleNeumannBC>()
+InputParameters validParams<InterfacialAngleNeumannBC>()
 {
   InputParameters params = validParams<IntegratedBC>();
-  params.addParam<Real>("value", 0.0, "The cosine of the wetting angle");
- 
+  params.addParam<Real>("cosineoftheta", 0.0, "The cosine of the wetting angle");
+  // the expression cos(x) is utilized in parsed function's expression within moose framework
   return params;
 }
 
-WettingAngleNeumannBC::WettingAngleNeumannBC(const InputParameters & parameters):IntegratedBC(parameters),
-    _value(getParam<Real>("value"))
+InterfacialAngleNeumannBC::InterfacialAngleNeumannBC(const InputParameters & parameters):IntegratedBC(parameters),
+    _trigonometricvalue(getParam<Real>("cosineoftheta"))
 {
 }
 
 Real
-WettingAngleNeumannBC::computeQpResidual()
+InterfacialAngleNeumannBC::computeQpResidual()
 {
 
-	return -_test[_i][_qp] * _value * sqrt(2) / 2 * (1 - (_u[_qp] * _u[_qp]));
+	return -_test[_i][_qp] * _trigonometricvalue * sqrt(2) / 2 * (1 - (_u[_qp] * _u[_qp]));
 }
