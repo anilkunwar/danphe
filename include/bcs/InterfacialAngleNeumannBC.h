@@ -36,6 +36,9 @@ protected:
 
   /// The wetting angle used for the Neumann wall potential condition
   //const Real & _value;
+private:
+// The cosine of the wetting angle for the Neumann wall potential condition
+Real  _trigonometricvalue;
 };
 
 #endif // INTERFACIALANGLENEUMANNBC_H
