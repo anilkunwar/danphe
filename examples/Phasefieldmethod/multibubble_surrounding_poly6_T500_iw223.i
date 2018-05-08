@@ -33,7 +33,8 @@
     radii = '7.0e3 12.0e3 10.0e3'  #'5.0e3 15.0e3 8.0e3'
     invalue = 1.0
     outvalue = 0.0
-    int_width = '2.21e3 2.21e3 2.21e3' #'1.0e3 10.0e3 10.0e3'
+    #int_width = '2.21e3 2.21e3 2.21e3' #'1.0e3 10.0e3 10.0e3'
+    int_width = '2.21e3'
     variable = c
   [../]
 
