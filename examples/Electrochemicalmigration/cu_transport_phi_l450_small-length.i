@@ -1,3 +1,5 @@
+# Simulation of Cu transport across solder under the influence of voltage difference
+# Variables are Cu concentration (c) and potential distribution (phi)
 #if we need to model concentration c, make e(-kd*t) =1 i.e. Neumann BC 
 # and for this we need to decrease the value of a_1 from 10^-8 to 10^-10
 
