@@ -62,6 +62,8 @@
 #include "FunctionRobinBCS.h"
 #include "BetaFunctionRobinBCS.h"
 #include "OnlyBetaFunctionRobinBCS.h"
+#include "InterfacialNeumannBC.h"
+#include "InterfacialAngleNeumannBC.h"
 #include "SpreadingNeumannBC.h"
 //Functions
 #include "LevelSetBoundingBox.h"
@@ -206,6 +208,8 @@ DanpheApp::registerObjects(Factory & factory)
   registerBoundaryCondition(FunctionRobinBCS);
   registerBoundaryCondition(BetaFunctionRobinBCS);
   registerBoundaryCondition(OnlyBetaFunctionRobinBCS);
+  registerBoundaryCondition(InterfacialNeumannBC);
+  registerBoundaryCondition(InterfacialAngleNeumannBC);
   registerBoundaryCondition(SpreadingNeumannBC);
   //Functions
   registerFunction(LevelSetBoundingBox);
