@@ -30,6 +30,9 @@ SpreadingNeumannBC::SpreadingNeumannBC(const InputParameters & parameters)
 {
 }
 
+// the residual is formed according to the phase field method's boundary condtion
+// k*dC/dn + f_w^', where f_w = factor*(c-c^3/3)
+
 Real
 SpreadingNeumannBC::computeQpResidual()
 {
