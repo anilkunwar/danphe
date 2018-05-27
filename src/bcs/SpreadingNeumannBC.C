@@ -18,20 +18,26 @@ validParams<SpreadingNeumannBC>()
   InputParameters params = validParams<IntegratedBC>();
 
   // Here we are adding a parameter that will be extracted from the input file by the Parser
-  params.addParam<Real>("phi", 1.0, "Amplitude of the NeumannBC");
+  params.addParam<Real>("phasefactor", 1.0, "Amplitude of the NeumannBC");
   //params.addRequiredCoupledVar("some_var", "Flux Value at the Boundary");
   return params;
 }
 
 SpreadingNeumannBC::SpreadingNeumannBC(const InputParameters & parameters)
   : IntegratedBC(parameters),
-    _alpha(getParam<Real>("alpha")),
-    _some_var_val(coupledValue("some_var"))
+    _factor(getParam<Real>("phasefactor"))
+    //_some_var_val(coupledValue("some_var"))
 {
 }
 
 Real
 SpreadingNeumannBC::computeQpResidual()
 {
-  return _test[_i][_qp] * _phi * (_u[_qp]*_u[_qp]-1.0);
+  return _test[_i][_qp] * _factor * (_u[_qp]*_u[_qp]-1.0);
+}
+
+Real
+SpreadingNeumannBC::computeQpJacobian()
+{
+  return _test[_i][_qp] * _factor * _phi[_j][_qp] * 2.0 *_u[_qp];
 }
