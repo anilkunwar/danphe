@@ -10,6 +10,7 @@
 #include "SpreadingNeumannBC.h"
 
 //registerMooseObject("ExampleApp", SpreadingNeumannBC);
+//This may be for newer applications
 
 template <>
 InputParameters
