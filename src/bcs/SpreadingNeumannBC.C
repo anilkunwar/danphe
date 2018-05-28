@@ -9,7 +9,7 @@
 
 #include "SpreadingNeumannBC.h"
 
-registerMooseObject("ExampleApp", SpreadingNeumannBC);
+//registerMooseObject("ExampleApp", SpreadingNeumannBC);
 
 template <>
 InputParameters
