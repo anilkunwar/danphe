@@ -150,7 +150,7 @@ DanpheApp::DanpheApp(InputParameters parameters) :
   RichardsApp::associateSyntax(_syntax, _action_factory);
   SolidMechanicsApp::associateSyntax(_syntax, _action_factory);
   TensorMechanicsApp::associateSyntax(_syntax, _action_factory);
-  WaterSteamEOSApp::associateSyntax(_syntax, _action_factory);
+  //WaterSteamEOSApp::associateSyntax(_syntax, _action_factory);
   XFEMApp::associateSyntax(_syntax, _action_factory);
   DanpheApp::associateSyntax(_syntax, _action_factory);
 }
