@@ -35,7 +35,7 @@ _C_svart(getMaterialProperty<Real>("C_svar"))
 //_some_var_val(coupledValue("some_var"))
 {}
 
-                                      Real
+Real
 PrecipitationBCS::computeQpResidual()
 {
 return -_test[_i][_qp] * _k_rc[_qp] *_area*(_C_o-_C_svart[_qp])/_volume;
