@@ -22,7 +22,7 @@ class InterfacialNeumannBC;
 class Function;
 
 template<>
-InputParameters validParams<WettingNeumannBC>();
+InputParameters validParams<InterfacialNeumannBC>();
 
 /**
  * Boundary condition of a Neumann style whose value is computed by a user-defined function
