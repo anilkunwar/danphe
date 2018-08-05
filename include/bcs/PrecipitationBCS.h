@@ -41,9 +41,9 @@ public:
 protected:
   virtual Real computeQpResidual();
   /// The function being used for setting the value
-  Function & _func;
+  //Function & _func;
 
-  virtual Real computeQpJacobian();
+  //virtual Real computeQpJacobian();
 
 private:
   /**
