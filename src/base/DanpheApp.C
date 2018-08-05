@@ -22,7 +22,7 @@
 #include "RichardsApp.h"
 #include "SolidMechanicsApp.h"
 #include "TensorMechanicsApp.h"
-#include "WaterSteamEOSApp.h"
+//#include "WaterSteamEOSApp.h"
 #include "XFEMApp.h"
 //Kernels
 #include "ElectricPotential.h"
@@ -125,7 +125,7 @@ DanpheApp::DanpheApp(InputParameters parameters) :
   RichardsApp::registerObjects(_factory);
   SolidMechanicsApp::registerObjects(_factory);
   TensorMechanicsApp::registerObjects(_factory);
-  WaterSteamEOSApp::registerObjects(_factory);
+  //WaterSteamEOSApp::registerObjects(_factory);
   XFEMApp::registerObjects(_factory);
   DanpheApp::registerObjects(_factory);
 
